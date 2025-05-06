@@ -1,16 +1,22 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
-});
+})
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+  // ✅ Ignore all files and folders under src/app/generated
+  {
+    ignores: ['src/app/generated/**'],
+  },
 
-export default eslintConfig;
+  // ✅ Apply standard Next.js + TypeScript config
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+]
+
+export default eslintConfig
