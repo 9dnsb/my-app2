@@ -23,14 +23,28 @@ export const authOptions: AuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null
+      async authorize(credentials, req) {
+        const ip =
+          req?.headers?.['x-forwarded-for']?.split(',')[0]?.trim() ?? 'unknown'
+        const email = credentials?.email ?? 'unknown'
+
+        if (!credentials?.email || !credentials?.password) {
+          console.warn(
+            `[LOGIN FAIL] Missing fields - IP: ${ip} | Email: ${email}`
+          )
+          return null
+        }
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         })
 
-        if (!user || !('hashedPassword' in user)) return null
+        if (!user || !('hashedPassword' in user)) {
+          console.warn(
+            `[LOGIN FAIL] User not found or missing hash - IP: ${ip} | Email: ${email}`
+          )
+          return null
+        }
 
         const typedUser = user as UserWithPassword
 
@@ -39,8 +53,14 @@ export const authOptions: AuthOptions = {
           typedUser.hashedPassword
         )
 
-        if (!isValid) return null
+        if (!isValid) {
+          console.warn(
+            `[LOGIN FAIL] Invalid password - IP: ${ip} | Email: ${email}`
+          )
+          return null
+        }
 
+        // ✅ Successful login
         return {
           id: String(typedUser.id),
           name: typedUser.name,

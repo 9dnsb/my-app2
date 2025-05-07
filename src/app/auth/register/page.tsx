@@ -2,8 +2,16 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function RegisterPage() {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://www.google.com/recaptcha/api.js'
+    script.async = true
+    script.defer = true
+    document.body.appendChild(script)
+  }, [])
   const router = useRouter()
   const [error, setError] = useState('')
 
@@ -54,6 +62,11 @@ export default function RegisterPage() {
           required
           className="w-full border p-2 rounded"
         />
+        <div
+          className="g-recaptcha"
+          data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+        ></div>
+
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <button
           type="submit"
