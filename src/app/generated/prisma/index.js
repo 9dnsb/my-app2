@@ -201,7 +201,7 @@ const config = {
   },
   "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             Int     @id @default(autoincrement())\n  email          String  @unique\n  name           String?\n  hashedPassword String\n\n  type        UserType     @default(user) // re-add this\n  posts       Post[]\n  submissions Submission[]\n}\n\nenum UserType {\n  admin\n  user\n}\n\nmodel Post {\n  id        Int     @id @default(autoincrement())\n  title     String\n  content   String?\n  published Boolean @default(false)\n  authorId  Int\n  author    User    @relation(fields: [authorId], references: [id])\n}\n\nmodel Submission {\n  id        Int      @id @default(autoincrement())\n  userId    Int\n  formName  String\n  data      Json\n  createdAt DateTime @default(now())\n  user      User     @relation(fields: [userId], references: [id])\n}\n",
   "inlineSchemaHash": "cf11061b135fbc36cb99dea621bf12d6e0c4b341e4d483ddc224473be18dbb9d",
-  "copyEngine": false
+  "copyEngine": true
 }
 
 const fs = require('fs')
@@ -238,3 +238,9 @@ const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
+// file annotations for bundling tools to include these files
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "src/app/generated/prisma/query_engine-windows.dll.node")
+// file annotations for bundling tools to include these files
+path.join(__dirname, "schema.prisma");
+path.join(process.cwd(), "src/app/generated/prisma/schema.prisma")

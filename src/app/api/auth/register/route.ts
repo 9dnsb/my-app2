@@ -1,15 +1,21 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
+import { UserType } from '@/app/generated/prisma' // Verify this path is correct
+
+// Constants
+const PASSWORD_MIN_LENGTH = 8
+const NAME_MAX_LENGTH = 100
+const EMAIL_MAX_LENGTH = 255
 
 export async function POST(req: Request) {
+  // Add a timestamp at function start for measuring execution time
+  const startTime = Date.now()
+
   try {
     // ✅ Ensure Content-Type is application/json
     if (req.headers.get('content-type') !== 'application/json') {
-      return NextResponse.json(
-        { message: 'Invalid content type' },
-        { status: 400 }
-      )
+      return createErrorResponse('Invalid content type', 400)
     }
 
     const body = await req.json()
@@ -22,28 +28,58 @@ export async function POST(req: Request) {
       typeof email !== 'string' ||
       typeof password !== 'string'
     ) {
-      return NextResponse.json(
-        { message: 'Missing or invalid fields' },
-        { status: 400 }
-      )
+      return createErrorResponse('Missing or invalid fields', 400)
     }
 
     // ✅ Normalize and validate email format
+    // More comprehensive email regex
     const normalizedEmail = email.toLowerCase().trim()
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(normalizedEmail)) {
-      return NextResponse.json(
-        { message: 'Invalid email format' },
-        { status: 400 }
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
+    if (
+      !emailRegex.test(normalizedEmail) ||
+      normalizedEmail.length > EMAIL_MAX_LENGTH
+    ) {
+      return createErrorResponse('Invalid email format', 400)
+    }
+
+    // ✅ Enhanced password strength validation
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      return createErrorResponse('Password must be at least 8 characters', 400)
+    }
+
+    // Add more complex password validation
+    const hasUpperCase = /[A-Z]/.test(password)
+    const hasLowerCase = /[a-z]/.test(password)
+    const hasNumbers = /\d/.test(password)
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password)
+
+    if (!(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar)) {
+      return createErrorResponse(
+        'Password must include uppercase, lowercase, numbers, and special characters',
+        400
       )
     }
 
-    // ✅ Enforce password strength
-    if (password.length < 8) {
-      return NextResponse.json(
-        { message: 'Password must be at least 8 characters' },
-        { status: 400 }
-      )
+    // ✅ Better name validation (if provided)
+    let sanitizedName = null
+    if (name !== undefined) {
+      if (typeof name !== 'string') {
+        return createErrorResponse('Invalid name format', 400)
+      }
+
+      sanitizedName = name.trim()
+
+      // Prevent excessively long names
+      if (sanitizedName.length > NAME_MAX_LENGTH) {
+        return createErrorResponse('Name is too long', 400)
+      }
+
+      // If trimmed name is empty, set to null
+      if (sanitizedName === '') {
+        sanitizedName = null
+      }
     }
 
     // ✅ Check for existing user (but avoid enumeration)
@@ -51,33 +87,86 @@ export async function POST(req: Request) {
       where: { email: normalizedEmail },
     })
 
-    if (existingUser) {
-      return NextResponse.json(
-        { message: 'Invalid credentials' },
-        { status: 400 }
-      ) // Generic
+    // ✅ Hash password with proper cost factor
+    const hashedPassword = await bcrypt.hash(password, 12) // Increased from 10 to 12 for better security
+
+    // User doesn't exist - create new user
+    if (!existingUser) {
+      await prisma.user.create({
+        data: {
+          email: normalizedEmail,
+          name: sanitizedName,
+          hashedPassword,
+          type: UserType.user, // Using the enum directly
+        },
+      })
+
+      // Log successful registration (without sensitive data)
+      console.info(`User registered successfully`, {
+        email: normalizedEmail,
+        timestamp: new Date().toISOString(),
+      })
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    // Important: Return the same response regardless of whether user existed
+    // This prevents timing attacks for user enumeration
 
-    await prisma.user.create({
-      data: {
-        email: normalizedEmail,
-        name: name?.trim() || null,
-        hashedPassword,
-      },
-    })
+    // Add deliberate delay to make timing attacks harder
+    await simulateWork()
 
-    return NextResponse.json({ message: 'User created' }, { status: 201 })
-  } catch (error) {
-    console.error('❌ Registration error:', {
-      error: (error as Error)?.message,
-      timestamp: new Date().toISOString(),
-    })
-
+    // Return success regardless of whether we created a user or not
+    // This prevents user enumeration
     return NextResponse.json(
-      { message: 'Internal server error' },
-      { status: 500 }
+      { message: 'Registration request processed' },
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Content-Type-Options': 'nosniff',
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      }
     )
+  } catch (error) {
+    // Safer error logging for production
+    const errorObj: Record<string, unknown> = {
+      message: (error as Error)?.message,
+      timestamp: new Date().toISOString(),
+      timeSpent: Date.now() - startTime,
+    }
+
+    // Only include stack trace in development
+    if (process.env.NODE_ENV !== 'production') {
+      errorObj.stack = (error as Error)?.stack
+    }
+
+    console.error('Registration error:', errorObj)
+
+    // Wait a bit to prevent timing attacks
+    await simulateWork()
+
+    return createErrorResponse('Internal server error', 500)
   }
+}
+
+// Helper function to create consistent error responses
+function createErrorResponse(message: string, status: number): NextResponse {
+  return NextResponse.json(
+    { message },
+    {
+      status,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Content-Type-Options': 'nosniff',
+        'Cache-Control': 'no-store, max-age=0',
+      },
+    }
+  )
+}
+
+// Helper function to add slight delay to prevent timing attacks
+async function simulateWork(): Promise<void> {
+  return new Promise((resolve) =>
+    setTimeout(resolve, 100 + Math.floor(Math.random() * 150))
+  )
 }

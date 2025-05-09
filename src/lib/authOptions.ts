@@ -4,17 +4,48 @@ import { PrismaAdapter } from '@auth/prisma-adapter'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
-type UserWithPassword = {
-  id: number
-  name: string | null
-  email: string
-  hashedPassword: string
+// Ensure NEXTAUTH_SECRET is set
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error('NEXTAUTH_SECRET environment variable is not set')
+}
+
+// Define a more specific type for our user with type information
+interface UserWithType {
+  id: string
+  name?: string | null
+  email?: string | null
+  type?: string
 }
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
+    maxAge: 24 * 60 * 60, // 24 hours
+  },
+  // Explicit JWT configuration
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 24 * 60 * 60, // 24 hours - match session maxAge
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Add user type to token when user object is available
+      if (user) {
+        const userWithType = user as UserWithType
+        if (userWithType.type) {
+          token.userType = userWithType.type
+        }
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // Add user type to session from token
+      if (token.userType && session.user) {
+        session.user.type = token.userType
+      }
+      return session
+    },
   },
   providers: [
     CredentialsProvider({
@@ -23,48 +54,69 @@ export const authOptions: AuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        const ip =
-          req?.headers?.['x-forwarded-for']?.split(',')[0]?.trim() ?? 'unknown'
-        const email = credentials?.email ?? 'unknown'
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null
 
-        if (!credentials?.email || !credentials?.password) {
-          console.warn(
-            `[LOGIN FAIL] Missing fields - IP: ${ip} | Email: ${email}`
-          )
-          return null
-        }
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(credentials.email)) return null
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        })
-
-        if (!user || !('hashedPassword' in user)) {
-          console.warn(
-            `[LOGIN FAIL] User not found or missing hash - IP: ${ip} | Email: ${email}`
-          )
-          return null
-        }
-
-        const typedUser = user as UserWithPassword
-
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          typedUser.hashedPassword
+        const hasUpperCase = /[A-Z]/.test(credentials.password)
+        const hasLowerCase = /[a-z]/.test(credentials.password)
+        const hasNumbers = /\d/.test(credentials.password)
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(
+          credentials.password
         )
 
-        if (!isValid) {
-          console.warn(
-            `[LOGIN FAIL] Invalid password - IP: ${ip} | Email: ${email}`
-          )
+        if (
+          credentials.password.length < 8 ||
+          !(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar)
+        ) {
           return null
         }
 
-        // ✅ Successful login
-        return {
-          id: String(typedUser.id),
-          name: typedUser.name,
-          email: typedUser.email,
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              hashedPassword: true,
+              type: true,
+            },
+          })
+
+          if (!user || !user.hashedPassword) {
+            console.warn(
+              `Login attempt with invalid email: ${credentials.email}`
+            )
+            return null
+          }
+
+          const isValid = await bcrypt.compare(
+            credentials.password,
+            user.hashedPassword
+          )
+
+          if (!isValid) {
+            console.warn(`Failed login attempt for user: ${credentials.email}`)
+            return null
+          }
+
+          // Log successful login
+          console.info(`Successful login: ${user.email} (${user.type})`)
+
+          // Return user with type information
+          return {
+            id: String(user.id),
+            name: user.name,
+            email: user.email,
+            type: user.type,
+          }
+        } catch (error) {
+          console.error('Authentication error:', error)
+          return null
         }
       },
     }),
@@ -73,4 +125,17 @@ export const authOptions: AuthOptions = {
     signIn: '/auth/login',
     error: '/auth/error',
   },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+  },
+  // Enable debug logs in development only
+  debug: process.env.NODE_ENV === 'development',
 }
