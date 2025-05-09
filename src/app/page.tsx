@@ -1,6 +1,34 @@
+// src/app/page.tsx
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/authOptions'
+import { redirect } from 'next/navigation'
+import prisma from '@/lib/prisma'
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Get the current session
+  const session = await getServerSession(authOptions)
+
+  // Only check user role and redirect if user is logged in
+  if (session && session.user?.email) {
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { type: true },
+    })
+
+    // Perform redirection based on user type
+    if (user) {
+      if (user.type === 'admin') {
+        return redirect('/admin')
+      } else {
+        return redirect('/dashboard')
+      }
+    }
+    // If user not found in database but has session, default to dashboard
+    return redirect('/dashboard')
+  }
+
+  // If no user is logged in, show the homepage
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-white text-gray-900">
       <h1 className="text-3xl font-bold mb-8">Welcome to the Platform</h1>

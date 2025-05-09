@@ -8,7 +8,7 @@ import Link from 'next/link'
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+  const callbackUrl = searchParams.get('callbackUrl') || ''
   const registered = searchParams.get('registered') === 'true'
 
   const [email, setEmail] = useState('')
@@ -37,27 +37,58 @@ export default function LoginPage() {
       // Security best practice: trim and normalize email
       const sanitizedEmail = email.trim().toLowerCase()
 
+      // First attempt login with redirect:false to check for errors
       const res = await signIn('credentials', {
         email: sanitizedEmail,
         password,
         remember: rememberMe,
         redirect: false,
-        callbackUrl,
       })
 
-      if (res?.ok) {
-        router.push(callbackUrl)
-      } else if (res?.error === 'email-not-verified') {
-        setError(
-          'Your email is not verified. Please check your inbox or request a new verification email.'
-        )
-        setShowResendVerification(true)
-      } else if (res?.error === 'CredentialsSignin') {
-        setError('Invalid email or password')
-      } else {
-        setError('An error occurred. Please try again.')
+      // If login failed, show error
+      if (!res?.ok) {
+        if (res?.error === 'email-not-verified') {
+          setError(
+            'Your email is not verified. Please check your inbox or request a new verification email.'
+          )
+          setShowResendVerification(true)
+        } else if (res?.error === 'CredentialsSignin') {
+          setError('Invalid email or password')
+        } else {
+          setError('An error occurred. Please try again.')
+        }
+        return
       }
-    } catch {
+
+      // Only if login was successful, check user type
+      try {
+        const checkTypeResponse = await fetch('/api/auth/check-user-type', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: sanitizedEmail }),
+        })
+
+        let redirectTo = '/dashboard' // Default
+
+        if (checkTypeResponse.ok) {
+          const { type } = await checkTypeResponse.json()
+          if (type === 'admin') {
+            redirectTo = '/admin'
+          }
+        }
+
+        // Use the callback URL if provided, otherwise use our determined path
+        const finalRedirect = callbackUrl || redirectTo
+
+        // Redirect to the appropriate page
+        router.push(finalRedirect)
+      } catch (error) {
+        console.error('Error checking user type:', error)
+        // If there's an error determining user type, default to dashboard
+        router.push('/dashboard')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
       setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
