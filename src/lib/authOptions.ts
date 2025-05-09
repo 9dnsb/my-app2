@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
+import { isValidEmail, isValidPassword } from '@/lib/validation'
 
 // Ensure NEXTAUTH_SECRET is set
 if (!process.env.NEXTAUTH_SECRET) {
@@ -57,23 +58,12 @@ export const authOptions: AuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(credentials.email)) return null
+        // Email validation using our utility
+        if (!isValidEmail(credentials.email)) return null
 
-        const hasUpperCase = /[A-Z]/.test(credentials.password)
-        const hasLowerCase = /[a-z]/.test(credentials.password)
-        const hasNumbers = /\d/.test(credentials.password)
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(
-          credentials.password
-        )
-
-        if (
-          credentials.password.length < 8 ||
-          !(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar)
-        ) {
-          return null
-        }
+        // Password validation
+        const passwordCheck = isValidPassword(credentials.password)
+        if (!passwordCheck.valid) return null
 
         try {
           // Add emailVerified to the selected fields

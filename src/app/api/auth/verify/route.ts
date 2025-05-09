@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import prisma from '@/lib/prisma'
 import { isTokenExpired } from '@/lib/tokenUtils'
+import { logApiError } from '@/lib/apiUtils'
 
 export async function GET(request: NextRequest) {
   try {
@@ -56,7 +57,9 @@ export async function GET(request: NextRequest) {
       new URL('/auth/verification-success', request.url)
     )
   } catch (error) {
-    console.error('Verification error:', error)
+    // Use our new error logging utility
+    logApiError('email-verification', error)
+
     return NextResponse.redirect(
       new URL('/auth/verification-error?error=server-error', request.url)
     )

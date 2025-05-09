@@ -1,16 +1,22 @@
 'use client'
 
-import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useForm } from '@/hooks/useForm'
+import Alert from '@/components/Alert'
+import FormField from '@/components/FormField'
+import Button from '@/components/Button'
+import { normalizeEmail, isValidEmail } from '@/lib/validation'
+
+interface ResendFormValues {
+  email: string
+}
 
 export default function VerificationErrorPage() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
-  const [email, setEmail] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState('')
 
+  // Get error message based on error code
   const getErrorMessage = () => {
     switch (error) {
       case 'missing-token':
@@ -24,34 +30,51 @@ export default function VerificationErrorPage() {
     }
   }
 
-  const handleResendEmail = async (e: React.FormEvent) => {
-    e.preventDefault()
+  // Validate the email form
+  const validateEmailForm = (values: ResendFormValues) => {
+    const errors: Record<string, string> = {}
 
-    if (!email) {
-      setMessage('Please enter your email address.')
-      return
+    if (!values.email) {
+      errors.email = 'Email is required'
+    } else if (!isValidEmail(values.email)) {
+      errors.email = 'Please enter a valid email address'
     }
 
-    setIsLoading(true)
-    setMessage('')
-
-    try {
-      const res = await fetch('/api/auth/resend-verification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-
-      const data = await res.json()
-
-      setMessage(data.message)
-    } catch (error) {
-      console.error('Verification error:', error)
-      setMessage('An error occurred. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
+    return errors
   }
+
+  // Handle form submission
+  const handleResendSubmit = async (values: ResendFormValues) => {
+    const normalizedEmail = normalizeEmail(values.email)
+
+    const res = await fetch('/api/auth/resend-verification', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: normalizedEmail }),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data.message || 'An error occurred. Please try again.')
+    }
+
+    return data.message
+  }
+
+  // Use our custom form hook
+  const {
+    values,
+    errors,
+    isSubmitting,
+    submitError,
+    handleChange,
+    handleSubmit,
+  } = useForm<ResendFormValues>(
+    { email: '' },
+    validateEmailForm,
+    handleResendSubmit
+  )
 
   return (
     <div className="max-w-md mx-auto mt-12 px-4">
@@ -79,35 +102,30 @@ export default function VerificationErrorPage() {
 
       <div className="bg-gray-50 p-4 rounded border mb-6">
         <h2 className="text-lg font-medium mb-2">Resend Verification Email</h2>
-        <form onSubmit={handleResendEmail}>
-          <input
+
+        {submitError && <Alert type="error" message={submitError} />}
+
+        <form onSubmit={handleSubmit}>
+          <FormField
+            label="Email Address"
+            name="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
             placeholder="Your email address"
-            className="w-full border p-2 rounded mb-3"
             required
+            error={errors.email}
+            className="mb-3"
           />
 
-          {message && (
-            <div
-              className={`p-2 rounded mb-3 ${
-                message.includes('sent')
-                  ? 'bg-green-50 text-green-800'
-                  : 'bg-red-50 text-red-800'
-              }`}
-            >
-              {message}
-            </div>
-          )}
-
-          <button
+          <Button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-black text-white py-2 rounded disabled:bg-gray-400"
+            fullWidth
+            isLoading={isSubmitting}
+            disabled={isSubmitting}
           >
-            {isLoading ? 'Sending...' : 'Resend Verification Email'}
-          </button>
+            {isSubmitting ? 'Sending...' : 'Resend Verification Email'}
+          </Button>
         </form>
       </div>
 

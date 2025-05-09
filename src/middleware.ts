@@ -18,6 +18,16 @@ const ratelimit = new Ratelimit({
   analytics: true,
 })
 
+// Security headers to apply to all responses
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+}
+
+// Protected routes that require authentication
+const PROTECTED_ROUTES = ['/admin', '/client', '/dashboard']
+
 export async function middleware(req: NextRequest) {
   const forwardedFor = req.headers.get('x-forwarded-for')
   const ip = forwardedFor?.split(',')[0]?.trim() ?? 'unknown'
@@ -30,7 +40,10 @@ export async function middleware(req: NextRequest) {
     if (!success) {
       return NextResponse.json(
         { message: 'Too many requests. Please try again later.' },
-        { status: 429 }
+        {
+          status: 429,
+          headers: SECURITY_HEADERS,
+        }
       )
     }
 
@@ -42,28 +55,14 @@ export async function middleware(req: NextRequest) {
   }
 
   // Authentication check for protected routes
-  if (
-    path.startsWith('/admin') ||
-    path.startsWith('/client') ||
-    path === '/dashboard'
-  ) {
+  if (isProtectedRoute(path)) {
     try {
       const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
       // Not authenticated
       if (!token) {
         console.log(`[AUTH] No valid token for ${path}`)
-
-        const redirectUrl = new URL('/auth/login', req.url)
-
-        // Validate callback URL (simple validation for Edge Runtime)
-        let callbackUrl = req.nextUrl.pathname
-        if (!callbackUrl.startsWith('/') || callbackUrl.includes('//')) {
-          callbackUrl = '/dashboard'
-        }
-
-        redirectUrl.searchParams.set('callbackUrl', callbackUrl)
-        return NextResponse.redirect(redirectUrl)
+        return redirectToLogin(req)
       }
 
       // Note: We're checking roles at the page level instead of here
@@ -77,12 +76,26 @@ export async function middleware(req: NextRequest) {
   // Add security headers to all responses
   const response = NextResponse.next()
 
-  // Security headers
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('X-Frame-Options', 'DENY')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  // Apply security headers
+  Object.entries(SECURITY_HEADERS).forEach(([header, value]) => {
+    response.headers.set(header, value)
+  })
 
   return response
+}
+
+// Helper function to check if route is protected
+function isProtectedRoute(path: string): boolean {
+  return PROTECTED_ROUTES.some(
+    (route) => path === route || path.startsWith(`${route}/`)
+  )
+}
+
+// Helper function to redirect to login
+function redirectToLogin(req: NextRequest): NextResponse {
+  const redirectUrl = new URL('/auth/login', req.url)
+
+  return NextResponse.redirect(redirectUrl)
 }
 
 export const config = {

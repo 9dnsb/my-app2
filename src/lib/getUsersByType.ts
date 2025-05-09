@@ -1,6 +1,5 @@
-import { PrismaClient, UserType } from '@/app/generated/prisma'
-
-const prisma = new PrismaClient()
+import { UserType } from '@/app/generated/prisma'
+import prisma from '@/lib/prisma'
 
 export async function getUsersByType(type: UserType) {
   return await prisma.user.findMany({

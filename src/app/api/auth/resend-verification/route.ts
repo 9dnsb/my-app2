@@ -1,7 +1,13 @@
-import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { generateToken, createTokenExpiry } from '@/lib/tokenUtils'
 import { sendVerificationEmail } from '@/lib/emailService'
+import { normalizeEmail, isValidEmail } from '@/lib/validation'
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  simulateWork,
+  logApiError,
+} from '@/lib/apiUtils'
 
 export async function POST(req: Request) {
   try {
@@ -9,13 +15,15 @@ export async function POST(req: Request) {
     const { email } = await req.json()
 
     if (!email || typeof email !== 'string') {
-      return NextResponse.json(
-        { message: 'Email is required' },
-        { status: 400 }
-      )
+      return createErrorResponse('Email is required', 400)
     }
 
-    const normalizedEmail = email.trim().toLowerCase()
+    const normalizedEmail = normalizeEmail(email)
+
+    // Validate email format
+    if (!isValidEmail(normalizedEmail)) {
+      return createErrorResponse('Invalid email format', 400)
+    }
 
     // Find user
     const user = await prisma.user.findUnique({
@@ -25,17 +33,12 @@ export async function POST(req: Request) {
     // For security, don't reveal if the email exists
     if (!user || user.emailVerified) {
       // Simulate work for consistent timing
-      await new Promise((resolve) =>
-        setTimeout(resolve, 500 + Math.random() * 500)
-      )
+      await simulateWork()
 
-      return NextResponse.json(
-        {
-          message:
-            'If your email exists and is not verified, a new verification email has been sent.',
-        },
-        { status: 200 }
-      )
+      return createSuccessResponse({
+        message:
+          'If your email exists and is not verified, a new verification email has been sent.',
+      })
     }
 
     // Rate limiting: Check when the last token was created
@@ -44,12 +47,9 @@ export async function POST(req: Request) {
       new Date(user.verificationTokenExpiry).getTime() >
         Date.now() - 5 * 60 * 1000 // 5 minutes ago
     ) {
-      return NextResponse.json(
-        {
-          message:
-            'Please wait a few minutes before requesting another verification email.',
-        },
-        { status: 429 }
+      return createErrorResponse(
+        'Please wait a few minutes before requesting another verification email.',
+        429
       )
     }
 
@@ -69,15 +69,15 @@ export async function POST(req: Request) {
     // Send email
     await sendVerificationEmail(normalizedEmail, verificationToken, user.name)
 
-    return NextResponse.json(
-      { message: 'Verification email sent. Please check your inbox.' },
-      { status: 200 }
-    )
+    return createSuccessResponse({
+      message: 'Verification email sent. Please check your inbox.',
+    })
   } catch (error) {
-    console.error('Resend verification error:', error)
-    return NextResponse.json(
-      { message: 'An error occurred. Please try again later.' },
-      { status: 500 }
+    logApiError('resend-verification', error)
+
+    return createErrorResponse(
+      'An error occurred. Please try again later.',
+      500
     )
   }
 }

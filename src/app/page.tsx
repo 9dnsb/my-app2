@@ -9,23 +9,20 @@ export default async function HomePage() {
   // Get the current session
   const session = await getServerSession(authOptions)
 
-  // Only check user role and redirect if user is logged in
-  if (session && session.user?.email) {
+  // Only redirect if user is logged in
+  if (session?.user?.email) {
+    // Find user type to determine redirect destination
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
       select: { type: true },
     })
 
-    // Perform redirection based on user type
-    if (user) {
-      if (user.type === 'admin') {
-        return redirect('/admin')
-      } else {
-        return redirect('/dashboard')
-      }
+    // Redirect based on user type
+    if (user?.type === 'admin') {
+      return redirect('/admin')
+    } else {
+      return redirect('/dashboard')
     }
-    // If user not found in database but has session, default to dashboard
-    return redirect('/dashboard')
   }
 
   // If no user is logged in, show the homepage

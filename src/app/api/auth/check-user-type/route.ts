@@ -1,30 +1,35 @@
-import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
+import { normalizeEmail } from '@/lib/validation'
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  logApiError,
+} from '@/lib/apiUtils'
 
 export async function POST(req: Request) {
   try {
     const { email } = await req.json()
 
     if (!email || typeof email !== 'string') {
-      return NextResponse.json(
-        { message: 'Invalid email', type: 'user' },
-        { status: 400 }
-      )
+      return createErrorResponse('Invalid email', 400)
     }
+
+    const normalizedEmail = normalizeEmail(email)
 
     // Find the user by email
     const user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase() },
+      where: { email: normalizedEmail },
       select: { type: true },
     })
 
     // Return user type if found, or default to user
-    return NextResponse.json({
+    return createSuccessResponse({
       type: user?.type || 'user',
     })
   } catch (error) {
-    console.error('Error checking user type:', error)
+    logApiError('check-user-type', error)
+
     // If there's an error, default to user type
-    return NextResponse.json({ type: 'user' })
+    return createSuccessResponse({ type: 'user' })
   }
 }
