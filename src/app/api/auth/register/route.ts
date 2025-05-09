@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
-import { UserType } from '@/app/generated/prisma' // Verify this path is correct
+import { UserType } from '@/app/generated/prisma'
+import { generateToken, createTokenExpiry } from '@/lib/tokenUtils'
+import { sendVerificationEmail } from '@/lib/emailService'
 
 // Constants
 const PASSWORD_MIN_LENGTH = 8
@@ -92,17 +94,33 @@ export async function POST(req: Request) {
 
     // User doesn't exist - create new user
     if (!existingUser) {
+      // Generate verification token and expiry
+      const verificationToken = generateToken()
+      const verificationTokenExpiry = createTokenExpiry(24) // 24 hours validity
+
+      // Create user with verification token
       await prisma.user.create({
         data: {
           email: normalizedEmail,
           name: sanitizedName,
           hashedPassword,
-          type: UserType.user, // Using the enum directly
+          type: UserType.user,
+          // New verification fields
+          verificationToken,
+          verificationTokenExpiry,
+          // emailVerified remains null until verified
         },
       })
 
-      // Log successful registration (without sensitive data)
-      console.info(`User registered successfully`, {
+      // Send verification email
+      await sendVerificationEmail(
+        normalizedEmail,
+        verificationToken,
+        sanitizedName
+      )
+
+      // Log successful registration
+      console.info(`User registered successfully, verification email sent`, {
         email: normalizedEmail,
         timestamp: new Date().toISOString(),
       })
@@ -114,10 +132,12 @@ export async function POST(req: Request) {
     // Add deliberate delay to make timing attacks harder
     await simulateWork()
 
-    // Return success regardless of whether we created a user or not
-    // This prevents user enumeration
+    // Return success with verification instructions
     return NextResponse.json(
-      { message: 'Registration request processed' },
+      {
+        message:
+          'Registration request processed. Please check your email to verify your account.',
+      },
       {
         status: 200,
         headers: {

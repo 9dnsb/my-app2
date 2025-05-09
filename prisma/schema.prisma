@@ -13,8 +13,13 @@ model User {
   email          String       @unique
   name           String?
   hashedPassword String
-
-  type           UserType     @default(user) // re-add this
+  type           UserType     @default(user)
+  
+  // Add verification fields
+  emailVerified  DateTime?
+  verificationToken String?   
+  verificationTokenExpiry DateTime?
+  
   posts          Post[]
   submissions    Submission[]
 }

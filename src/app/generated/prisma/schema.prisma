@@ -9,12 +9,17 @@ datasource db {
 }
 
 model User {
-  id             Int     @id @default(autoincrement())
-  email          String  @unique
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
   name           String?
   hashedPassword String
+  type           UserType @default(user)
 
-  type        UserType     @default(user) // re-add this
+  // Add verification fields
+  emailVerified           DateTime?
+  verificationToken       String?
+  verificationTokenExpiry DateTime?
+
   posts       Post[]
   submissions Submission[]
 }

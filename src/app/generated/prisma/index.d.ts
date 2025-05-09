@@ -1133,6 +1133,9 @@ export namespace Prisma {
     name: string | null
     hashedPassword: string | null
     type: $Enums.UserType | null
+    emailVerified: Date | null
+    verificationToken: string | null
+    verificationTokenExpiry: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1141,6 +1144,9 @@ export namespace Prisma {
     name: string | null
     hashedPassword: string | null
     type: $Enums.UserType | null
+    emailVerified: Date | null
+    verificationToken: string | null
+    verificationTokenExpiry: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1149,6 +1155,9 @@ export namespace Prisma {
     name: number
     hashedPassword: number
     type: number
+    emailVerified: number
+    verificationToken: number
+    verificationTokenExpiry: number
     _all: number
   }
 
@@ -1167,6 +1176,9 @@ export namespace Prisma {
     name?: true
     hashedPassword?: true
     type?: true
+    emailVerified?: true
+    verificationToken?: true
+    verificationTokenExpiry?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1175,6 +1187,9 @@ export namespace Prisma {
     name?: true
     hashedPassword?: true
     type?: true
+    emailVerified?: true
+    verificationToken?: true
+    verificationTokenExpiry?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1183,6 +1198,9 @@ export namespace Prisma {
     name?: true
     hashedPassword?: true
     type?: true
+    emailVerified?: true
+    verificationToken?: true
+    verificationTokenExpiry?: true
     _all?: true
   }
 
@@ -1278,6 +1296,9 @@ export namespace Prisma {
     name: string | null
     hashedPassword: string
     type: $Enums.UserType
+    emailVerified: Date | null
+    verificationToken: string | null
+    verificationTokenExpiry: Date | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1305,6 +1326,9 @@ export namespace Prisma {
     name?: boolean
     hashedPassword?: boolean
     type?: boolean
+    emailVerified?: boolean
+    verificationToken?: boolean
+    verificationTokenExpiry?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
     submissions?: boolean | User$submissionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1316,6 +1340,9 @@ export namespace Prisma {
     name?: boolean
     hashedPassword?: boolean
     type?: boolean
+    emailVerified?: boolean
+    verificationToken?: boolean
+    verificationTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1324,6 +1351,9 @@ export namespace Prisma {
     name?: boolean
     hashedPassword?: boolean
     type?: boolean
+    emailVerified?: boolean
+    verificationToken?: boolean
+    verificationTokenExpiry?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1332,9 +1362,12 @@ export namespace Prisma {
     name?: boolean
     hashedPassword?: boolean
     type?: boolean
+    emailVerified?: boolean
+    verificationToken?: boolean
+    verificationTokenExpiry?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "hashedPassword" | "type", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "hashedPassword" | "type" | "emailVerified" | "verificationToken" | "verificationTokenExpiry", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     submissions?: boolean | User$submissionsArgs<ExtArgs>
@@ -1355,6 +1388,9 @@ export namespace Prisma {
       name: string | null
       hashedPassword: string
       type: $Enums.UserType
+      emailVerified: Date | null
+      verificationToken: string | null
+      verificationTokenExpiry: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1785,6 +1821,9 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly hashedPassword: FieldRef<"User", 'String'>
     readonly type: FieldRef<"User", 'UserType'>
+    readonly emailVerified: FieldRef<"User", 'DateTime'>
+    readonly verificationToken: FieldRef<"User", 'String'>
+    readonly verificationTokenExpiry: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -4446,7 +4485,10 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     hashedPassword: 'hashedPassword',
-    type: 'type'
+    type: 'type',
+    emailVerified: 'emailVerified',
+    verificationToken: 'verificationToken',
+    verificationTokenExpiry: 'verificationTokenExpiry'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4562,6 +4604,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -4579,20 +4635,6 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -4622,6 +4664,9 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     hashedPassword?: StringFilter<"User"> | string
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
+    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
+    verificationToken?: StringNullableFilter<"User"> | string | null
+    verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     posts?: PostListRelationFilter
     submissions?: SubmissionListRelationFilter
   }
@@ -4632,6 +4677,9 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     hashedPassword?: SortOrder
     type?: SortOrder
+    emailVerified?: SortOrderInput | SortOrder
+    verificationToken?: SortOrderInput | SortOrder
+    verificationTokenExpiry?: SortOrderInput | SortOrder
     posts?: PostOrderByRelationAggregateInput
     submissions?: SubmissionOrderByRelationAggregateInput
   }
@@ -4645,6 +4693,9 @@ export namespace Prisma {
     name?: StringNullableFilter<"User"> | string | null
     hashedPassword?: StringFilter<"User"> | string
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
+    emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
+    verificationToken?: StringNullableFilter<"User"> | string | null
+    verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     posts?: PostListRelationFilter
     submissions?: SubmissionListRelationFilter
   }, "id" | "email">
@@ -4655,6 +4706,9 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     hashedPassword?: SortOrder
     type?: SortOrder
+    emailVerified?: SortOrderInput | SortOrder
+    verificationToken?: SortOrderInput | SortOrder
+    verificationTokenExpiry?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4671,6 +4725,9 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     hashedPassword?: StringWithAggregatesFilter<"User"> | string
     type?: EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
+    emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    verificationToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    verificationTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
 
   export type PostWhereInput = {
@@ -4792,6 +4849,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     posts?: PostCreateNestedManyWithoutAuthorInput
     submissions?: SubmissionCreateNestedManyWithoutUserInput
   }
@@ -4802,6 +4862,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -4811,6 +4874,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUpdateManyWithoutAuthorNestedInput
     submissions?: SubmissionUpdateManyWithoutUserNestedInput
   }
@@ -4821,6 +4887,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -4831,6 +4900,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -4838,6 +4910,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -4846,6 +4921,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PostCreateInput = {
@@ -5000,6 +5078,17 @@ export namespace Prisma {
     not?: NestedEnumUserTypeFilter<$PrismaModel> | $Enums.UserType
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type PostListRelationFilter = {
     every?: PostWhereInput
     some?: PostWhereInput
@@ -5031,6 +5120,9 @@ export namespace Prisma {
     name?: SortOrder
     hashedPassword?: SortOrder
     type?: SortOrder
+    emailVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationTokenExpiry?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -5043,6 +5135,9 @@ export namespace Prisma {
     name?: SortOrder
     hashedPassword?: SortOrder
     type?: SortOrder
+    emailVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationTokenExpiry?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5051,6 +5146,9 @@ export namespace Prisma {
     name?: SortOrder
     hashedPassword?: SortOrder
     type?: SortOrder
+    emailVerified?: SortOrder
+    verificationToken?: SortOrder
+    verificationTokenExpiry?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -5117,6 +5215,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserTypeFilter<$PrismaModel>
     _max?: NestedEnumUserTypeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -5317,6 +5429,10 @@ export namespace Prisma {
     set?: $Enums.UserType
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type PostUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -5463,6 +5579,17 @@ export namespace Prisma {
     not?: NestedEnumUserTypeFilter<$PrismaModel> | $Enums.UserType
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5543,6 +5670,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserTypeFilter<$PrismaModel>
     _max?: NestedEnumUserTypeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -5711,6 +5852,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     submissions?: SubmissionCreateNestedManyWithoutUserInput
   }
 
@@ -5720,6 +5864,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -5744,6 +5891,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submissions?: SubmissionUpdateManyWithoutUserNestedInput
   }
 
@@ -5753,6 +5903,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -5761,6 +5914,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     posts?: PostCreateNestedManyWithoutAuthorInput
   }
 
@@ -5770,6 +5926,9 @@ export namespace Prisma {
     name?: string | null
     hashedPassword: string
     type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
   }
 
@@ -5794,6 +5953,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUpdateManyWithoutAuthorNestedInput
   }
 
@@ -5803,6 +5965,9 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     hashedPassword?: StringFieldUpdateOperationsInput | string
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
   }
 

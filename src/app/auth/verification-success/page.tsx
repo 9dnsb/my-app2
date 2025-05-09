@@ -1,0 +1,35 @@
+import Link from 'next/link'
+
+export default function VerificationSuccessPage() {
+  return (
+    <div className="max-w-md mx-auto mt-12 px-4 text-center">
+      <div className="rounded-full bg-green-100 p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8 text-green-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      </div>
+      <h1 className="text-2xl font-bold mb-4">Email Verified!</h1>
+      <p className="mb-6">
+        Your email has been successfully verified. You can now log in to your
+        account.
+      </p>
+      <Link
+        href="/auth/login"
+        className="inline-block bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+      >
+        Log In
+      </Link>
+    </div>
+  )
+}

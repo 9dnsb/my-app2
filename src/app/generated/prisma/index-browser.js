@@ -125,7 +125,10 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   name: 'name',
   hashedPassword: 'hashedPassword',
-  type: 'type'
+  type: 'type',
+  emailVerified: 'emailVerified',
+  verificationToken: 'verificationToken',
+  verificationTokenExpiry: 'verificationTokenExpiry'
 };
 
 exports.Prisma.PostScalarFieldEnum = {

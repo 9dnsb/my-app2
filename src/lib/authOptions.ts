@@ -76,6 +76,7 @@ export const authOptions: AuthOptions = {
         }
 
         try {
+          // Add emailVerified to the selected fields
           const user = await prisma.user.findUnique({
             where: { email: credentials.email },
             select: {
@@ -84,6 +85,7 @@ export const authOptions: AuthOptions = {
               name: true,
               hashedPassword: true,
               type: true,
+              emailVerified: true, // Add this field
             },
           })
 
@@ -104,6 +106,14 @@ export const authOptions: AuthOptions = {
             return null
           }
 
+          // Check if email is verified
+          if (!user.emailVerified) {
+            console.warn(
+              `Login attempt with unverified email: ${credentials.email}`
+            )
+            throw new Error('email-not-verified')
+          }
+
           // Log successful login
           console.info(`Successful login: ${user.email} (${user.type})`)
 
@@ -115,6 +125,14 @@ export const authOptions: AuthOptions = {
             type: user.type,
           }
         } catch (error) {
+          // If it's our custom error, rethrow it
+          if (
+            error instanceof Error &&
+            error.message === 'email-not-verified'
+          ) {
+            throw error
+          }
+
           console.error('Authentication error:', error)
           return null
         }
