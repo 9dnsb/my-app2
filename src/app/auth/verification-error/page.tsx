@@ -1,18 +1,21 @@
+// src/app/auth/verification-error/page.tsx
 'use client'
 
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useForm } from '@/hooks/useForm'
-import Alert from '@/components/Alert'
-import FormField from '@/components/FormField'
-import Button from '@/components/Button'
-import { normalizeEmail, isValidEmail } from '@/lib/validation'
+import { isValidEmail } from '@/lib/validation'
+import EmailForm from '@/components/EmailForm'
+import FormContainer from '@/components/FormContainer'
+import SuspensePage from '@/components/SuspensePage'
+import { resendVerificationEmail } from '@/lib/authVerificationService'
 
 interface ResendFormValues {
   email: string
 }
 
-export default function VerificationErrorPage() {
+// Component that uses useSearchParams
+function VerificationErrorContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
 
@@ -45,21 +48,7 @@ export default function VerificationErrorPage() {
 
   // Handle form submission
   const handleResendSubmit = async (values: ResendFormValues) => {
-    const normalizedEmail = normalizeEmail(values.email)
-
-    const res = await fetch('/api/auth/resend-verification', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: normalizedEmail }),
-    })
-
-    const data = await res.json()
-
-    if (!res.ok) {
-      throw new Error(data.message || 'An error occurred. Please try again.')
-    }
-
-    return data.message
+    return await resendVerificationEmail(values.email)
   }
 
   // Use our custom form hook
@@ -77,7 +66,7 @@ export default function VerificationErrorPage() {
   )
 
   return (
-    <div className="max-w-md mx-auto mt-12 px-4">
+    <>
       <div className="rounded-full bg-red-100 p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,38 +84,26 @@ export default function VerificationErrorPage() {
         </svg>
       </div>
 
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Verification Failed
-      </h1>
       <p className="mb-6 text-center">{getErrorMessage()}</p>
 
       <div className="bg-gray-50 p-4 rounded border mb-6">
         <h2 className="text-lg font-medium mb-2">Resend Verification Email</h2>
 
-        {submitError && <Alert type="error" message={submitError} />}
-
-        <form onSubmit={handleSubmit}>
-          <FormField
-            label="Email Address"
-            name="email"
-            type="email"
+        <FormContainer
+          onSubmit={handleSubmit}
+          submitError={submitError}
+          isSubmitting={isSubmitting}
+          submitButtonText="Resend Verification Email"
+          loadingText="Sending..."
+        >
+          <EmailForm
             value={values.email}
             onChange={handleChange}
-            placeholder="Your email address"
-            required
             error={errors.email}
-            className="mb-3"
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            isLoading={isSubmitting}
             disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Sending...' : 'Resend Verification Email'}
-          </Button>
-        </form>
+            placeholder="Your email address"
+          />
+        </FormContainer>
       </div>
 
       <div className="text-center">
@@ -134,6 +111,15 @@ export default function VerificationErrorPage() {
           Return to login
         </Link>
       </div>
-    </div>
+    </>
+  )
+}
+
+// Main page component with Suspense
+export default function VerificationErrorPage() {
+  return (
+    <SuspensePage title="Verification Failed">
+      <VerificationErrorContent />
+    </SuspensePage>
   )
 }

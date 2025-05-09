@@ -8,10 +8,10 @@ type ValidationFunction<T> = (values: T) => Record<string, string>
 /**
  * Custom hook for form handling with validation
  */
-export function useForm<T extends Record<string, any>>(
+export function useForm<T>(
   initialValues: T,
   validate: ValidationFunction<T>,
-  onSubmit: (values: T) => Promise<void>
+  onSubmit: (values: T) => Promise<void | string>
 ) {
   const [values, setValues] = useState<T>(initialValues)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -34,8 +34,14 @@ export function useForm<T extends Record<string, any>>(
     const { name, value, type, checked } = e.target
     const inputValue = type === 'checkbox' ? checked : value
 
-    // Update form values
-    setValues((prev) => ({ ...prev, [name]: inputValue }))
+    // Update form values safely with type casting
+    setValues(
+      (prev) =>
+        ({
+          ...prev,
+          [name]: inputValue,
+        } as T)
+    )
 
     // Clear specific field error when user types
     if (errors[name]) {
@@ -51,32 +57,32 @@ export function useForm<T extends Record<string, any>>(
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitError('')
-    
+
     // Rate limiting with form attempts
     const newAttemptCount = attemptCount + 1
     setAttemptCount(newAttemptCount)
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('formAttempts', newAttemptCount.toString())
     }
-    
+
     // Simple rate limiting
     if (newAttemptCount > 5) {
       setSubmitError('Too many attempts. Please try again later.')
       await new Promise((resolve) => setTimeout(resolve, 1000))
       return
     }
-    
+
     // Validate form
     const newErrors = validate(values)
     setErrors(newErrors)
-    
+
     // Only proceed if no validation errors
     if (Object.keys(newErrors).length === 0) {
       setIsSubmitting(true)
-      
+
       try {
         await onSubmit(values)
-        
+
         // Reset attempt counter on success
         if (typeof window !== 'undefined') {
           sessionStorage.removeItem('formAttempts')
@@ -84,7 +90,9 @@ export function useForm<T extends Record<string, any>>(
       } catch (error) {
         console.error('Form submission error:', error)
         if (error instanceof Error) {
-          setSubmitError(error.message || 'An error occurred. Please try again.')
+          setSubmitError(
+            error.message || 'An error occurred. Please try again.'
+          )
         } else {
           setSubmitError('An error occurred. Please try again.')
         }
