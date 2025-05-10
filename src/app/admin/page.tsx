@@ -1,17 +1,9 @@
 // src/app/admin/page.tsx
-import { withAuth } from '@/lib/withAuth'
-import LogoutButton from '@/components/LogoutButton'
+import AdminDashboardPage from '@/components/AdminDashboardPage'
+import { requireAdmin } from '@/lib/withAuth'
 
 export default async function AdminHomePage() {
-  // Protect page: only allow 'admin' users
-  await withAuth({ requiredRole: 'admin' })
+  const session = await requireAdmin()
 
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white text-gray-900">
-      <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-      <p className="text-lg">Welcome! You&apos;re logged in as an admin.</p>
-
-      <LogoutButton />
-    </main>
-  )
+  return <AdminDashboardPage session={session} />
 }

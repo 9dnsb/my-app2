@@ -1,34 +1,43 @@
 // src/lib/withAuth.ts
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/authOptions'
+import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
 
-export type AuthOptions = {
+export type WithAuthOptions = {
   requiredRole?: 'admin' | 'user'
 }
 
 /**
- * Higher-order function for page protection and role validation
- *
- * @param options - Configuration options
- * @returns - The session if authenticated, otherwise redirects
+ * Generic auth guard
  */
-export async function withAuth(options: AuthOptions = {}) {
-  const session = await getServerSession(authOptions)
+export async function withAuth(options: WithAuthOptions = {}) {
+  const session = await auth()
 
   if (!session || !session.user?.email) {
     return redirect('/auth/login')
   }
 
-  // You already injected 'type' into session.user via callbacks
   if (options.requiredRole) {
     if (session.user.type !== options.requiredRole) {
       console.warn(
         `Access denied: Expected ${options.requiredRole}, got ${session.user.type}`
       )
-      return redirect('/auth/login') // or '/unauthorized'
+      return redirect('/auth/login')
     }
   }
 
   return session
+}
+
+/**
+ * Shortcut for requiring admin role
+ */
+export async function requireAdmin() {
+  return withAuth({ requiredRole: 'admin' })
+}
+
+/**
+ * Shortcut for requiring user role
+ */
+export async function requireUser() {
+  return withAuth({ requiredRole: 'user' })
 }
