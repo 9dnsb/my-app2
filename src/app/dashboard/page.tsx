@@ -1,10 +1,10 @@
 // src/app/dashboard/page.tsx
-import { requireUser } from '@/lib/withAuth'
 import LogoutButton from '@/components/LogoutButton'
 import CreditCardForm from '@/components/CreditCardForm'
+import { withAuth } from '@/lib/withAuth'
 
 export default async function DashboardPage() {
-  const session = await requireUser()
+  const session = await withAuth()
   return (
     <main className="min-h-screen p-8 bg-white text-gray-900">
       <div className="max-w-2xl mx-auto mt-12 px-4">
