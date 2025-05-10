@@ -17,6 +17,7 @@ model User {
 
   // Add verification fields
   emailVerified           DateTime?
+  verifiedAt              DateTime?
   verificationToken       String?
   verificationTokenExpiry DateTime?
 

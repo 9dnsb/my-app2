@@ -1,7 +1,10 @@
+// src/app/admin/page.tsx
+import { withAuth } from '@/lib/withAuth'
 import LogoutButton from '@/components/LogoutButton'
 
 export default async function AdminHomePage() {
-  // Use the withAuth utility with required role
+  // Protect page: only allow 'admin' users
+  await withAuth({ requiredRole: 'admin' })
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-white text-gray-900">

@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
 import { UserType } from '@/app/generated/prisma'
 import { generateToken, createTokenExpiry } from '@/lib/tokenUtils'
-import { sendVerificationEmail } from '@/lib/emailService'
+import { sendVerificationEmail } from '@/lib/emailService.server'
 import {
   isValidEmail,
   isValidPassword,
@@ -61,6 +61,13 @@ export async function POST(req: Request) {
     const existingUser = await prisma.user.findUnique({
       where: { email: normalizedEmail },
     })
+    if (existingUser) {
+      console.info('Registration attempt for existing email', {
+        email: normalizedEmail,
+        timestamp: new Date().toISOString(),
+        verified: !!existingUser.emailVerified,
+      })
+    }
 
     // Hash password with proper cost factor
     const hashedPassword = await bcrypt.hash(password, 12)

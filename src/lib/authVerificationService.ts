@@ -1,7 +1,4 @@
 // src/lib/authVerificationService.ts
-/**
- * Sends verification email resend request
- */
 export async function resendVerificationEmail(email: string): Promise<string> {
   const res = await fetch('/api/auth/resend-verification', {
     method: 'POST',

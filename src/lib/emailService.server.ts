@@ -88,7 +88,7 @@ export async function sendVerificationEmail(
     await createTransporter()
   }
 
-  const verificationUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify?token=${token}`
+  const verificationUrl = `${process.env.NEXTAUTH_URL}/api/auth/verify-token?token=${token}`
 
   const mailOptions = {
     from: `"Your App" <${process.env.EMAIL_FROM}>`,
