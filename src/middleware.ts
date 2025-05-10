@@ -1,58 +1,46 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
-import { getToken } from 'next-auth/jwt'
+import { Ratelimit } from '@upstash/ratelimit'
 
-// Init Redis and Ratelimit
+// --- 🛡️ Initialize Redis connection ---
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 })
 
+// --- 🛡️ Set up basic rate limiting ---
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.fixedWindow(20, '60 s'),
+  limiter: Ratelimit.fixedWindow(20, '60 s'), // 20 requests per 60 seconds
   analytics: true,
 })
 
-// Lists of routes
-const PROTECTED_ROUTES = ['/admin', '/client', '/dashboard']
-const PUBLIC_ROUTES = ['/auth/login', '/auth/register', '/auth/error']
-
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
+  const forwardedFor = req.headers.get('x-forwarded-for')
+  const ip = forwardedFor?.split(',')[0]?.trim() || 'unknown'
 
-  // Rate limit /api/auth routes
+  // --- 🔥 Rate limiting for sensitive API routes ---
   if (path.startsWith('/api/auth')) {
-    const ip =
-      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-    const { success } = await ratelimit.limit(ip)
+    const { success, limit, remaining, reset } = await ratelimit.limit(ip)
+
     if (!success) {
       return NextResponse.json(
-        { message: 'Too many requests' },
+        { message: 'Too many requests. Please try again later.' },
         { status: 429 }
       )
     }
-  }
 
-  // Allow public routes
-  if (PUBLIC_ROUTES.some((route) => path.startsWith(route))) {
-    return NextResponse.next()
-  }
-
-  // Protect private routes
-  if (PROTECTED_ROUTES.some((route) => path.startsWith(route))) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
-    if (!token) {
-      return NextResponse.redirect(new URL('/auth/login', req.url))
-    }
+    const secondsUntilReset = Math.ceil((reset - Date.now()) / 1000)
+    console.log(
+      `[RATE LIMIT] ${ip}: ${remaining}/${limit} remaining (reset in ${secondsUntilReset}s)`
+    )
   }
 
   return NextResponse.next()
 }
 
-// Match everything except static assets
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
