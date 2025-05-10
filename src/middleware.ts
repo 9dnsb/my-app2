@@ -26,6 +26,39 @@ export async function middleware(req: NextRequest) {
   const ip = forwardedFor?.split(',')[0]?.trim() ?? 'unknown'
   const path = req.nextUrl.pathname
 
+  const response = NextResponse.next()
+
+  // --- 🛡️ Generate a random nonce for this response ---
+  const nonce = generateNonce()
+
+  const isDev = process.env.NODE_ENV !== 'production'
+
+  const csp = [
+    `default-src 'self'`,
+    isDev
+      ? `script-src 'self' 'unsafe-eval' 'nonce-${nonce}' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/`
+      : `script-src 'self' 'nonce-${nonce}' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/`,
+    `style-src 'self' 'unsafe-inline'`,
+    `img-src 'self' data:`,
+    `connect-src 'self'`,
+    `frame-src https://www.google.com/`,
+    `report-uri /api/csp-violation`,
+    `report-to csp-endpoint`,
+  ].join('; ')
+
+  // Set CSP header
+  response.headers.set('Content-Security-Policy', csp)
+
+  // Set the nonce as a readable cookie (so frontend can access it)
+  response.cookies.set('csp-nonce', nonce, {
+    path: '/',
+    httpOnly: false, // must be accessible to client-side
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  })
+
+  // --- 🔥 Continue with your existing logic ---
+
   // Rate limiting for auth endpoints
   if (path.startsWith('/api/auth')) {
     const { success, limit, remaining, reset } = await ratelimit.limit(ip)
@@ -60,8 +93,13 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // Just continue normally; security headers are handled in next.config.ts
-  return NextResponse.next()
+  return response
+}
+
+function generateNonce() {
+  const array = new Uint8Array(16)
+  crypto.getRandomValues(array)
+  return Buffer.from(array).toString('base64')
 }
 
 // Helper function to check if route is protected
@@ -78,5 +116,5 @@ function redirectToLogin(req: NextRequest): NextResponse {
 }
 
 export const config = {
-  matcher: ['/api/auth/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
