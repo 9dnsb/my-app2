@@ -36,12 +36,12 @@ export async function middleware(req: NextRequest) {
   const csp = [
     `default-src 'self'`,
     isDev
-      ? `script-src 'self' 'unsafe-eval' 'nonce-${nonce}' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/`
-      : `script-src 'self' 'nonce-${nonce}' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/`,
+      ? `script-src 'self' 'unsafe-eval' 'nonce-${nonce}'`
+      : `script-src 'self' 'nonce-${nonce}'`,
     `style-src 'self' 'unsafe-inline'`,
     `img-src 'self' data:`,
     `connect-src 'self'`,
-    `frame-src https://www.google.com/`,
+    `frame-src 'self'`,
     `report-uri /api/csp-violation`,
     `report-to csp-endpoint`,
   ].join('; ')
