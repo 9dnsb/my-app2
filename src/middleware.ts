@@ -31,18 +31,7 @@ export async function middleware(req: NextRequest) {
   // --- 🛡️ Generate a random nonce for this response ---
   const nonce = generateNonce()
 
-  const csp = [
-    `default-src 'self'`,
-    `style-src 'self' 'unsafe-inline'`,
-    `img-src 'self' data:`,
-    `connect-src 'self'`,
-    `frame-src 'self'`,
-    `report-uri /api/csp-violation`,
-    `report-to csp-endpoint`,
-  ].join('; ')
-
   // Set CSP header
-  response.headers.set('Content-Security-Policy', csp)
 
   // Set the nonce as a readable cookie (so frontend can access it)
   response.cookies.set('csp-nonce', nonce, {
