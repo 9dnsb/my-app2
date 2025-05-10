@@ -31,13 +31,8 @@ export async function middleware(req: NextRequest) {
   // --- 🛡️ Generate a random nonce for this response ---
   const nonce = generateNonce()
 
-  const isDev = process.env.NODE_ENV !== 'production'
-
   const csp = [
     `default-src 'self'`,
-    isDev
-      ? `script-src 'self' 'unsafe-eval' 'nonce-${nonce}'`
-      : `script-src 'self' 'nonce-${nonce}'`,
     `style-src 'self' 'unsafe-inline'`,
     `img-src 'self' data:`,
     `connect-src 'self'`,
