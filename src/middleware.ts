@@ -11,19 +11,12 @@ const redis = new Redis({
 })
 
 // Rate limit: 20 requests per minute during development
-// Consider reducing this to 5-10 in production
+// Consider reducing this to 5–10 in production
 const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.fixedWindow(20, '60 s'),
   analytics: true,
 })
-
-// Security headers to apply to all responses
-const SECURITY_HEADERS = {
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-}
 
 // Protected routes that require authentication
 const PROTECTED_ROUTES = ['/admin', '/client', '/dashboard']
@@ -40,15 +33,11 @@ export async function middleware(req: NextRequest) {
     if (!success) {
       return NextResponse.json(
         { message: 'Too many requests. Please try again later.' },
-        {
-          status: 429,
-          headers: SECURITY_HEADERS,
-        }
+        { status: 429 }
       )
     }
 
     const secondsUntilReset = Math.ceil((reset - Date.now()) / 1000)
-
     console.log(
       `[RATE LIMIT] ${ip}: ${remaining}/${limit} remaining (reset in ${secondsUntilReset}s)`
     )
@@ -59,29 +48,20 @@ export async function middleware(req: NextRequest) {
     try {
       const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
-      // Not authenticated
       if (!token) {
         console.log(`[AUTH] No valid token for ${path}`)
         return redirectToLogin(req)
       }
 
-      // Note: We're checking roles at the page level instead of here
-      // This avoids issues with Edge Runtime and simplifies our approach
+      // Role checking is done at the page level
     } catch (error) {
       console.error(`[AUTH ERROR] ${error}`)
       return NextResponse.redirect(new URL('/auth/error', req.url))
     }
   }
 
-  // Add security headers to all responses
-  const response = NextResponse.next()
-
-  // Apply security headers
-  Object.entries(SECURITY_HEADERS).forEach(([header, value]) => {
-    response.headers.set(header, value)
-  })
-
-  return response
+  // Just continue normally; security headers are handled in next.config.ts
+  return NextResponse.next()
 }
 
 // Helper function to check if route is protected
@@ -94,15 +74,9 @@ function isProtectedRoute(path: string): boolean {
 // Helper function to redirect to login
 function redirectToLogin(req: NextRequest): NextResponse {
   const redirectUrl = new URL('/auth/login', req.url)
-
   return NextResponse.redirect(redirectUrl)
 }
 
 export const config = {
-  matcher: [
-    '/api/auth/:path*',
-    '/admin/:path*',
-    '/client/:path*',
-    '/dashboard/:path*',
-  ],
+  matcher: ['/api/auth/:path*'],
 }

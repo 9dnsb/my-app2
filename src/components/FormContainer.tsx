@@ -1,4 +1,3 @@
-// src/components/FormContainer.tsx
 'use client'
 
 import { ReactNode } from 'react'
@@ -10,6 +9,7 @@ interface FormContainerProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   submitError?: string
   isSubmitting?: boolean
+  buttonLoading?: boolean // ✨ NEW
   submitButtonText: string
   loadingText?: string
   className?: string
@@ -20,7 +20,7 @@ export default function FormContainer({
   children,
   onSubmit,
   submitError,
-  isSubmitting = false,
+  buttonLoading = false, // ✨ Default false
   submitButtonText,
   loadingText,
   className = 'space-y-4',
@@ -42,10 +42,10 @@ export default function FormContainer({
         <Button
           type="submit"
           fullWidth
-          isLoading={isSubmitting}
-          disabled={isSubmitting}
+          isLoading={buttonLoading} // ✨ use `buttonLoading`
+          disabled={buttonLoading} // ✨ disable button properly too
         >
-          {isSubmitting ? loadingText || 'Submitting...' : submitButtonText}
+          {buttonLoading ? loadingText || 'Submitting...' : submitButtonText}
         </Button>
       </form>
     </>

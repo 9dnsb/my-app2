@@ -1,20 +1,19 @@
-// src/app/auth/login/page.tsx
 'use client'
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 import { useForm } from '@/hooks/useForm'
 import { validateLoginForm } from '@/lib/validation'
 import {
   loginWithCredentials,
   getUserRedirectDestination,
 } from '@/lib/authService'
-import FormField from '@/components/FormField'
-import EmailForm from '@/components/EmailForm'
-import FormContainer from '@/components/FormContainer'
-import SuspensePage from '@/components/SuspensePage'
 import { resendVerificationEmail } from '@/lib/authVerificationService'
+import FormContainer from '@/components/FormContainer'
+import EmailForm from '@/components/EmailForm'
+import FormField from '@/components/FormField'
+import SuspensePage from '@/components/SuspensePage'
+import Link from 'next/link'
 
 interface LoginFormValues {
   email: string
@@ -22,7 +21,6 @@ interface LoginFormValues {
   rememberMe: boolean
 }
 
-// Component that uses useSearchParams
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -32,23 +30,19 @@ function LoginForm() {
   const [showResendVerification, setShowResendVerification] = useState(false)
   const [resendMessage, setResendMessage] = useState('')
   const [isResending, setIsResending] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false) // ✨ manually track
 
-  // Form submission handler
   const handleLoginSubmit = async (values: LoginFormValues) => {
-    // Reset verification state
     setShowResendVerification(false)
     setResendMessage('')
 
-    // Attempt login
     const res = await loginWithCredentials(
       values.email,
       values.password,
       values.rememberMe
     )
 
-    // Handle login result
     if (!res?.ok) {
-      // Handle specific error cases
       if (res?.error === 'email-not-verified') {
         setShowResendVerification(true)
         throw new Error(
@@ -61,17 +55,17 @@ function LoginForm() {
       }
     }
 
-    // Determine redirect destination
     const redirectTo = await getUserRedirectDestination(values.email)
-
-    // Use the callback URL if provided, otherwise use our determined path
     const finalRedirect = callbackUrl || redirectTo
 
-    // Redirect to the appropriate page
+    // ✨ mark navigating before push
+    setIsNavigating(true)
+
     router.push(finalRedirect)
+
+    // ❗ Don't set isNavigating(false) — let navigation complete naturally
   }
 
-  // Use our custom form hook
   const {
     values,
     errors,
@@ -85,7 +79,6 @@ function LoginForm() {
     handleLoginSubmit
   )
 
-  // Handle resend verification
   async function handleResendVerification() {
     if (!values.email) {
       setResendMessage('Please enter your email address above.')
@@ -96,7 +89,6 @@ function LoginForm() {
     setResendMessage('')
 
     try {
-      // Use the service instead of direct fetch
       const message = await resendVerificationEmail(values.email)
       setResendMessage(message)
     } catch (error) {
@@ -107,7 +99,6 @@ function LoginForm() {
     }
   }
 
-  // Render verification resend button if needed
   const renderResendVerification = () => {
     if (!showResendVerification) return null
 
@@ -132,6 +123,7 @@ function LoginForm() {
       onSubmit={handleSubmit}
       submitError={submitError}
       isSubmitting={isSubmitting}
+      buttonLoading={isSubmitting || isNavigating} // ✨ fix here
       submitButtonText="Sign In"
       loadingText="Signing in..."
       successMessage={
@@ -194,7 +186,6 @@ function LoginForm() {
   )
 }
 
-// Main page component with Suspense
 export default function LoginPage() {
   return (
     <SuspensePage title="Login">
