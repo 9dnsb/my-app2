@@ -5,8 +5,11 @@ import prisma from '@/lib/prisma'
 export async function GET() {
   const session = await auth()
 
-  if (!session?.user || session.user.type !== 'admin') {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+  if (!session) {
+    return NextResponse.json({ message: 'Not Authenticated' }, { status: 401 })
+  }
+  if (session.user.type !== 'admin') {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 403 })
   }
 
   const creditCards = await prisma.creditCard.findMany({

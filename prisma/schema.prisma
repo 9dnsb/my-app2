@@ -20,10 +20,7 @@ model User {
   verifiedAt                DateTime?
   verificationToken String?   
   verificationTokenExpiry DateTime?
-  
-  posts          Post[]
-  submissions    Submission[]
-  creditcards    CreditCard[]
+  incomeProfile  IncomeProfile?
 }
 
 enum UserType {
@@ -32,31 +29,102 @@ enum UserType {
 }
 
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id])
+model IncomeProfile {
+  id           Int       @id @default(autoincrement())
+  userId       Int       @unique
+  user         User      @relation(fields: [userId], references: [id])
+
+  jobs         Job[]     // One-to-many relationship
+  otherIncomes OtherIncomeSource[] // One-to-many relationship
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
-model Submission {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  formName  String
-  data      Json
+model Job {
+  id                 Int      @id @default(autoincrement())
+  incomeProfileId    Int
+  incomeProfile      IncomeProfile @relation(fields: [incomeProfileId], references: [id])
+
+  employmentStatus   EmploymentStatus
+  employerName       String
+  roleTitle          String
+  paymentFrequency   PaymentFrequency
+  
+  paystubPeriod      PaystubPeriod
+  grossSalary        Decimal  @db.Decimal(10, 2)
+  taxDeductions      Decimal  @db.Decimal(10, 2)
+  healthInsurance    Decimal  @db.Decimal(10, 2)
+  retirementContributions Decimal @db.Decimal(10, 2)
+  otherDeductions    OtherDeduction[] // 🔥 new one-to-many relationship!
+  netSalary          Decimal  @db.Decimal(10, 2)
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model OtherDeduction {
+  id       Int     @id @default(autoincrement())
+  jobId    Int
+  job      Job     @relation(fields: [jobId], references: [id])
+
+  name     String   // Name of deduction (example: "Union Dues", "Life Insurance Premium")
+  amount   Decimal  @db.Decimal(10, 2) // Amount deducted
+
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  updatedAt DateTime @updatedAt
 }
 
-model CreditCard {
-  id           Int      @id @default(autoincrement())
-  userId       Int
-  cardName     String
-  bankName     String
-  balance      Float
-  interestRate Float
-  createdAt    DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id])
+model OtherIncomeSource {
+  id                 Int      @id @default(autoincrement())
+  incomeProfileId    Int
+  incomeProfile      IncomeProfile @relation(fields: [incomeProfileId], references: [id])
+
+  sourceType         OtherIncomeType
+  frequency          PaymentFrequency
+  amount             Decimal  @db.Decimal(10, 2)
+  additionalContext  String?  // Optional notes
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
+
+enum EmploymentStatus {
+  FULL_TIME
+  PART_TIME
+  SEASONAL
+  RETIRED
+  UNEMPLOYED
+  STUDENT
+}
+
+enum PaymentFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  SEMIMONTHLY
+}
+
+enum PaystubPeriod {
+  ONE_WEEK
+  TWO_WEEKS
+  HALF_MONTH
+  ONE_MONTH
+}
+
+enum OtherIncomeType {
+  UNEMPLOYMENT
+  DISABILITY
+  RETIREMENT
+  PUBLIC_ASSISTANCE
+  CHILD_SUPPORT
+  VETERANS_BENEFITS
+  ALIMONY
+  STUDENT_LOANS_GRANTS
+  SCHOLARSHIPS
+  TAX_REFUND
+  RENTAL_INCOME
+  INVESTMENT_INCOME
+  OTHER
+}
+

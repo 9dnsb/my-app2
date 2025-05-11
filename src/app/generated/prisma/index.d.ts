@@ -19,20 +19,25 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Post
+ * Model IncomeProfile
  * 
  */
-export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
+export type IncomeProfile = $Result.DefaultSelection<Prisma.$IncomeProfilePayload>
 /**
- * Model Submission
+ * Model Job
  * 
  */
-export type Submission = $Result.DefaultSelection<Prisma.$SubmissionPayload>
+export type Job = $Result.DefaultSelection<Prisma.$JobPayload>
 /**
- * Model CreditCard
+ * Model OtherDeduction
  * 
  */
-export type CreditCard = $Result.DefaultSelection<Prisma.$CreditCardPayload>
+export type OtherDeduction = $Result.DefaultSelection<Prisma.$OtherDeductionPayload>
+/**
+ * Model OtherIncomeSource
+ * 
+ */
+export type OtherIncomeSource = $Result.DefaultSelection<Prisma.$OtherIncomeSourcePayload>
 
 /**
  * Enums
@@ -45,11 +50,78 @@ export namespace $Enums {
 
 export type UserType = (typeof UserType)[keyof typeof UserType]
 
+
+export const EmploymentStatus: {
+  FULL_TIME: 'FULL_TIME',
+  PART_TIME: 'PART_TIME',
+  SEASONAL: 'SEASONAL',
+  RETIRED: 'RETIRED',
+  UNEMPLOYED: 'UNEMPLOYED',
+  STUDENT: 'STUDENT'
+};
+
+export type EmploymentStatus = (typeof EmploymentStatus)[keyof typeof EmploymentStatus]
+
+
+export const PaymentFrequency: {
+  WEEKLY: 'WEEKLY',
+  BIWEEKLY: 'BIWEEKLY',
+  MONTHLY: 'MONTHLY',
+  SEMIMONTHLY: 'SEMIMONTHLY'
+};
+
+export type PaymentFrequency = (typeof PaymentFrequency)[keyof typeof PaymentFrequency]
+
+
+export const PaystubPeriod: {
+  ONE_WEEK: 'ONE_WEEK',
+  TWO_WEEKS: 'TWO_WEEKS',
+  HALF_MONTH: 'HALF_MONTH',
+  ONE_MONTH: 'ONE_MONTH'
+};
+
+export type PaystubPeriod = (typeof PaystubPeriod)[keyof typeof PaystubPeriod]
+
+
+export const OtherIncomeType: {
+  UNEMPLOYMENT: 'UNEMPLOYMENT',
+  DISABILITY: 'DISABILITY',
+  RETIREMENT: 'RETIREMENT',
+  PUBLIC_ASSISTANCE: 'PUBLIC_ASSISTANCE',
+  CHILD_SUPPORT: 'CHILD_SUPPORT',
+  VETERANS_BENEFITS: 'VETERANS_BENEFITS',
+  ALIMONY: 'ALIMONY',
+  STUDENT_LOANS_GRANTS: 'STUDENT_LOANS_GRANTS',
+  SCHOLARSHIPS: 'SCHOLARSHIPS',
+  TAX_REFUND: 'TAX_REFUND',
+  RENTAL_INCOME: 'RENTAL_INCOME',
+  INVESTMENT_INCOME: 'INVESTMENT_INCOME',
+  OTHER: 'OTHER'
+};
+
+export type OtherIncomeType = (typeof OtherIncomeType)[keyof typeof OtherIncomeType]
+
 }
 
 export type UserType = $Enums.UserType
 
 export const UserType: typeof $Enums.UserType
+
+export type EmploymentStatus = $Enums.EmploymentStatus
+
+export const EmploymentStatus: typeof $Enums.EmploymentStatus
+
+export type PaymentFrequency = $Enums.PaymentFrequency
+
+export const PaymentFrequency: typeof $Enums.PaymentFrequency
+
+export type PaystubPeriod = $Enums.PaystubPeriod
+
+export const PaystubPeriod: typeof $Enums.PaystubPeriod
+
+export type OtherIncomeType = $Enums.OtherIncomeType
+
+export const OtherIncomeType: typeof $Enums.OtherIncomeType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -187,34 +259,44 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.post`: Exposes CRUD operations for the **Post** model.
+   * `prisma.incomeProfile`: Exposes CRUD operations for the **IncomeProfile** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Posts
-    * const posts = await prisma.post.findMany()
+    * // Fetch zero or more IncomeProfiles
+    * const incomeProfiles = await prisma.incomeProfile.findMany()
     * ```
     */
-  get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
+  get incomeProfile(): Prisma.IncomeProfileDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.submission`: Exposes CRUD operations for the **Submission** model.
+   * `prisma.job`: Exposes CRUD operations for the **Job** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Submissions
-    * const submissions = await prisma.submission.findMany()
+    * // Fetch zero or more Jobs
+    * const jobs = await prisma.job.findMany()
     * ```
     */
-  get submission(): Prisma.SubmissionDelegate<ExtArgs, ClientOptions>;
+  get job(): Prisma.JobDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.creditCard`: Exposes CRUD operations for the **CreditCard** model.
+   * `prisma.otherDeduction`: Exposes CRUD operations for the **OtherDeduction** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more CreditCards
-    * const creditCards = await prisma.creditCard.findMany()
+    * // Fetch zero or more OtherDeductions
+    * const otherDeductions = await prisma.otherDeduction.findMany()
     * ```
     */
-  get creditCard(): Prisma.CreditCardDelegate<ExtArgs, ClientOptions>;
+  get otherDeduction(): Prisma.OtherDeductionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.otherIncomeSource`: Exposes CRUD operations for the **OtherIncomeSource** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OtherIncomeSources
+    * const otherIncomeSources = await prisma.otherIncomeSource.findMany()
+    * ```
+    */
+  get otherIncomeSource(): Prisma.OtherIncomeSourceDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -656,9 +738,10 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Post: 'Post',
-    Submission: 'Submission',
-    CreditCard: 'CreditCard'
+    IncomeProfile: 'IncomeProfile',
+    Job: 'Job',
+    OtherDeduction: 'OtherDeduction',
+    OtherIncomeSource: 'OtherIncomeSource'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -677,7 +760,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "submission" | "creditCard"
+      modelProps: "user" | "incomeProfile" | "job" | "otherDeduction" | "otherIncomeSource"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -755,225 +838,299 @@ export namespace Prisma {
           }
         }
       }
-      Post: {
-        payload: Prisma.$PostPayload<ExtArgs>
-        fields: Prisma.PostFieldRefs
+      IncomeProfile: {
+        payload: Prisma.$IncomeProfilePayload<ExtArgs>
+        fields: Prisma.IncomeProfileFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.PostFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
+            args: Prisma.IncomeProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           findFirst: {
-            args: Prisma.PostFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
+            args: Prisma.IncomeProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           findMany: {
-            args: Prisma.PostFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
+            args: Prisma.IncomeProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>[]
           }
           create: {
-            args: Prisma.PostCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           createMany: {
-            args: Prisma.PostCreateManyArgs<ExtArgs>
+            args: Prisma.IncomeProfileCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
+            args: Prisma.IncomeProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>[]
           }
           delete: {
-            args: Prisma.PostDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           update: {
-            args: Prisma.PostUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           deleteMany: {
-            args: Prisma.PostDeleteManyArgs<ExtArgs>
+            args: Prisma.IncomeProfileDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.PostUpdateManyArgs<ExtArgs>
+            args: Prisma.IncomeProfileUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
+            args: Prisma.IncomeProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>[]
           }
           upsert: {
-            args: Prisma.PostUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
+            args: Prisma.IncomeProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncomeProfilePayload>
           }
           aggregate: {
-            args: Prisma.PostAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePost>
+            args: Prisma.IncomeProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIncomeProfile>
           }
           groupBy: {
-            args: Prisma.PostGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PostGroupByOutputType>[]
+            args: Prisma.IncomeProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IncomeProfileGroupByOutputType>[]
           }
           count: {
-            args: Prisma.PostCountArgs<ExtArgs>
-            result: $Utils.Optional<PostCountAggregateOutputType> | number
+            args: Prisma.IncomeProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<IncomeProfileCountAggregateOutputType> | number
           }
         }
       }
-      Submission: {
-        payload: Prisma.$SubmissionPayload<ExtArgs>
-        fields: Prisma.SubmissionFieldRefs
+      Job: {
+        payload: Prisma.$JobPayload<ExtArgs>
+        fields: Prisma.JobFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SubmissionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+            args: Prisma.JobFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SubmissionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           findFirst: {
-            args: Prisma.SubmissionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+            args: Prisma.JobFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SubmissionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           findMany: {
-            args: Prisma.SubmissionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+            args: Prisma.JobFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>[]
           }
           create: {
-            args: Prisma.SubmissionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           createMany: {
-            args: Prisma.SubmissionCreateManyArgs<ExtArgs>
+            args: Prisma.JobCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SubmissionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+            args: Prisma.JobCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>[]
           }
           delete: {
-            args: Prisma.SubmissionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           update: {
-            args: Prisma.SubmissionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           deleteMany: {
-            args: Prisma.SubmissionDeleteManyArgs<ExtArgs>
+            args: Prisma.JobDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SubmissionUpdateManyArgs<ExtArgs>
+            args: Prisma.JobUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SubmissionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+            args: Prisma.JobUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>[]
           }
           upsert: {
-            args: Prisma.SubmissionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.JobUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobPayload>
           }
           aggregate: {
-            args: Prisma.SubmissionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSubmission>
+            args: Prisma.JobAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJob>
           }
           groupBy: {
-            args: Prisma.SubmissionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SubmissionGroupByOutputType>[]
+            args: Prisma.JobGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JobGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SubmissionCountArgs<ExtArgs>
-            result: $Utils.Optional<SubmissionCountAggregateOutputType> | number
+            args: Prisma.JobCountArgs<ExtArgs>
+            result: $Utils.Optional<JobCountAggregateOutputType> | number
           }
         }
       }
-      CreditCard: {
-        payload: Prisma.$CreditCardPayload<ExtArgs>
-        fields: Prisma.CreditCardFieldRefs
+      OtherDeduction: {
+        payload: Prisma.$OtherDeductionPayload<ExtArgs>
+        fields: Prisma.OtherDeductionFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.CreditCardFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload> | null
+            args: Prisma.OtherDeductionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.CreditCardFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           findFirst: {
-            args: Prisma.CreditCardFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload> | null
+            args: Prisma.OtherDeductionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.CreditCardFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           findMany: {
-            args: Prisma.CreditCardFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+            args: Prisma.OtherDeductionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>[]
           }
           create: {
-            args: Prisma.CreditCardCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           createMany: {
-            args: Prisma.CreditCardCreateManyArgs<ExtArgs>
+            args: Prisma.OtherDeductionCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.CreditCardCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+            args: Prisma.OtherDeductionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>[]
           }
           delete: {
-            args: Prisma.CreditCardDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           update: {
-            args: Prisma.CreditCardUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           deleteMany: {
-            args: Prisma.CreditCardDeleteManyArgs<ExtArgs>
+            args: Prisma.OtherDeductionDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.CreditCardUpdateManyArgs<ExtArgs>
+            args: Prisma.OtherDeductionUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.CreditCardUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+            args: Prisma.OtherDeductionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>[]
           }
           upsert: {
-            args: Prisma.CreditCardUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+            args: Prisma.OtherDeductionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherDeductionPayload>
           }
           aggregate: {
-            args: Prisma.CreditCardAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCreditCard>
+            args: Prisma.OtherDeductionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOtherDeduction>
           }
           groupBy: {
-            args: Prisma.CreditCardGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CreditCardGroupByOutputType>[]
+            args: Prisma.OtherDeductionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OtherDeductionGroupByOutputType>[]
           }
           count: {
-            args: Prisma.CreditCardCountArgs<ExtArgs>
-            result: $Utils.Optional<CreditCardCountAggregateOutputType> | number
+            args: Prisma.OtherDeductionCountArgs<ExtArgs>
+            result: $Utils.Optional<OtherDeductionCountAggregateOutputType> | number
+          }
+        }
+      }
+      OtherIncomeSource: {
+        payload: Prisma.$OtherIncomeSourcePayload<ExtArgs>
+        fields: Prisma.OtherIncomeSourceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OtherIncomeSourceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OtherIncomeSourceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          findFirst: {
+            args: Prisma.OtherIncomeSourceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OtherIncomeSourceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          findMany: {
+            args: Prisma.OtherIncomeSourceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>[]
+          }
+          create: {
+            args: Prisma.OtherIncomeSourceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          createMany: {
+            args: Prisma.OtherIncomeSourceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OtherIncomeSourceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>[]
+          }
+          delete: {
+            args: Prisma.OtherIncomeSourceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          update: {
+            args: Prisma.OtherIncomeSourceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          deleteMany: {
+            args: Prisma.OtherIncomeSourceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OtherIncomeSourceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OtherIncomeSourceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>[]
+          }
+          upsert: {
+            args: Prisma.OtherIncomeSourceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OtherIncomeSourcePayload>
+          }
+          aggregate: {
+            args: Prisma.OtherIncomeSourceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOtherIncomeSource>
+          }
+          groupBy: {
+            args: Prisma.OtherIncomeSourceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OtherIncomeSourceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OtherIncomeSourceCountArgs<ExtArgs>
+            result: $Utils.Optional<OtherIncomeSourceCountAggregateOutputType> | number
           }
         }
       }
@@ -1062,9 +1219,10 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
-    post?: PostOmit
-    submission?: SubmissionOmit
-    creditCard?: CreditCardOmit
+    incomeProfile?: IncomeProfileOmit
+    job?: JobOmit
+    otherDeduction?: OtherDeductionOmit
+    otherIncomeSource?: OtherIncomeSourceOmit
   }
 
   /* Types for Logging */
@@ -1155,51 +1313,73 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
+   * Count Type IncomeProfileCountOutputType
    */
 
-  export type UserCountOutputType = {
-    posts: number
-    submissions: number
-    creditcards: number
+  export type IncomeProfileCountOutputType = {
+    jobs: number
+    otherIncomes: number
   }
 
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    posts?: boolean | UserCountOutputTypeCountPostsArgs
-    submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
-    creditcards?: boolean | UserCountOutputTypeCountCreditcardsArgs
+  export type IncomeProfileCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobs?: boolean | IncomeProfileCountOutputTypeCountJobsArgs
+    otherIncomes?: boolean | IncomeProfileCountOutputTypeCountOtherIncomesArgs
   }
 
   // Custom InputTypes
   /**
-   * UserCountOutputType without action
+   * IncomeProfileCountOutputType without action
    */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserCountOutputType
+     * Select specific fields to fetch from the IncomeProfileCountOutputType
      */
-    select?: UserCountOutputTypeSelect<ExtArgs> | null
+    select?: IncomeProfileCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UserCountOutputType without action
+   * IncomeProfileCountOutputType without action
    */
-  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
+  export type IncomeProfileCountOutputTypeCountJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobWhereInput
   }
 
   /**
-   * UserCountOutputType without action
+   * IncomeProfileCountOutputType without action
    */
-  export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubmissionWhereInput
+  export type IncomeProfileCountOutputTypeCountOtherIncomesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OtherIncomeSourceWhereInput
+  }
+
+
+  /**
+   * Count Type JobCountOutputType
+   */
+
+  export type JobCountOutputType = {
+    otherDeductions: number
+  }
+
+  export type JobCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    otherDeductions?: boolean | JobCountOutputTypeCountOtherDeductionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * JobCountOutputType without action
+   */
+  export type JobCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobCountOutputType
+     */
+    select?: JobCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UserCountOutputType without action
+   * JobCountOutputType without action
    */
-  export type UserCountOutputTypeCountCreditcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CreditCardWhereInput
+  export type JobCountOutputTypeCountOtherDeductionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OtherDeductionWhereInput
   }
 
 
@@ -1437,10 +1617,7 @@ export namespace Prisma {
     verifiedAt?: boolean
     verificationToken?: boolean
     verificationTokenExpiry?: boolean
-    posts?: boolean | User$postsArgs<ExtArgs>
-    submissions?: boolean | User$submissionsArgs<ExtArgs>
-    creditcards?: boolean | User$creditcardsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+    incomeProfile?: boolean | User$incomeProfileArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1481,10 +1658,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "hashedPassword" | "type" | "emailVerified" | "verifiedAt" | "verificationToken" | "verificationTokenExpiry", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    posts?: boolean | User$postsArgs<ExtArgs>
-    submissions?: boolean | User$submissionsArgs<ExtArgs>
-    creditcards?: boolean | User$creditcardsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+    incomeProfile?: boolean | User$incomeProfileArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1492,9 +1666,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      posts: Prisma.$PostPayload<ExtArgs>[]
-      submissions: Prisma.$SubmissionPayload<ExtArgs>[]
-      creditcards: Prisma.$CreditCardPayload<ExtArgs>[]
+      incomeProfile: Prisma.$IncomeProfilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1900,9 +2072,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    submissions<T extends User$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    creditcards<T extends User$creditcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$creditcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    incomeProfile<T extends User$incomeProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$incomeProfileArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2329,75 +2499,22 @@ export namespace Prisma {
   }
 
   /**
-   * User.posts
+   * User.incomeProfile
    */
-  export type User$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$incomeProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Post
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: PostSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Post
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: PostOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PostInclude<ExtArgs> | null
-    where?: PostWhereInput
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    cursor?: PostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * User.submissions
-   */
-  export type User$submissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Submission
-     */
-    select?: SubmissionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Submission
-     */
-    omit?: SubmissionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SubmissionInclude<ExtArgs> | null
-    where?: SubmissionWhereInput
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
-    cursor?: SubmissionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
-  }
-
-  /**
-   * User.creditcards
-   */
-  export type User$creditcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CreditCard
-     */
-    select?: CreditCardSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CreditCard
-     */
-    omit?: CreditCardOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CreditCardInclude<ExtArgs> | null
-    where?: CreditCardWhereInput
-    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
-    cursor?: CreditCardWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+    include?: IncomeProfileInclude<ExtArgs> | null
+    where?: IncomeProfileWhereInput
   }
 
   /**
@@ -2420,1480 +2537,384 @@ export namespace Prisma {
 
 
   /**
-   * Model Post
+   * Model IncomeProfile
    */
 
-  export type AggregatePost = {
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
+  export type AggregateIncomeProfile = {
+    _count: IncomeProfileCountAggregateOutputType | null
+    _avg: IncomeProfileAvgAggregateOutputType | null
+    _sum: IncomeProfileSumAggregateOutputType | null
+    _min: IncomeProfileMinAggregateOutputType | null
+    _max: IncomeProfileMaxAggregateOutputType | null
   }
 
-  export type PostAvgAggregateOutputType = {
-    id: number | null
-    authorId: number | null
-  }
-
-  export type PostSumAggregateOutputType = {
-    id: number | null
-    authorId: number | null
-  }
-
-  export type PostMinAggregateOutputType = {
-    id: number | null
-    title: string | null
-    content: string | null
-    published: boolean | null
-    authorId: number | null
-  }
-
-  export type PostMaxAggregateOutputType = {
-    id: number | null
-    title: string | null
-    content: string | null
-    published: boolean | null
-    authorId: number | null
-  }
-
-  export type PostCountAggregateOutputType = {
-    id: number
-    title: number
-    content: number
-    published: number
-    authorId: number
-    _all: number
-  }
-
-
-  export type PostAvgAggregateInputType = {
-    id?: true
-    authorId?: true
-  }
-
-  export type PostSumAggregateInputType = {
-    id?: true
-    authorId?: true
-  }
-
-  export type PostMinAggregateInputType = {
-    id?: true
-    title?: true
-    content?: true
-    published?: true
-    authorId?: true
-  }
-
-  export type PostMaxAggregateInputType = {
-    id?: true
-    title?: true
-    content?: true
-    published?: true
-    authorId?: true
-  }
-
-  export type PostCountAggregateInputType = {
-    id?: true
-    title?: true
-    content?: true
-    published?: true
-    authorId?: true
-    _all?: true
-  }
-
-  export type PostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Post to aggregate.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Posts
-    **/
-    _count?: true | PostCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostMaxAggregateInputType
-  }
-
-  export type GetPostAggregateType<T extends PostAggregateArgs> = {
-        [P in keyof T & keyof AggregatePost]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePost[P]>
-      : GetScalarType<T[P], AggregatePost[P]>
-  }
-
-
-
-
-  export type PostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
-    orderBy?: PostOrderByWithAggregationInput | PostOrderByWithAggregationInput[]
-    by: PostScalarFieldEnum[] | PostScalarFieldEnum
-    having?: PostScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostCountAggregateInputType | true
-    _avg?: PostAvgAggregateInputType
-    _sum?: PostSumAggregateInputType
-    _min?: PostMinAggregateInputType
-    _max?: PostMaxAggregateInputType
-  }
-
-  export type PostGroupByOutputType = {
-    id: number
-    title: string
-    content: string | null
-    published: boolean
-    authorId: number
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
-  }
-
-  type GetPostGroupByPayload<T extends PostGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<PostGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostGroupByOutputType[P]>
-            : GetScalarType<T[P], PostGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    content?: boolean
-    published?: boolean
-    authorId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    content?: boolean
-    published?: boolean
-    authorId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    title?: boolean
-    content?: boolean
-    published?: boolean
-    authorId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectScalar = {
-    id?: boolean
-    title?: boolean
-    content?: boolean
-    published?: boolean
-    authorId?: boolean
-  }
-
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "authorId", ExtArgs["result"]["post"]>
-  export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Post"
-    objects: {
-      author: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      title: string
-      content: string | null
-      published: boolean
-      authorId: number
-    }, ExtArgs["result"]["post"]>
-    composites: {}
-  }
-
-  type PostGetPayload<S extends boolean | null | undefined | PostDefaultArgs> = $Result.GetResult<Prisma.$PostPayload, S>
-
-  type PostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PostCountAggregateInputType | true
-    }
-
-  export interface PostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Post'], meta: { name: 'Post' } }
-    /**
-     * Find zero or one Post that matches the filter.
-     * @param {PostFindUniqueArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends PostFindUniqueArgs>(args: SelectSubset<T, PostFindUniqueArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Post that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {PostFindUniqueOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends PostFindUniqueOrThrowArgs>(args: SelectSubset<T, PostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Post that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends PostFindFirstArgs>(args?: SelectSubset<T, PostFindFirstArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Post that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends PostFindFirstOrThrowArgs>(args?: SelectSubset<T, PostFindFirstOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Posts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Posts
-     * const posts = await prisma.post.findMany()
-     * 
-     * // Get first 10 Posts
-     * const posts = await prisma.post.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postWithIdOnly = await prisma.post.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends PostFindManyArgs>(args?: SelectSubset<T, PostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Post.
-     * @param {PostCreateArgs} args - Arguments to create a Post.
-     * @example
-     * // Create one Post
-     * const Post = await prisma.post.create({
-     *   data: {
-     *     // ... data to create a Post
-     *   }
-     * })
-     * 
-     */
-    create<T extends PostCreateArgs>(args: SelectSubset<T, PostCreateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Posts.
-     * @param {PostCreateManyArgs} args - Arguments to create many Posts.
-     * @example
-     * // Create many Posts
-     * const post = await prisma.post.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends PostCreateManyArgs>(args?: SelectSubset<T, PostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Posts and returns the data saved in the database.
-     * @param {PostCreateManyAndReturnArgs} args - Arguments to create many Posts.
-     * @example
-     * // Create many Posts
-     * const post = await prisma.post.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Posts and only return the `id`
-     * const postWithIdOnly = await prisma.post.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends PostCreateManyAndReturnArgs>(args?: SelectSubset<T, PostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Post.
-     * @param {PostDeleteArgs} args - Arguments to delete one Post.
-     * @example
-     * // Delete one Post
-     * const Post = await prisma.post.delete({
-     *   where: {
-     *     // ... filter to delete one Post
-     *   }
-     * })
-     * 
-     */
-    delete<T extends PostDeleteArgs>(args: SelectSubset<T, PostDeleteArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Post.
-     * @param {PostUpdateArgs} args - Arguments to update one Post.
-     * @example
-     * // Update one Post
-     * const post = await prisma.post.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends PostUpdateArgs>(args: SelectSubset<T, PostUpdateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Posts.
-     * @param {PostDeleteManyArgs} args - Arguments to filter Posts to delete.
-     * @example
-     * // Delete a few Posts
-     * const { count } = await prisma.post.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends PostDeleteManyArgs>(args?: SelectSubset<T, PostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Posts
-     * const post = await prisma.post.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends PostUpdateManyArgs>(args: SelectSubset<T, PostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Posts and returns the data updated in the database.
-     * @param {PostUpdateManyAndReturnArgs} args - Arguments to update many Posts.
-     * @example
-     * // Update many Posts
-     * const post = await prisma.post.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Posts and only return the `id`
-     * const postWithIdOnly = await prisma.post.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends PostUpdateManyAndReturnArgs>(args: SelectSubset<T, PostUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Post.
-     * @param {PostUpsertArgs} args - Arguments to update or create a Post.
-     * @example
-     * // Update or create a Post
-     * const post = await prisma.post.upsert({
-     *   create: {
-     *     // ... data to create a Post
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Post we want to update
-     *   }
-     * })
-     */
-    upsert<T extends PostUpsertArgs>(args: SelectSubset<T, PostUpsertArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostCountArgs} args - Arguments to filter Posts to count.
-     * @example
-     * // Count the number of Posts
-     * const count = await prisma.post.count({
-     *   where: {
-     *     // ... the filter for the Posts we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostCountArgs>(
-      args?: Subset<T, PostCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostAggregateArgs>(args: Subset<T, PostAggregateArgs>): Prisma.PrismaPromise<GetPostAggregateType<T>>
-
-    /**
-     * Group by Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostGroupByArgs['orderBy'] }
-        : { orderBy?: PostGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Post model
-   */
-  readonly fields: PostFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Post.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Post model
-   */
-  interface PostFieldRefs {
-    readonly id: FieldRef<"Post", 'Int'>
-    readonly title: FieldRef<"Post", 'String'>
-    readonly content: FieldRef<"Post", 'String'>
-    readonly published: FieldRef<"Post", 'Boolean'>
-    readonly authorId: FieldRef<"Post", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Post findUnique
-   */
-  export type PostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post findUniqueOrThrow
-   */
-  export type PostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post findFirst
-   */
-  export type PostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post findFirstOrThrow
-   */
-  export type PostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post findMany
-   */
-  export type PostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Posts to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post create
-   */
-  export type PostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Post.
-     */
-    data: XOR<PostCreateInput, PostUncheckedCreateInput>
-  }
-
-  /**
-   * Post createMany
-   */
-  export type PostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Posts.
-     */
-    data: PostCreateManyInput | PostCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Post createManyAndReturn
-   */
-  export type PostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * The data used to create many Posts.
-     */
-    data: PostCreateManyInput | PostCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Post update
-   */
-  export type PostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Post.
-     */
-    data: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-    /**
-     * Choose, which Post to update.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post updateMany
-   */
-  export type PostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Posts.
-     */
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
-    /**
-     * Filter which Posts to update
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Post updateManyAndReturn
-   */
-  export type PostUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * The data used to update Posts.
-     */
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
-    /**
-     * Filter which Posts to update
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Post upsert
-   */
-  export type PostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Post to update in case it exists.
-     */
-    where: PostWhereUniqueInput
-    /**
-     * In case the Post found by the `where` argument doesn't exist, create a new Post with this data.
-     */
-    create: XOR<PostCreateInput, PostUncheckedCreateInput>
-    /**
-     * In case the Post was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-  }
-
-  /**
-   * Post delete
-   */
-  export type PostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter which Post to delete.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post deleteMany
-   */
-  export type PostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Posts to delete
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Post without action
-   */
-  export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Submission
-   */
-
-  export type AggregateSubmission = {
-    _count: SubmissionCountAggregateOutputType | null
-    _avg: SubmissionAvgAggregateOutputType | null
-    _sum: SubmissionSumAggregateOutputType | null
-    _min: SubmissionMinAggregateOutputType | null
-    _max: SubmissionMaxAggregateOutputType | null
-  }
-
-  export type SubmissionAvgAggregateOutputType = {
+  export type IncomeProfileAvgAggregateOutputType = {
     id: number | null
     userId: number | null
   }
 
-  export type SubmissionSumAggregateOutputType = {
+  export type IncomeProfileSumAggregateOutputType = {
     id: number | null
     userId: number | null
   }
 
-  export type SubmissionMinAggregateOutputType = {
+  export type IncomeProfileMinAggregateOutputType = {
     id: number | null
     userId: number | null
-    formName: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type SubmissionMaxAggregateOutputType = {
+  export type IncomeProfileMaxAggregateOutputType = {
     id: number | null
     userId: number | null
-    formName: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type SubmissionCountAggregateOutputType = {
+  export type IncomeProfileCountAggregateOutputType = {
     id: number
     userId: number
-    formName: number
-    data: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type SubmissionAvgAggregateInputType = {
+  export type IncomeProfileAvgAggregateInputType = {
     id?: true
     userId?: true
   }
 
-  export type SubmissionSumAggregateInputType = {
+  export type IncomeProfileSumAggregateInputType = {
     id?: true
     userId?: true
   }
 
-  export type SubmissionMinAggregateInputType = {
+  export type IncomeProfileMinAggregateInputType = {
     id?: true
     userId?: true
-    formName?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type SubmissionMaxAggregateInputType = {
+  export type IncomeProfileMaxAggregateInputType = {
     id?: true
     userId?: true
-    formName?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type SubmissionCountAggregateInputType = {
+  export type IncomeProfileCountAggregateInputType = {
     id?: true
     userId?: true
-    formName?: true
-    data?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type SubmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Submission to aggregate.
+     * Filter which IncomeProfile to aggregate.
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of IncomeProfiles to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: IncomeProfileOrderByWithRelationInput | IncomeProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: IncomeProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` IncomeProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` IncomeProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Submissions
+     * Count returned IncomeProfiles
     **/
-    _count?: true | SubmissionCountAggregateInputType
+    _count?: true | IncomeProfileCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: SubmissionAvgAggregateInputType
+    _avg?: IncomeProfileAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: SubmissionSumAggregateInputType
+    _sum?: IncomeProfileSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SubmissionMinAggregateInputType
+    _min?: IncomeProfileMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SubmissionMaxAggregateInputType
+    _max?: IncomeProfileMaxAggregateInputType
   }
 
-  export type GetSubmissionAggregateType<T extends SubmissionAggregateArgs> = {
-        [P in keyof T & keyof AggregateSubmission]: P extends '_count' | 'count'
+  export type GetIncomeProfileAggregateType<T extends IncomeProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateIncomeProfile]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSubmission[P]>
-      : GetScalarType<T[P], AggregateSubmission[P]>
+        : GetScalarType<T[P], AggregateIncomeProfile[P]>
+      : GetScalarType<T[P], AggregateIncomeProfile[P]>
   }
 
 
 
 
-  export type SubmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubmissionWhereInput
-    orderBy?: SubmissionOrderByWithAggregationInput | SubmissionOrderByWithAggregationInput[]
-    by: SubmissionScalarFieldEnum[] | SubmissionScalarFieldEnum
-    having?: SubmissionScalarWhereWithAggregatesInput
+  export type IncomeProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IncomeProfileWhereInput
+    orderBy?: IncomeProfileOrderByWithAggregationInput | IncomeProfileOrderByWithAggregationInput[]
+    by: IncomeProfileScalarFieldEnum[] | IncomeProfileScalarFieldEnum
+    having?: IncomeProfileScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SubmissionCountAggregateInputType | true
-    _avg?: SubmissionAvgAggregateInputType
-    _sum?: SubmissionSumAggregateInputType
-    _min?: SubmissionMinAggregateInputType
-    _max?: SubmissionMaxAggregateInputType
+    _count?: IncomeProfileCountAggregateInputType | true
+    _avg?: IncomeProfileAvgAggregateInputType
+    _sum?: IncomeProfileSumAggregateInputType
+    _min?: IncomeProfileMinAggregateInputType
+    _max?: IncomeProfileMaxAggregateInputType
   }
 
-  export type SubmissionGroupByOutputType = {
+  export type IncomeProfileGroupByOutputType = {
     id: number
     userId: number
-    formName: string
-    data: JsonValue
     createdAt: Date
-    _count: SubmissionCountAggregateOutputType | null
-    _avg: SubmissionAvgAggregateOutputType | null
-    _sum: SubmissionSumAggregateOutputType | null
-    _min: SubmissionMinAggregateOutputType | null
-    _max: SubmissionMaxAggregateOutputType | null
+    updatedAt: Date
+    _count: IncomeProfileCountAggregateOutputType | null
+    _avg: IncomeProfileAvgAggregateOutputType | null
+    _sum: IncomeProfileSumAggregateOutputType | null
+    _min: IncomeProfileMinAggregateOutputType | null
+    _max: IncomeProfileMaxAggregateOutputType | null
   }
 
-  type GetSubmissionGroupByPayload<T extends SubmissionGroupByArgs> = Prisma.PrismaPromise<
+  type GetIncomeProfileGroupByPayload<T extends IncomeProfileGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SubmissionGroupByOutputType, T['by']> &
+      PickEnumerable<IncomeProfileGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SubmissionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof IncomeProfileGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
-            : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
+              : GetScalarType<T[P], IncomeProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], IncomeProfileGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SubmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IncomeProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    formName?: boolean
-    data?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["submission"]>
+    jobs?: boolean | IncomeProfile$jobsArgs<ExtArgs>
+    otherIncomes?: boolean | IncomeProfile$otherIncomesArgs<ExtArgs>
+    _count?: boolean | IncomeProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["incomeProfile"]>
 
-  export type SubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IncomeProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    formName?: boolean
-    data?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["submission"]>
+  }, ExtArgs["result"]["incomeProfile"]>
 
-  export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type IncomeProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    formName?: boolean
-    data?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["submission"]>
+  }, ExtArgs["result"]["incomeProfile"]>
 
-  export type SubmissionSelectScalar = {
+  export type IncomeProfileSelectScalar = {
     id?: boolean
     userId?: boolean
-    formName?: boolean
-    data?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type SubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "formName" | "data" | "createdAt", ExtArgs["result"]["submission"]>
-  export type SubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["incomeProfile"]>
+  export type IncomeProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    jobs?: boolean | IncomeProfile$jobsArgs<ExtArgs>
+    otherIncomes?: boolean | IncomeProfile$otherIncomesArgs<ExtArgs>
+    _count?: boolean | IncomeProfileCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type IncomeProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type SubmissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SubmissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $SubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Submission"
+  export type $IncomeProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IncomeProfile"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      jobs: Prisma.$JobPayload<ExtArgs>[]
+      otherIncomes: Prisma.$OtherIncomeSourcePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: number
-      formName: string
-      data: Prisma.JsonValue
       createdAt: Date
-    }, ExtArgs["result"]["submission"]>
+      updatedAt: Date
+    }, ExtArgs["result"]["incomeProfile"]>
     composites: {}
   }
 
-  type SubmissionGetPayload<S extends boolean | null | undefined | SubmissionDefaultArgs> = $Result.GetResult<Prisma.$SubmissionPayload, S>
+  type IncomeProfileGetPayload<S extends boolean | null | undefined | IncomeProfileDefaultArgs> = $Result.GetResult<Prisma.$IncomeProfilePayload, S>
 
-  type SubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SubmissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SubmissionCountAggregateInputType | true
+  type IncomeProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IncomeProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IncomeProfileCountAggregateInputType | true
     }
 
-  export interface SubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submission'], meta: { name: 'Submission' } }
+  export interface IncomeProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IncomeProfile'], meta: { name: 'IncomeProfile' } }
     /**
-     * Find zero or one Submission that matches the filter.
-     * @param {SubmissionFindUniqueArgs} args - Arguments to find a Submission
+     * Find zero or one IncomeProfile that matches the filter.
+     * @param {IncomeProfileFindUniqueArgs} args - Arguments to find a IncomeProfile
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findUnique({
+     * // Get one IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SubmissionFindUniqueArgs>(args: SelectSubset<T, SubmissionFindUniqueArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends IncomeProfileFindUniqueArgs>(args: SelectSubset<T, IncomeProfileFindUniqueArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Submission that matches the filter or throw an error with `error.code='P2025'`
+     * Find one IncomeProfile that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SubmissionFindUniqueOrThrowArgs} args - Arguments to find a Submission
+     * @param {IncomeProfileFindUniqueOrThrowArgs} args - Arguments to find a IncomeProfile
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findUniqueOrThrow({
+     * // Get one IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends IncomeProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, IncomeProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Submission that matches the filter.
+     * Find the first IncomeProfile that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindFirstArgs} args - Arguments to find a Submission
+     * @param {IncomeProfileFindFirstArgs} args - Arguments to find a IncomeProfile
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findFirst({
+     * // Get one IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SubmissionFindFirstArgs>(args?: SelectSubset<T, SubmissionFindFirstArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends IncomeProfileFindFirstArgs>(args?: SelectSubset<T, IncomeProfileFindFirstArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Submission that matches the filter or
+     * Find the first IncomeProfile that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindFirstOrThrowArgs} args - Arguments to find a Submission
+     * @param {IncomeProfileFindFirstOrThrowArgs} args - Arguments to find a IncomeProfile
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findFirstOrThrow({
+     * // Get one IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends IncomeProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, IncomeProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Submissions that matches the filter.
+     * Find zero or more IncomeProfiles that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {IncomeProfileFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Submissions
-     * const submissions = await prisma.submission.findMany()
+     * // Get all IncomeProfiles
+     * const incomeProfiles = await prisma.incomeProfile.findMany()
      * 
-     * // Get first 10 Submissions
-     * const submissions = await prisma.submission.findMany({ take: 10 })
+     * // Get first 10 IncomeProfiles
+     * const incomeProfiles = await prisma.incomeProfile.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const submissionWithIdOnly = await prisma.submission.findMany({ select: { id: true } })
+     * const incomeProfileWithIdOnly = await prisma.incomeProfile.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SubmissionFindManyArgs>(args?: SelectSubset<T, SubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends IncomeProfileFindManyArgs>(args?: SelectSubset<T, IncomeProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Submission.
-     * @param {SubmissionCreateArgs} args - Arguments to create a Submission.
+     * Create a IncomeProfile.
+     * @param {IncomeProfileCreateArgs} args - Arguments to create a IncomeProfile.
      * @example
-     * // Create one Submission
-     * const Submission = await prisma.submission.create({
+     * // Create one IncomeProfile
+     * const IncomeProfile = await prisma.incomeProfile.create({
      *   data: {
-     *     // ... data to create a Submission
+     *     // ... data to create a IncomeProfile
      *   }
      * })
      * 
      */
-    create<T extends SubmissionCreateArgs>(args: SelectSubset<T, SubmissionCreateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends IncomeProfileCreateArgs>(args: SelectSubset<T, IncomeProfileCreateArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Submissions.
-     * @param {SubmissionCreateManyArgs} args - Arguments to create many Submissions.
+     * Create many IncomeProfiles.
+     * @param {IncomeProfileCreateManyArgs} args - Arguments to create many IncomeProfiles.
      * @example
-     * // Create many Submissions
-     * const submission = await prisma.submission.createMany({
+     * // Create many IncomeProfiles
+     * const incomeProfile = await prisma.incomeProfile.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SubmissionCreateManyArgs>(args?: SelectSubset<T, SubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends IncomeProfileCreateManyArgs>(args?: SelectSubset<T, IncomeProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Submissions and returns the data saved in the database.
-     * @param {SubmissionCreateManyAndReturnArgs} args - Arguments to create many Submissions.
+     * Create many IncomeProfiles and returns the data saved in the database.
+     * @param {IncomeProfileCreateManyAndReturnArgs} args - Arguments to create many IncomeProfiles.
      * @example
-     * // Create many Submissions
-     * const submission = await prisma.submission.createManyAndReturn({
+     * // Create many IncomeProfiles
+     * const incomeProfile = await prisma.incomeProfile.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Submissions and only return the `id`
-     * const submissionWithIdOnly = await prisma.submission.createManyAndReturn({
+     * // Create many IncomeProfiles and only return the `id`
+     * const incomeProfileWithIdOnly = await prisma.incomeProfile.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3903,28 +2924,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends IncomeProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, IncomeProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Submission.
-     * @param {SubmissionDeleteArgs} args - Arguments to delete one Submission.
+     * Delete a IncomeProfile.
+     * @param {IncomeProfileDeleteArgs} args - Arguments to delete one IncomeProfile.
      * @example
-     * // Delete one Submission
-     * const Submission = await prisma.submission.delete({
+     * // Delete one IncomeProfile
+     * const IncomeProfile = await prisma.incomeProfile.delete({
      *   where: {
-     *     // ... filter to delete one Submission
+     *     // ... filter to delete one IncomeProfile
      *   }
      * })
      * 
      */
-    delete<T extends SubmissionDeleteArgs>(args: SelectSubset<T, SubmissionDeleteArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends IncomeProfileDeleteArgs>(args: SelectSubset<T, IncomeProfileDeleteArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Submission.
-     * @param {SubmissionUpdateArgs} args - Arguments to update one Submission.
+     * Update one IncomeProfile.
+     * @param {IncomeProfileUpdateArgs} args - Arguments to update one IncomeProfile.
      * @example
-     * // Update one Submission
-     * const submission = await prisma.submission.update({
+     * // Update one IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3934,30 +2955,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SubmissionUpdateArgs>(args: SelectSubset<T, SubmissionUpdateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends IncomeProfileUpdateArgs>(args: SelectSubset<T, IncomeProfileUpdateArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Submissions.
-     * @param {SubmissionDeleteManyArgs} args - Arguments to filter Submissions to delete.
+     * Delete zero or more IncomeProfiles.
+     * @param {IncomeProfileDeleteManyArgs} args - Arguments to filter IncomeProfiles to delete.
      * @example
-     * // Delete a few Submissions
-     * const { count } = await prisma.submission.deleteMany({
+     * // Delete a few IncomeProfiles
+     * const { count } = await prisma.incomeProfile.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SubmissionDeleteManyArgs>(args?: SelectSubset<T, SubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends IncomeProfileDeleteManyArgs>(args?: SelectSubset<T, IncomeProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Submissions.
+     * Update zero or more IncomeProfiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {IncomeProfileUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Submissions
-     * const submission = await prisma.submission.updateMany({
+     * // Update many IncomeProfiles
+     * const incomeProfile = await prisma.incomeProfile.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3967,14 +2988,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SubmissionUpdateManyArgs>(args: SelectSubset<T, SubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends IncomeProfileUpdateManyArgs>(args: SelectSubset<T, IncomeProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Submissions and returns the data updated in the database.
-     * @param {SubmissionUpdateManyAndReturnArgs} args - Arguments to update many Submissions.
+     * Update zero or more IncomeProfiles and returns the data updated in the database.
+     * @param {IncomeProfileUpdateManyAndReturnArgs} args - Arguments to update many IncomeProfiles.
      * @example
-     * // Update many Submissions
-     * const submission = await prisma.submission.updateManyAndReturn({
+     * // Update many IncomeProfiles
+     * const incomeProfile = await prisma.incomeProfile.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3983,8 +3004,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Submissions and only return the `id`
-     * const submissionWithIdOnly = await prisma.submission.updateManyAndReturn({
+     * // Update zero or more IncomeProfiles and only return the `id`
+     * const incomeProfileWithIdOnly = await prisma.incomeProfile.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -3997,56 +3018,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SubmissionUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends IncomeProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, IncomeProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Submission.
-     * @param {SubmissionUpsertArgs} args - Arguments to update or create a Submission.
+     * Create or update one IncomeProfile.
+     * @param {IncomeProfileUpsertArgs} args - Arguments to update or create a IncomeProfile.
      * @example
-     * // Update or create a Submission
-     * const submission = await prisma.submission.upsert({
+     * // Update or create a IncomeProfile
+     * const incomeProfile = await prisma.incomeProfile.upsert({
      *   create: {
-     *     // ... data to create a Submission
+     *     // ... data to create a IncomeProfile
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Submission we want to update
+     *     // ... the filter for the IncomeProfile we want to update
      *   }
      * })
      */
-    upsert<T extends SubmissionUpsertArgs>(args: SelectSubset<T, SubmissionUpsertArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends IncomeProfileUpsertArgs>(args: SelectSubset<T, IncomeProfileUpsertArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Submissions.
+     * Count the number of IncomeProfiles.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionCountArgs} args - Arguments to filter Submissions to count.
+     * @param {IncomeProfileCountArgs} args - Arguments to filter IncomeProfiles to count.
      * @example
-     * // Count the number of Submissions
-     * const count = await prisma.submission.count({
+     * // Count the number of IncomeProfiles
+     * const count = await prisma.incomeProfile.count({
      *   where: {
-     *     // ... the filter for the Submissions we want to count
+     *     // ... the filter for the IncomeProfiles we want to count
      *   }
      * })
     **/
-    count<T extends SubmissionCountArgs>(
-      args?: Subset<T, SubmissionCountArgs>,
+    count<T extends IncomeProfileCountArgs>(
+      args?: Subset<T, IncomeProfileCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SubmissionCountAggregateOutputType>
+          : GetScalarType<T['select'], IncomeProfileCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Submission.
+     * Allows you to perform aggregations operations on a IncomeProfile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {IncomeProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4066,13 +3087,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SubmissionAggregateArgs>(args: Subset<T, SubmissionAggregateArgs>): Prisma.PrismaPromise<GetSubmissionAggregateType<T>>
+    aggregate<T extends IncomeProfileAggregateArgs>(args: Subset<T, IncomeProfileAggregateArgs>): Prisma.PrismaPromise<GetIncomeProfileAggregateType<T>>
 
     /**
-     * Group by Submission.
+     * Group by IncomeProfile.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionGroupByArgs} args - Group by arguments.
+     * @param {IncomeProfileGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4087,14 +3108,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SubmissionGroupByArgs,
+      T extends IncomeProfileGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SubmissionGroupByArgs['orderBy'] }
-        : { orderBy?: SubmissionGroupByArgs['orderBy'] },
+        ? { orderBy: IncomeProfileGroupByArgs['orderBy'] }
+        : { orderBy?: IncomeProfileGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4143,22 +3164,24 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SubmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, IncomeProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIncomeProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Submission model
+   * Fields of the IncomeProfile model
    */
-  readonly fields: SubmissionFieldRefs;
+  readonly fields: IncomeProfileFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Submission.
+   * The delegate class that acts as a "Promise-like" for IncomeProfile.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__IncomeProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    jobs<T extends IncomeProfile$jobsArgs<ExtArgs> = {}>(args?: Subset<T, IncomeProfile$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    otherIncomes<T extends IncomeProfile$otherIncomesArgs<ExtArgs> = {}>(args?: Subset<T, IncomeProfile$otherIncomesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4185,843 +3208,991 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Submission model
+   * Fields of the IncomeProfile model
    */
-  interface SubmissionFieldRefs {
-    readonly id: FieldRef<"Submission", 'Int'>
-    readonly userId: FieldRef<"Submission", 'Int'>
-    readonly formName: FieldRef<"Submission", 'String'>
-    readonly data: FieldRef<"Submission", 'Json'>
-    readonly createdAt: FieldRef<"Submission", 'DateTime'>
+  interface IncomeProfileFieldRefs {
+    readonly id: FieldRef<"IncomeProfile", 'Int'>
+    readonly userId: FieldRef<"IncomeProfile", 'Int'>
+    readonly createdAt: FieldRef<"IncomeProfile", 'DateTime'>
+    readonly updatedAt: FieldRef<"IncomeProfile", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Submission findUnique
+   * IncomeProfile findUnique
    */
-  export type SubmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Filter, which IncomeProfile to fetch.
      */
-    where: SubmissionWhereUniqueInput
+    where: IncomeProfileWhereUniqueInput
   }
 
   /**
-   * Submission findUniqueOrThrow
+   * IncomeProfile findUniqueOrThrow
    */
-  export type SubmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Filter, which IncomeProfile to fetch.
      */
-    where: SubmissionWhereUniqueInput
+    where: IncomeProfileWhereUniqueInput
   }
 
   /**
-   * Submission findFirst
+   * IncomeProfile findFirst
    */
-  export type SubmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Filter, which IncomeProfile to fetch.
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of IncomeProfiles to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: IncomeProfileOrderByWithRelationInput | IncomeProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Submissions.
+     * Sets the position for searching for IncomeProfiles.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: IncomeProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` IncomeProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` IncomeProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Submissions.
+     * Filter by unique combinations of IncomeProfiles.
      */
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: IncomeProfileScalarFieldEnum | IncomeProfileScalarFieldEnum[]
   }
 
   /**
-   * Submission findFirstOrThrow
+   * IncomeProfile findFirstOrThrow
    */
-  export type SubmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Filter, which IncomeProfile to fetch.
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of IncomeProfiles to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: IncomeProfileOrderByWithRelationInput | IncomeProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Submissions.
+     * Sets the position for searching for IncomeProfiles.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: IncomeProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` IncomeProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` IncomeProfiles.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Submissions.
+     * Filter by unique combinations of IncomeProfiles.
      */
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: IncomeProfileScalarFieldEnum | IncomeProfileScalarFieldEnum[]
   }
 
   /**
-   * Submission findMany
+   * IncomeProfile findMany
    */
-  export type SubmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter, which Submissions to fetch.
+     * Filter, which IncomeProfiles to fetch.
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of IncomeProfiles to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: IncomeProfileOrderByWithRelationInput | IncomeProfileOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Submissions.
+     * Sets the position for listing IncomeProfiles.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: IncomeProfileWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` IncomeProfiles from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` IncomeProfiles.
      */
     skip?: number
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: IncomeProfileScalarFieldEnum | IncomeProfileScalarFieldEnum[]
   }
 
   /**
-   * Submission create
+   * IncomeProfile create
    */
-  export type SubmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * The data needed to create a Submission.
+     * The data needed to create a IncomeProfile.
      */
-    data: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+    data: XOR<IncomeProfileCreateInput, IncomeProfileUncheckedCreateInput>
   }
 
   /**
-   * Submission createMany
+   * IncomeProfile createMany
    */
-  export type SubmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Submissions.
+     * The data used to create many IncomeProfiles.
      */
-    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    data: IncomeProfileCreateManyInput | IncomeProfileCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Submission createManyAndReturn
+   * IncomeProfile createManyAndReturn
    */
-  export type SubmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: IncomeProfileSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
-     * The data used to create many Submissions.
+     * The data used to create many IncomeProfiles.
      */
-    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    data: IncomeProfileCreateManyInput | IncomeProfileCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: IncomeProfileIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Submission update
+   * IncomeProfile update
    */
-  export type SubmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * The data needed to update a Submission.
+     * The data needed to update a IncomeProfile.
      */
-    data: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+    data: XOR<IncomeProfileUpdateInput, IncomeProfileUncheckedUpdateInput>
     /**
-     * Choose, which Submission to update.
+     * Choose, which IncomeProfile to update.
      */
-    where: SubmissionWhereUniqueInput
+    where: IncomeProfileWhereUniqueInput
   }
 
   /**
-   * Submission updateMany
+   * IncomeProfile updateMany
    */
-  export type SubmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Submissions.
+     * The data used to update IncomeProfiles.
      */
-    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyInput>
+    data: XOR<IncomeProfileUpdateManyMutationInput, IncomeProfileUncheckedUpdateManyInput>
     /**
-     * Filter which Submissions to update
+     * Filter which IncomeProfiles to update
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
-     * Limit how many Submissions to update.
+     * Limit how many IncomeProfiles to update.
      */
     limit?: number
   }
 
   /**
-   * Submission updateManyAndReturn
+   * IncomeProfile updateManyAndReturn
    */
-  export type SubmissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: IncomeProfileSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
-     * The data used to update Submissions.
+     * The data used to update IncomeProfiles.
      */
-    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyInput>
+    data: XOR<IncomeProfileUpdateManyMutationInput, IncomeProfileUncheckedUpdateManyInput>
     /**
-     * Filter which Submissions to update
+     * Filter which IncomeProfiles to update
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
-     * Limit how many Submissions to update.
+     * Limit how many IncomeProfiles to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: IncomeProfileIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Submission upsert
+   * IncomeProfile upsert
    */
-  export type SubmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * The filter to search for the Submission to update in case it exists.
+     * The filter to search for the IncomeProfile to update in case it exists.
      */
-    where: SubmissionWhereUniqueInput
+    where: IncomeProfileWhereUniqueInput
     /**
-     * In case the Submission found by the `where` argument doesn't exist, create a new Submission with this data.
+     * In case the IncomeProfile found by the `where` argument doesn't exist, create a new IncomeProfile with this data.
      */
-    create: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+    create: XOR<IncomeProfileCreateInput, IncomeProfileUncheckedCreateInput>
     /**
-     * In case the Submission was found with the provided `where` argument, update it with this data.
+     * In case the IncomeProfile was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+    update: XOR<IncomeProfileUpdateInput, IncomeProfileUncheckedUpdateInput>
   }
 
   /**
-   * Submission delete
+   * IncomeProfile delete
    */
-  export type SubmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the IncomeProfile
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: IncomeProfileSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the IncomeProfile
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: IncomeProfileOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: IncomeProfileInclude<ExtArgs> | null
     /**
-     * Filter which Submission to delete.
+     * Filter which IncomeProfile to delete.
      */
-    where: SubmissionWhereUniqueInput
+    where: IncomeProfileWhereUniqueInput
   }
 
   /**
-   * Submission deleteMany
+   * IncomeProfile deleteMany
    */
-  export type SubmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Submissions to delete
+     * Filter which IncomeProfiles to delete
      */
-    where?: SubmissionWhereInput
+    where?: IncomeProfileWhereInput
     /**
-     * Limit how many Submissions to delete.
+     * Limit how many IncomeProfiles to delete.
      */
     limit?: number
   }
 
   /**
-   * Submission without action
+   * IncomeProfile.jobs
    */
-  export type SubmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type IncomeProfile$jobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Job
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Submission
+     * Omit specific fields from the Job
      */
-    omit?: SubmissionOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SubmissionInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
+    where?: JobWhereInput
+    orderBy?: JobOrderByWithRelationInput | JobOrderByWithRelationInput[]
+    cursor?: JobWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JobScalarFieldEnum | JobScalarFieldEnum[]
+  }
+
+  /**
+   * IncomeProfile.otherIncomes
+   */
+  export type IncomeProfile$otherIncomesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    where?: OtherIncomeSourceWhereInput
+    orderBy?: OtherIncomeSourceOrderByWithRelationInput | OtherIncomeSourceOrderByWithRelationInput[]
+    cursor?: OtherIncomeSourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OtherIncomeSourceScalarFieldEnum | OtherIncomeSourceScalarFieldEnum[]
+  }
+
+  /**
+   * IncomeProfile without action
+   */
+  export type IncomeProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IncomeProfile
+     */
+    select?: IncomeProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IncomeProfile
+     */
+    omit?: IncomeProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncomeProfileInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model CreditCard
+   * Model Job
    */
 
-  export type AggregateCreditCard = {
-    _count: CreditCardCountAggregateOutputType | null
-    _avg: CreditCardAvgAggregateOutputType | null
-    _sum: CreditCardSumAggregateOutputType | null
-    _min: CreditCardMinAggregateOutputType | null
-    _max: CreditCardMaxAggregateOutputType | null
+  export type AggregateJob = {
+    _count: JobCountAggregateOutputType | null
+    _avg: JobAvgAggregateOutputType | null
+    _sum: JobSumAggregateOutputType | null
+    _min: JobMinAggregateOutputType | null
+    _max: JobMaxAggregateOutputType | null
   }
 
-  export type CreditCardAvgAggregateOutputType = {
+  export type JobAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
-    balance: number | null
-    interestRate: number | null
+    incomeProfileId: number | null
+    grossSalary: Decimal | null
+    taxDeductions: Decimal | null
+    healthInsurance: Decimal | null
+    retirementContributions: Decimal | null
+    netSalary: Decimal | null
   }
 
-  export type CreditCardSumAggregateOutputType = {
+  export type JobSumAggregateOutputType = {
     id: number | null
-    userId: number | null
-    balance: number | null
-    interestRate: number | null
+    incomeProfileId: number | null
+    grossSalary: Decimal | null
+    taxDeductions: Decimal | null
+    healthInsurance: Decimal | null
+    retirementContributions: Decimal | null
+    netSalary: Decimal | null
   }
 
-  export type CreditCardMinAggregateOutputType = {
+  export type JobMinAggregateOutputType = {
     id: number | null
-    userId: number | null
-    cardName: string | null
-    bankName: string | null
-    balance: number | null
-    interestRate: number | null
+    incomeProfileId: number | null
+    employmentStatus: $Enums.EmploymentStatus | null
+    employerName: string | null
+    roleTitle: string | null
+    paymentFrequency: $Enums.PaymentFrequency | null
+    paystubPeriod: $Enums.PaystubPeriod | null
+    grossSalary: Decimal | null
+    taxDeductions: Decimal | null
+    healthInsurance: Decimal | null
+    retirementContributions: Decimal | null
+    netSalary: Decimal | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type CreditCardMaxAggregateOutputType = {
+  export type JobMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
-    cardName: string | null
-    bankName: string | null
-    balance: number | null
-    interestRate: number | null
+    incomeProfileId: number | null
+    employmentStatus: $Enums.EmploymentStatus | null
+    employerName: string | null
+    roleTitle: string | null
+    paymentFrequency: $Enums.PaymentFrequency | null
+    paystubPeriod: $Enums.PaystubPeriod | null
+    grossSalary: Decimal | null
+    taxDeductions: Decimal | null
+    healthInsurance: Decimal | null
+    retirementContributions: Decimal | null
+    netSalary: Decimal | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
-  export type CreditCardCountAggregateOutputType = {
+  export type JobCountAggregateOutputType = {
     id: number
-    userId: number
-    cardName: number
-    bankName: number
-    balance: number
-    interestRate: number
+    incomeProfileId: number
+    employmentStatus: number
+    employerName: number
+    roleTitle: number
+    paymentFrequency: number
+    paystubPeriod: number
+    grossSalary: number
+    taxDeductions: number
+    healthInsurance: number
+    retirementContributions: number
+    netSalary: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type CreditCardAvgAggregateInputType = {
+  export type JobAvgAggregateInputType = {
     id?: true
-    userId?: true
-    balance?: true
-    interestRate?: true
+    incomeProfileId?: true
+    grossSalary?: true
+    taxDeductions?: true
+    healthInsurance?: true
+    retirementContributions?: true
+    netSalary?: true
   }
 
-  export type CreditCardSumAggregateInputType = {
+  export type JobSumAggregateInputType = {
     id?: true
-    userId?: true
-    balance?: true
-    interestRate?: true
+    incomeProfileId?: true
+    grossSalary?: true
+    taxDeductions?: true
+    healthInsurance?: true
+    retirementContributions?: true
+    netSalary?: true
   }
 
-  export type CreditCardMinAggregateInputType = {
+  export type JobMinAggregateInputType = {
     id?: true
-    userId?: true
-    cardName?: true
-    bankName?: true
-    balance?: true
-    interestRate?: true
+    incomeProfileId?: true
+    employmentStatus?: true
+    employerName?: true
+    roleTitle?: true
+    paymentFrequency?: true
+    paystubPeriod?: true
+    grossSalary?: true
+    taxDeductions?: true
+    healthInsurance?: true
+    retirementContributions?: true
+    netSalary?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type CreditCardMaxAggregateInputType = {
+  export type JobMaxAggregateInputType = {
     id?: true
-    userId?: true
-    cardName?: true
-    bankName?: true
-    balance?: true
-    interestRate?: true
+    incomeProfileId?: true
+    employmentStatus?: true
+    employerName?: true
+    roleTitle?: true
+    paymentFrequency?: true
+    paystubPeriod?: true
+    grossSalary?: true
+    taxDeductions?: true
+    healthInsurance?: true
+    retirementContributions?: true
+    netSalary?: true
     createdAt?: true
+    updatedAt?: true
   }
 
-  export type CreditCardCountAggregateInputType = {
+  export type JobCountAggregateInputType = {
     id?: true
-    userId?: true
-    cardName?: true
-    bankName?: true
-    balance?: true
-    interestRate?: true
+    incomeProfileId?: true
+    employmentStatus?: true
+    employerName?: true
+    roleTitle?: true
+    paymentFrequency?: true
+    paystubPeriod?: true
+    grossSalary?: true
+    taxDeductions?: true
+    healthInsurance?: true
+    retirementContributions?: true
+    netSalary?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type CreditCardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which CreditCard to aggregate.
+     * Filter which Job to aggregate.
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of CreditCards to fetch.
+     * Determine the order of Jobs to fetch.
      */
-    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    orderBy?: JobOrderByWithRelationInput | JobOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: CreditCardWhereUniqueInput
+    cursor?: JobWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` CreditCards from the position of the cursor.
+     * Take `±n` Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` CreditCards.
+     * Skip the first `n` Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned CreditCards
+     * Count returned Jobs
     **/
-    _count?: true | CreditCardCountAggregateInputType
+    _count?: true | JobCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CreditCardAvgAggregateInputType
+    _avg?: JobAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CreditCardSumAggregateInputType
+    _sum?: JobSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CreditCardMinAggregateInputType
+    _min?: JobMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CreditCardMaxAggregateInputType
+    _max?: JobMaxAggregateInputType
   }
 
-  export type GetCreditCardAggregateType<T extends CreditCardAggregateArgs> = {
-        [P in keyof T & keyof AggregateCreditCard]: P extends '_count' | 'count'
+  export type GetJobAggregateType<T extends JobAggregateArgs> = {
+        [P in keyof T & keyof AggregateJob]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCreditCard[P]>
-      : GetScalarType<T[P], AggregateCreditCard[P]>
+        : GetScalarType<T[P], AggregateJob[P]>
+      : GetScalarType<T[P], AggregateJob[P]>
   }
 
 
 
 
-  export type CreditCardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CreditCardWhereInput
-    orderBy?: CreditCardOrderByWithAggregationInput | CreditCardOrderByWithAggregationInput[]
-    by: CreditCardScalarFieldEnum[] | CreditCardScalarFieldEnum
-    having?: CreditCardScalarWhereWithAggregatesInput
+  export type JobGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobWhereInput
+    orderBy?: JobOrderByWithAggregationInput | JobOrderByWithAggregationInput[]
+    by: JobScalarFieldEnum[] | JobScalarFieldEnum
+    having?: JobScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CreditCardCountAggregateInputType | true
-    _avg?: CreditCardAvgAggregateInputType
-    _sum?: CreditCardSumAggregateInputType
-    _min?: CreditCardMinAggregateInputType
-    _max?: CreditCardMaxAggregateInputType
+    _count?: JobCountAggregateInputType | true
+    _avg?: JobAvgAggregateInputType
+    _sum?: JobSumAggregateInputType
+    _min?: JobMinAggregateInputType
+    _max?: JobMaxAggregateInputType
   }
 
-  export type CreditCardGroupByOutputType = {
+  export type JobGroupByOutputType = {
     id: number
-    userId: number
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+    incomeProfileId: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal
+    taxDeductions: Decimal
+    healthInsurance: Decimal
+    retirementContributions: Decimal
+    netSalary: Decimal
     createdAt: Date
-    _count: CreditCardCountAggregateOutputType | null
-    _avg: CreditCardAvgAggregateOutputType | null
-    _sum: CreditCardSumAggregateOutputType | null
-    _min: CreditCardMinAggregateOutputType | null
-    _max: CreditCardMaxAggregateOutputType | null
+    updatedAt: Date
+    _count: JobCountAggregateOutputType | null
+    _avg: JobAvgAggregateOutputType | null
+    _sum: JobSumAggregateOutputType | null
+    _min: JobMinAggregateOutputType | null
+    _max: JobMaxAggregateOutputType | null
   }
 
-  type GetCreditCardGroupByPayload<T extends CreditCardGroupByArgs> = Prisma.PrismaPromise<
+  type GetJobGroupByPayload<T extends JobGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<CreditCardGroupByOutputType, T['by']> &
+      PickEnumerable<JobGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CreditCardGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof JobGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CreditCardGroupByOutputType[P]>
-            : GetScalarType<T[P], CreditCardGroupByOutputType[P]>
+              : GetScalarType<T[P], JobGroupByOutputType[P]>
+            : GetScalarType<T[P], JobGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type CreditCardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type JobSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    cardName?: boolean
-    bankName?: boolean
-    balance?: boolean
-    interestRate?: boolean
+    incomeProfileId?: boolean
+    employmentStatus?: boolean
+    employerName?: boolean
+    roleTitle?: boolean
+    paymentFrequency?: boolean
+    paystubPeriod?: boolean
+    grossSalary?: boolean
+    taxDeductions?: boolean
+    healthInsurance?: boolean
+    retirementContributions?: boolean
+    netSalary?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["creditCard"]>
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+    otherDeductions?: boolean | Job$otherDeductionsArgs<ExtArgs>
+    _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["job"]>
 
-  export type CreditCardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type JobSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    cardName?: boolean
-    bankName?: boolean
-    balance?: boolean
-    interestRate?: boolean
+    incomeProfileId?: boolean
+    employmentStatus?: boolean
+    employerName?: boolean
+    roleTitle?: boolean
+    paymentFrequency?: boolean
+    paystubPeriod?: boolean
+    grossSalary?: boolean
+    taxDeductions?: boolean
+    healthInsurance?: boolean
+    retirementContributions?: boolean
+    netSalary?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["creditCard"]>
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["job"]>
 
-  export type CreditCardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type JobSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    cardName?: boolean
-    bankName?: boolean
-    balance?: boolean
-    interestRate?: boolean
+    incomeProfileId?: boolean
+    employmentStatus?: boolean
+    employerName?: boolean
+    roleTitle?: boolean
+    paymentFrequency?: boolean
+    paystubPeriod?: boolean
+    grossSalary?: boolean
+    taxDeductions?: boolean
+    healthInsurance?: boolean
+    retirementContributions?: boolean
+    netSalary?: boolean
     createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["creditCard"]>
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["job"]>
 
-  export type CreditCardSelectScalar = {
+  export type JobSelectScalar = {
     id?: boolean
-    userId?: boolean
-    cardName?: boolean
-    bankName?: boolean
-    balance?: boolean
-    interestRate?: boolean
+    incomeProfileId?: boolean
+    employmentStatus?: boolean
+    employerName?: boolean
+    roleTitle?: boolean
+    paymentFrequency?: boolean
+    paystubPeriod?: boolean
+    grossSalary?: boolean
+    taxDeductions?: boolean
+    healthInsurance?: boolean
+    retirementContributions?: boolean
+    netSalary?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type CreditCardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "cardName" | "bankName" | "balance" | "interestRate" | "createdAt", ExtArgs["result"]["creditCard"]>
-  export type CreditCardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+  export type JobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "incomeProfileId" | "employmentStatus" | "employerName" | "roleTitle" | "paymentFrequency" | "paystubPeriod" | "grossSalary" | "taxDeductions" | "healthInsurance" | "retirementContributions" | "netSalary" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+  export type JobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+    otherDeductions?: boolean | Job$otherDeductionsArgs<ExtArgs>
+    _count?: boolean | JobCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type CreditCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+  export type JobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
   }
-  export type CreditCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+  export type JobIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
   }
 
-  export type $CreditCardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "CreditCard"
+  export type $JobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Job"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      incomeProfile: Prisma.$IncomeProfilePayload<ExtArgs>
+      otherDeductions: Prisma.$OtherDeductionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
-      cardName: string
-      bankName: string
-      balance: number
-      interestRate: number
+      incomeProfileId: number
+      employmentStatus: $Enums.EmploymentStatus
+      employerName: string
+      roleTitle: string
+      paymentFrequency: $Enums.PaymentFrequency
+      paystubPeriod: $Enums.PaystubPeriod
+      grossSalary: Prisma.Decimal
+      taxDeductions: Prisma.Decimal
+      healthInsurance: Prisma.Decimal
+      retirementContributions: Prisma.Decimal
+      netSalary: Prisma.Decimal
       createdAt: Date
-    }, ExtArgs["result"]["creditCard"]>
+      updatedAt: Date
+    }, ExtArgs["result"]["job"]>
     composites: {}
   }
 
-  type CreditCardGetPayload<S extends boolean | null | undefined | CreditCardDefaultArgs> = $Result.GetResult<Prisma.$CreditCardPayload, S>
+  type JobGetPayload<S extends boolean | null | undefined | JobDefaultArgs> = $Result.GetResult<Prisma.$JobPayload, S>
 
-  type CreditCardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<CreditCardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: CreditCardCountAggregateInputType | true
+  type JobCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JobFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: JobCountAggregateInputType | true
     }
 
-  export interface CreditCardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CreditCard'], meta: { name: 'CreditCard' } }
+  export interface JobDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Job'], meta: { name: 'Job' } }
     /**
-     * Find zero or one CreditCard that matches the filter.
-     * @param {CreditCardFindUniqueArgs} args - Arguments to find a CreditCard
+     * Find zero or one Job that matches the filter.
+     * @param {JobFindUniqueArgs} args - Arguments to find a Job
      * @example
-     * // Get one CreditCard
-     * const creditCard = await prisma.creditCard.findUnique({
+     * // Get one Job
+     * const job = await prisma.job.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends CreditCardFindUniqueArgs>(args: SelectSubset<T, CreditCardFindUniqueArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends JobFindUniqueArgs>(args: SelectSubset<T, JobFindUniqueArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one CreditCard that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Job that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {CreditCardFindUniqueOrThrowArgs} args - Arguments to find a CreditCard
+     * @param {JobFindUniqueOrThrowArgs} args - Arguments to find a Job
      * @example
-     * // Get one CreditCard
-     * const creditCard = await prisma.creditCard.findUniqueOrThrow({
+     * // Get one Job
+     * const job = await prisma.job.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends CreditCardFindUniqueOrThrowArgs>(args: SelectSubset<T, CreditCardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends JobFindUniqueOrThrowArgs>(args: SelectSubset<T, JobFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first CreditCard that matches the filter.
+     * Find the first Job that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardFindFirstArgs} args - Arguments to find a CreditCard
+     * @param {JobFindFirstArgs} args - Arguments to find a Job
      * @example
-     * // Get one CreditCard
-     * const creditCard = await prisma.creditCard.findFirst({
+     * // Get one Job
+     * const job = await prisma.job.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends CreditCardFindFirstArgs>(args?: SelectSubset<T, CreditCardFindFirstArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends JobFindFirstArgs>(args?: SelectSubset<T, JobFindFirstArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first CreditCard that matches the filter or
+     * Find the first Job that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardFindFirstOrThrowArgs} args - Arguments to find a CreditCard
+     * @param {JobFindFirstOrThrowArgs} args - Arguments to find a Job
      * @example
-     * // Get one CreditCard
-     * const creditCard = await prisma.creditCard.findFirstOrThrow({
+     * // Get one Job
+     * const job = await prisma.job.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends CreditCardFindFirstOrThrowArgs>(args?: SelectSubset<T, CreditCardFindFirstOrThrowArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends JobFindFirstOrThrowArgs>(args?: SelectSubset<T, JobFindFirstOrThrowArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more CreditCards that matches the filter.
+     * Find zero or more Jobs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {JobFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all CreditCards
-     * const creditCards = await prisma.creditCard.findMany()
+     * // Get all Jobs
+     * const jobs = await prisma.job.findMany()
      * 
-     * // Get first 10 CreditCards
-     * const creditCards = await prisma.creditCard.findMany({ take: 10 })
+     * // Get first 10 Jobs
+     * const jobs = await prisma.job.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const creditCardWithIdOnly = await prisma.creditCard.findMany({ select: { id: true } })
+     * const jobWithIdOnly = await prisma.job.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends CreditCardFindManyArgs>(args?: SelectSubset<T, CreditCardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends JobFindManyArgs>(args?: SelectSubset<T, JobFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a CreditCard.
-     * @param {CreditCardCreateArgs} args - Arguments to create a CreditCard.
+     * Create a Job.
+     * @param {JobCreateArgs} args - Arguments to create a Job.
      * @example
-     * // Create one CreditCard
-     * const CreditCard = await prisma.creditCard.create({
+     * // Create one Job
+     * const Job = await prisma.job.create({
      *   data: {
-     *     // ... data to create a CreditCard
+     *     // ... data to create a Job
      *   }
      * })
      * 
      */
-    create<T extends CreditCardCreateArgs>(args: SelectSubset<T, CreditCardCreateArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends JobCreateArgs>(args: SelectSubset<T, JobCreateArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many CreditCards.
-     * @param {CreditCardCreateManyArgs} args - Arguments to create many CreditCards.
+     * Create many Jobs.
+     * @param {JobCreateManyArgs} args - Arguments to create many Jobs.
      * @example
-     * // Create many CreditCards
-     * const creditCard = await prisma.creditCard.createMany({
+     * // Create many Jobs
+     * const job = await prisma.job.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends CreditCardCreateManyArgs>(args?: SelectSubset<T, CreditCardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends JobCreateManyArgs>(args?: SelectSubset<T, JobCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many CreditCards and returns the data saved in the database.
-     * @param {CreditCardCreateManyAndReturnArgs} args - Arguments to create many CreditCards.
+     * Create many Jobs and returns the data saved in the database.
+     * @param {JobCreateManyAndReturnArgs} args - Arguments to create many Jobs.
      * @example
-     * // Create many CreditCards
-     * const creditCard = await prisma.creditCard.createManyAndReturn({
+     * // Create many Jobs
+     * const job = await prisma.job.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many CreditCards and only return the `id`
-     * const creditCardWithIdOnly = await prisma.creditCard.createManyAndReturn({
+     * // Create many Jobs and only return the `id`
+     * const jobWithIdOnly = await prisma.job.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -5031,28 +4202,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends CreditCardCreateManyAndReturnArgs>(args?: SelectSubset<T, CreditCardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends JobCreateManyAndReturnArgs>(args?: SelectSubset<T, JobCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a CreditCard.
-     * @param {CreditCardDeleteArgs} args - Arguments to delete one CreditCard.
+     * Delete a Job.
+     * @param {JobDeleteArgs} args - Arguments to delete one Job.
      * @example
-     * // Delete one CreditCard
-     * const CreditCard = await prisma.creditCard.delete({
+     * // Delete one Job
+     * const Job = await prisma.job.delete({
      *   where: {
-     *     // ... filter to delete one CreditCard
+     *     // ... filter to delete one Job
      *   }
      * })
      * 
      */
-    delete<T extends CreditCardDeleteArgs>(args: SelectSubset<T, CreditCardDeleteArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends JobDeleteArgs>(args: SelectSubset<T, JobDeleteArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one CreditCard.
-     * @param {CreditCardUpdateArgs} args - Arguments to update one CreditCard.
+     * Update one Job.
+     * @param {JobUpdateArgs} args - Arguments to update one Job.
      * @example
-     * // Update one CreditCard
-     * const creditCard = await prisma.creditCard.update({
+     * // Update one Job
+     * const job = await prisma.job.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5062,30 +4233,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends CreditCardUpdateArgs>(args: SelectSubset<T, CreditCardUpdateArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends JobUpdateArgs>(args: SelectSubset<T, JobUpdateArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more CreditCards.
-     * @param {CreditCardDeleteManyArgs} args - Arguments to filter CreditCards to delete.
+     * Delete zero or more Jobs.
+     * @param {JobDeleteManyArgs} args - Arguments to filter Jobs to delete.
      * @example
-     * // Delete a few CreditCards
-     * const { count } = await prisma.creditCard.deleteMany({
+     * // Delete a few Jobs
+     * const { count } = await prisma.job.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends CreditCardDeleteManyArgs>(args?: SelectSubset<T, CreditCardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends JobDeleteManyArgs>(args?: SelectSubset<T, JobDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more CreditCards.
+     * Update zero or more Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {JobUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many CreditCards
-     * const creditCard = await prisma.creditCard.updateMany({
+     * // Update many Jobs
+     * const job = await prisma.job.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5095,14 +4266,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends CreditCardUpdateManyArgs>(args: SelectSubset<T, CreditCardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends JobUpdateManyArgs>(args: SelectSubset<T, JobUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more CreditCards and returns the data updated in the database.
-     * @param {CreditCardUpdateManyAndReturnArgs} args - Arguments to update many CreditCards.
+     * Update zero or more Jobs and returns the data updated in the database.
+     * @param {JobUpdateManyAndReturnArgs} args - Arguments to update many Jobs.
      * @example
-     * // Update many CreditCards
-     * const creditCard = await prisma.creditCard.updateManyAndReturn({
+     * // Update many Jobs
+     * const job = await prisma.job.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5111,8 +4282,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more CreditCards and only return the `id`
-     * const creditCardWithIdOnly = await prisma.creditCard.updateManyAndReturn({
+     * // Update zero or more Jobs and only return the `id`
+     * const jobWithIdOnly = await prisma.job.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -5125,56 +4296,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends CreditCardUpdateManyAndReturnArgs>(args: SelectSubset<T, CreditCardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends JobUpdateManyAndReturnArgs>(args: SelectSubset<T, JobUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one CreditCard.
-     * @param {CreditCardUpsertArgs} args - Arguments to update or create a CreditCard.
+     * Create or update one Job.
+     * @param {JobUpsertArgs} args - Arguments to update or create a Job.
      * @example
-     * // Update or create a CreditCard
-     * const creditCard = await prisma.creditCard.upsert({
+     * // Update or create a Job
+     * const job = await prisma.job.upsert({
      *   create: {
-     *     // ... data to create a CreditCard
+     *     // ... data to create a Job
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the CreditCard we want to update
+     *     // ... the filter for the Job we want to update
      *   }
      * })
      */
-    upsert<T extends CreditCardUpsertArgs>(args: SelectSubset<T, CreditCardUpsertArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends JobUpsertArgs>(args: SelectSubset<T, JobUpsertArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of CreditCards.
+     * Count the number of Jobs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardCountArgs} args - Arguments to filter CreditCards to count.
+     * @param {JobCountArgs} args - Arguments to filter Jobs to count.
      * @example
-     * // Count the number of CreditCards
-     * const count = await prisma.creditCard.count({
+     * // Count the number of Jobs
+     * const count = await prisma.job.count({
      *   where: {
-     *     // ... the filter for the CreditCards we want to count
+     *     // ... the filter for the Jobs we want to count
      *   }
      * })
     **/
-    count<T extends CreditCardCountArgs>(
-      args?: Subset<T, CreditCardCountArgs>,
+    count<T extends JobCountArgs>(
+      args?: Subset<T, JobCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CreditCardCountAggregateOutputType>
+          : GetScalarType<T['select'], JobCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a CreditCard.
+     * Allows you to perform aggregations operations on a Job.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {JobAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -5194,13 +4365,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CreditCardAggregateArgs>(args: Subset<T, CreditCardAggregateArgs>): Prisma.PrismaPromise<GetCreditCardAggregateType<T>>
+    aggregate<T extends JobAggregateArgs>(args: Subset<T, JobAggregateArgs>): Prisma.PrismaPromise<GetJobAggregateType<T>>
 
     /**
-     * Group by CreditCard.
+     * Group by Job.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CreditCardGroupByArgs} args - Group by arguments.
+     * @param {JobGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -5215,14 +4386,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends CreditCardGroupByArgs,
+      T extends JobGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CreditCardGroupByArgs['orderBy'] }
-        : { orderBy?: CreditCardGroupByArgs['orderBy'] },
+        ? { orderBy: JobGroupByArgs['orderBy'] }
+        : { orderBy?: JobGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -5271,22 +4442,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, CreditCardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCreditCardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, JobGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJobGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the CreditCard model
+   * Fields of the Job model
    */
-  readonly fields: CreditCardFieldRefs;
+  readonly fields: JobFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for CreditCard.
+   * The delegate class that acts as a "Promise-like" for Job.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CreditCardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__JobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    incomeProfile<T extends IncomeProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IncomeProfileDefaultArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    otherDeductions<T extends Job$otherDeductionsArgs<ExtArgs> = {}>(args?: Subset<T, Job$otherDeductionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5313,427 +4485,2710 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the CreditCard model
+   * Fields of the Job model
    */
-  interface CreditCardFieldRefs {
-    readonly id: FieldRef<"CreditCard", 'Int'>
-    readonly userId: FieldRef<"CreditCard", 'Int'>
-    readonly cardName: FieldRef<"CreditCard", 'String'>
-    readonly bankName: FieldRef<"CreditCard", 'String'>
-    readonly balance: FieldRef<"CreditCard", 'Float'>
-    readonly interestRate: FieldRef<"CreditCard", 'Float'>
-    readonly createdAt: FieldRef<"CreditCard", 'DateTime'>
+  interface JobFieldRefs {
+    readonly id: FieldRef<"Job", 'Int'>
+    readonly incomeProfileId: FieldRef<"Job", 'Int'>
+    readonly employmentStatus: FieldRef<"Job", 'EmploymentStatus'>
+    readonly employerName: FieldRef<"Job", 'String'>
+    readonly roleTitle: FieldRef<"Job", 'String'>
+    readonly paymentFrequency: FieldRef<"Job", 'PaymentFrequency'>
+    readonly paystubPeriod: FieldRef<"Job", 'PaystubPeriod'>
+    readonly grossSalary: FieldRef<"Job", 'Decimal'>
+    readonly taxDeductions: FieldRef<"Job", 'Decimal'>
+    readonly healthInsurance: FieldRef<"Job", 'Decimal'>
+    readonly retirementContributions: FieldRef<"Job", 'Decimal'>
+    readonly netSalary: FieldRef<"Job", 'Decimal'>
+    readonly createdAt: FieldRef<"Job", 'DateTime'>
+    readonly updatedAt: FieldRef<"Job", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * CreditCard findUnique
+   * Job findUnique
    */
-  export type CreditCardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter, which CreditCard to fetch.
+     * Filter, which Job to fetch.
      */
-    where: CreditCardWhereUniqueInput
+    where: JobWhereUniqueInput
   }
 
   /**
-   * CreditCard findUniqueOrThrow
+   * Job findUniqueOrThrow
    */
-  export type CreditCardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter, which CreditCard to fetch.
+     * Filter, which Job to fetch.
      */
-    where: CreditCardWhereUniqueInput
+    where: JobWhereUniqueInput
   }
 
   /**
-   * CreditCard findFirst
+   * Job findFirst
    */
-  export type CreditCardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter, which CreditCard to fetch.
+     * Filter, which Job to fetch.
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of CreditCards to fetch.
+     * Determine the order of Jobs to fetch.
      */
-    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    orderBy?: JobOrderByWithRelationInput | JobOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for CreditCards.
+     * Sets the position for searching for Jobs.
      */
-    cursor?: CreditCardWhereUniqueInput
+    cursor?: JobWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` CreditCards from the position of the cursor.
+     * Take `±n` Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` CreditCards.
+     * Skip the first `n` Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of CreditCards.
+     * Filter by unique combinations of Jobs.
      */
-    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+    distinct?: JobScalarFieldEnum | JobScalarFieldEnum[]
   }
 
   /**
-   * CreditCard findFirstOrThrow
+   * Job findFirstOrThrow
    */
-  export type CreditCardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter, which CreditCard to fetch.
+     * Filter, which Job to fetch.
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of CreditCards to fetch.
+     * Determine the order of Jobs to fetch.
      */
-    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    orderBy?: JobOrderByWithRelationInput | JobOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for CreditCards.
+     * Sets the position for searching for Jobs.
      */
-    cursor?: CreditCardWhereUniqueInput
+    cursor?: JobWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` CreditCards from the position of the cursor.
+     * Take `±n` Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` CreditCards.
+     * Skip the first `n` Jobs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of CreditCards.
+     * Filter by unique combinations of Jobs.
      */
-    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+    distinct?: JobScalarFieldEnum | JobScalarFieldEnum[]
   }
 
   /**
-   * CreditCard findMany
+   * Job findMany
    */
-  export type CreditCardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter, which CreditCards to fetch.
+     * Filter, which Jobs to fetch.
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of CreditCards to fetch.
+     * Determine the order of Jobs to fetch.
      */
-    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    orderBy?: JobOrderByWithRelationInput | JobOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing CreditCards.
+     * Sets the position for listing Jobs.
      */
-    cursor?: CreditCardWhereUniqueInput
+    cursor?: JobWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` CreditCards from the position of the cursor.
+     * Take `±n` Jobs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` CreditCards.
+     * Skip the first `n` Jobs.
      */
     skip?: number
-    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+    distinct?: JobScalarFieldEnum | JobScalarFieldEnum[]
   }
 
   /**
-   * CreditCard create
+   * Job create
    */
-  export type CreditCardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * The data needed to create a CreditCard.
+     * The data needed to create a Job.
      */
-    data: XOR<CreditCardCreateInput, CreditCardUncheckedCreateInput>
+    data: XOR<JobCreateInput, JobUncheckedCreateInput>
   }
 
   /**
-   * CreditCard createMany
+   * Job createMany
    */
-  export type CreditCardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many CreditCards.
+     * The data used to create many Jobs.
      */
-    data: CreditCardCreateManyInput | CreditCardCreateManyInput[]
+    data: JobCreateManyInput | JobCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * CreditCard createManyAndReturn
+   * Job createManyAndReturn
    */
-  export type CreditCardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelectCreateManyAndReturn<ExtArgs> | null
+    select?: JobSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
-     * The data used to create many CreditCards.
+     * The data used to create many Jobs.
      */
-    data: CreditCardCreateManyInput | CreditCardCreateManyInput[]
+    data: JobCreateManyInput | JobCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: JobIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * CreditCard update
+   * Job update
    */
-  export type CreditCardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * The data needed to update a CreditCard.
+     * The data needed to update a Job.
      */
-    data: XOR<CreditCardUpdateInput, CreditCardUncheckedUpdateInput>
+    data: XOR<JobUpdateInput, JobUncheckedUpdateInput>
     /**
-     * Choose, which CreditCard to update.
+     * Choose, which Job to update.
      */
-    where: CreditCardWhereUniqueInput
+    where: JobWhereUniqueInput
   }
 
   /**
-   * CreditCard updateMany
+   * Job updateMany
    */
-  export type CreditCardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update CreditCards.
+     * The data used to update Jobs.
      */
-    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyInput>
+    data: XOR<JobUpdateManyMutationInput, JobUncheckedUpdateManyInput>
     /**
-     * Filter which CreditCards to update
+     * Filter which Jobs to update
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
-     * Limit how many CreditCards to update.
+     * Limit how many Jobs to update.
      */
     limit?: number
   }
 
   /**
-   * CreditCard updateManyAndReturn
+   * Job updateManyAndReturn
    */
-  export type CreditCardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: JobSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
-     * The data used to update CreditCards.
+     * The data used to update Jobs.
      */
-    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyInput>
+    data: XOR<JobUpdateManyMutationInput, JobUncheckedUpdateManyInput>
     /**
-     * Filter which CreditCards to update
+     * Filter which Jobs to update
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
-     * Limit how many CreditCards to update.
+     * Limit how many Jobs to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: JobIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * CreditCard upsert
+   * Job upsert
    */
-  export type CreditCardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * The filter to search for the CreditCard to update in case it exists.
+     * The filter to search for the Job to update in case it exists.
      */
-    where: CreditCardWhereUniqueInput
+    where: JobWhereUniqueInput
     /**
-     * In case the CreditCard found by the `where` argument doesn't exist, create a new CreditCard with this data.
+     * In case the Job found by the `where` argument doesn't exist, create a new Job with this data.
      */
-    create: XOR<CreditCardCreateInput, CreditCardUncheckedCreateInput>
+    create: XOR<JobCreateInput, JobUncheckedCreateInput>
     /**
-     * In case the CreditCard was found with the provided `where` argument, update it with this data.
+     * In case the Job was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<CreditCardUpdateInput, CreditCardUncheckedUpdateInput>
+    update: XOR<JobUpdateInput, JobUncheckedUpdateInput>
   }
 
   /**
-   * CreditCard delete
+   * Job delete
    */
-  export type CreditCardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the Job
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: JobSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the Job
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: JobOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: JobInclude<ExtArgs> | null
     /**
-     * Filter which CreditCard to delete.
+     * Filter which Job to delete.
      */
-    where: CreditCardWhereUniqueInput
+    where: JobWhereUniqueInput
   }
 
   /**
-   * CreditCard deleteMany
+   * Job deleteMany
    */
-  export type CreditCardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which CreditCards to delete
+     * Filter which Jobs to delete
      */
-    where?: CreditCardWhereInput
+    where?: JobWhereInput
     /**
-     * Limit how many CreditCards to delete.
+     * Limit how many Jobs to delete.
      */
     limit?: number
   }
 
   /**
-   * CreditCard without action
+   * Job.otherDeductions
    */
-  export type CreditCardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Job$otherDeductionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CreditCard
+     * Select specific fields to fetch from the OtherDeduction
      */
-    select?: CreditCardSelect<ExtArgs> | null
+    select?: OtherDeductionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CreditCard
+     * Omit specific fields from the OtherDeduction
      */
-    omit?: CreditCardOmit<ExtArgs> | null
+    omit?: OtherDeductionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CreditCardInclude<ExtArgs> | null
+    include?: OtherDeductionInclude<ExtArgs> | null
+    where?: OtherDeductionWhereInput
+    orderBy?: OtherDeductionOrderByWithRelationInput | OtherDeductionOrderByWithRelationInput[]
+    cursor?: OtherDeductionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OtherDeductionScalarFieldEnum | OtherDeductionScalarFieldEnum[]
+  }
+
+  /**
+   * Job without action
+   */
+  export type JobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Job
+     */
+    select?: JobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Job
+     */
+    omit?: JobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OtherDeduction
+   */
+
+  export type AggregateOtherDeduction = {
+    _count: OtherDeductionCountAggregateOutputType | null
+    _avg: OtherDeductionAvgAggregateOutputType | null
+    _sum: OtherDeductionSumAggregateOutputType | null
+    _min: OtherDeductionMinAggregateOutputType | null
+    _max: OtherDeductionMaxAggregateOutputType | null
+  }
+
+  export type OtherDeductionAvgAggregateOutputType = {
+    id: number | null
+    jobId: number | null
+    amount: Decimal | null
+  }
+
+  export type OtherDeductionSumAggregateOutputType = {
+    id: number | null
+    jobId: number | null
+    amount: Decimal | null
+  }
+
+  export type OtherDeductionMinAggregateOutputType = {
+    id: number | null
+    jobId: number | null
+    name: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OtherDeductionMaxAggregateOutputType = {
+    id: number | null
+    jobId: number | null
+    name: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OtherDeductionCountAggregateOutputType = {
+    id: number
+    jobId: number
+    name: number
+    amount: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OtherDeductionAvgAggregateInputType = {
+    id?: true
+    jobId?: true
+    amount?: true
+  }
+
+  export type OtherDeductionSumAggregateInputType = {
+    id?: true
+    jobId?: true
+    amount?: true
+  }
+
+  export type OtherDeductionMinAggregateInputType = {
+    id?: true
+    jobId?: true
+    name?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OtherDeductionMaxAggregateInputType = {
+    id?: true
+    jobId?: true
+    name?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OtherDeductionCountAggregateInputType = {
+    id?: true
+    jobId?: true
+    name?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OtherDeductionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OtherDeduction to aggregate.
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherDeductions to fetch.
+     */
+    orderBy?: OtherDeductionOrderByWithRelationInput | OtherDeductionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OtherDeductionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherDeductions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherDeductions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OtherDeductions
+    **/
+    _count?: true | OtherDeductionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OtherDeductionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OtherDeductionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OtherDeductionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OtherDeductionMaxAggregateInputType
+  }
+
+  export type GetOtherDeductionAggregateType<T extends OtherDeductionAggregateArgs> = {
+        [P in keyof T & keyof AggregateOtherDeduction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOtherDeduction[P]>
+      : GetScalarType<T[P], AggregateOtherDeduction[P]>
+  }
+
+
+
+
+  export type OtherDeductionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OtherDeductionWhereInput
+    orderBy?: OtherDeductionOrderByWithAggregationInput | OtherDeductionOrderByWithAggregationInput[]
+    by: OtherDeductionScalarFieldEnum[] | OtherDeductionScalarFieldEnum
+    having?: OtherDeductionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OtherDeductionCountAggregateInputType | true
+    _avg?: OtherDeductionAvgAggregateInputType
+    _sum?: OtherDeductionSumAggregateInputType
+    _min?: OtherDeductionMinAggregateInputType
+    _max?: OtherDeductionMaxAggregateInputType
+  }
+
+  export type OtherDeductionGroupByOutputType = {
+    id: number
+    jobId: number
+    name: string
+    amount: Decimal
+    createdAt: Date
+    updatedAt: Date
+    _count: OtherDeductionCountAggregateOutputType | null
+    _avg: OtherDeductionAvgAggregateOutputType | null
+    _sum: OtherDeductionSumAggregateOutputType | null
+    _min: OtherDeductionMinAggregateOutputType | null
+    _max: OtherDeductionMaxAggregateOutputType | null
+  }
+
+  type GetOtherDeductionGroupByPayload<T extends OtherDeductionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OtherDeductionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OtherDeductionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OtherDeductionGroupByOutputType[P]>
+            : GetScalarType<T[P], OtherDeductionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OtherDeductionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    name?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherDeduction"]>
+
+  export type OtherDeductionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    name?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherDeduction"]>
+
+  export type OtherDeductionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    name?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherDeduction"]>
+
+  export type OtherDeductionSelectScalar = {
+    id?: boolean
+    jobId?: boolean
+    name?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OtherDeductionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobId" | "name" | "amount" | "createdAt" | "updatedAt", ExtArgs["result"]["otherDeduction"]>
+  export type OtherDeductionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type OtherDeductionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+  export type OtherDeductionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefaultArgs<ExtArgs>
+  }
+
+  export type $OtherDeductionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OtherDeduction"
+    objects: {
+      job: Prisma.$JobPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      jobId: number
+      name: string
+      amount: Prisma.Decimal
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["otherDeduction"]>
+    composites: {}
+  }
+
+  type OtherDeductionGetPayload<S extends boolean | null | undefined | OtherDeductionDefaultArgs> = $Result.GetResult<Prisma.$OtherDeductionPayload, S>
+
+  type OtherDeductionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OtherDeductionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OtherDeductionCountAggregateInputType | true
+    }
+
+  export interface OtherDeductionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OtherDeduction'], meta: { name: 'OtherDeduction' } }
+    /**
+     * Find zero or one OtherDeduction that matches the filter.
+     * @param {OtherDeductionFindUniqueArgs} args - Arguments to find a OtherDeduction
+     * @example
+     * // Get one OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OtherDeductionFindUniqueArgs>(args: SelectSubset<T, OtherDeductionFindUniqueArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OtherDeduction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OtherDeductionFindUniqueOrThrowArgs} args - Arguments to find a OtherDeduction
+     * @example
+     * // Get one OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OtherDeductionFindUniqueOrThrowArgs>(args: SelectSubset<T, OtherDeductionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OtherDeduction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionFindFirstArgs} args - Arguments to find a OtherDeduction
+     * @example
+     * // Get one OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OtherDeductionFindFirstArgs>(args?: SelectSubset<T, OtherDeductionFindFirstArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OtherDeduction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionFindFirstOrThrowArgs} args - Arguments to find a OtherDeduction
+     * @example
+     * // Get one OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OtherDeductionFindFirstOrThrowArgs>(args?: SelectSubset<T, OtherDeductionFindFirstOrThrowArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OtherDeductions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OtherDeductions
+     * const otherDeductions = await prisma.otherDeduction.findMany()
+     * 
+     * // Get first 10 OtherDeductions
+     * const otherDeductions = await prisma.otherDeduction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const otherDeductionWithIdOnly = await prisma.otherDeduction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OtherDeductionFindManyArgs>(args?: SelectSubset<T, OtherDeductionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OtherDeduction.
+     * @param {OtherDeductionCreateArgs} args - Arguments to create a OtherDeduction.
+     * @example
+     * // Create one OtherDeduction
+     * const OtherDeduction = await prisma.otherDeduction.create({
+     *   data: {
+     *     // ... data to create a OtherDeduction
+     *   }
+     * })
+     * 
+     */
+    create<T extends OtherDeductionCreateArgs>(args: SelectSubset<T, OtherDeductionCreateArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OtherDeductions.
+     * @param {OtherDeductionCreateManyArgs} args - Arguments to create many OtherDeductions.
+     * @example
+     * // Create many OtherDeductions
+     * const otherDeduction = await prisma.otherDeduction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OtherDeductionCreateManyArgs>(args?: SelectSubset<T, OtherDeductionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OtherDeductions and returns the data saved in the database.
+     * @param {OtherDeductionCreateManyAndReturnArgs} args - Arguments to create many OtherDeductions.
+     * @example
+     * // Create many OtherDeductions
+     * const otherDeduction = await prisma.otherDeduction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OtherDeductions and only return the `id`
+     * const otherDeductionWithIdOnly = await prisma.otherDeduction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OtherDeductionCreateManyAndReturnArgs>(args?: SelectSubset<T, OtherDeductionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OtherDeduction.
+     * @param {OtherDeductionDeleteArgs} args - Arguments to delete one OtherDeduction.
+     * @example
+     * // Delete one OtherDeduction
+     * const OtherDeduction = await prisma.otherDeduction.delete({
+     *   where: {
+     *     // ... filter to delete one OtherDeduction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OtherDeductionDeleteArgs>(args: SelectSubset<T, OtherDeductionDeleteArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OtherDeduction.
+     * @param {OtherDeductionUpdateArgs} args - Arguments to update one OtherDeduction.
+     * @example
+     * // Update one OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OtherDeductionUpdateArgs>(args: SelectSubset<T, OtherDeductionUpdateArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OtherDeductions.
+     * @param {OtherDeductionDeleteManyArgs} args - Arguments to filter OtherDeductions to delete.
+     * @example
+     * // Delete a few OtherDeductions
+     * const { count } = await prisma.otherDeduction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OtherDeductionDeleteManyArgs>(args?: SelectSubset<T, OtherDeductionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OtherDeductions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OtherDeductions
+     * const otherDeduction = await prisma.otherDeduction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OtherDeductionUpdateManyArgs>(args: SelectSubset<T, OtherDeductionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OtherDeductions and returns the data updated in the database.
+     * @param {OtherDeductionUpdateManyAndReturnArgs} args - Arguments to update many OtherDeductions.
+     * @example
+     * // Update many OtherDeductions
+     * const otherDeduction = await prisma.otherDeduction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OtherDeductions and only return the `id`
+     * const otherDeductionWithIdOnly = await prisma.otherDeduction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OtherDeductionUpdateManyAndReturnArgs>(args: SelectSubset<T, OtherDeductionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OtherDeduction.
+     * @param {OtherDeductionUpsertArgs} args - Arguments to update or create a OtherDeduction.
+     * @example
+     * // Update or create a OtherDeduction
+     * const otherDeduction = await prisma.otherDeduction.upsert({
+     *   create: {
+     *     // ... data to create a OtherDeduction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OtherDeduction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OtherDeductionUpsertArgs>(args: SelectSubset<T, OtherDeductionUpsertArgs<ExtArgs>>): Prisma__OtherDeductionClient<$Result.GetResult<Prisma.$OtherDeductionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OtherDeductions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionCountArgs} args - Arguments to filter OtherDeductions to count.
+     * @example
+     * // Count the number of OtherDeductions
+     * const count = await prisma.otherDeduction.count({
+     *   where: {
+     *     // ... the filter for the OtherDeductions we want to count
+     *   }
+     * })
+    **/
+    count<T extends OtherDeductionCountArgs>(
+      args?: Subset<T, OtherDeductionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OtherDeductionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OtherDeduction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OtherDeductionAggregateArgs>(args: Subset<T, OtherDeductionAggregateArgs>): Prisma.PrismaPromise<GetOtherDeductionAggregateType<T>>
+
+    /**
+     * Group by OtherDeduction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherDeductionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OtherDeductionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OtherDeductionGroupByArgs['orderBy'] }
+        : { orderBy?: OtherDeductionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OtherDeductionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOtherDeductionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OtherDeduction model
+   */
+  readonly fields: OtherDeductionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OtherDeduction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OtherDeductionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    job<T extends JobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefaultArgs<ExtArgs>>): Prisma__JobClient<$Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OtherDeduction model
+   */
+  interface OtherDeductionFieldRefs {
+    readonly id: FieldRef<"OtherDeduction", 'Int'>
+    readonly jobId: FieldRef<"OtherDeduction", 'Int'>
+    readonly name: FieldRef<"OtherDeduction", 'String'>
+    readonly amount: FieldRef<"OtherDeduction", 'Decimal'>
+    readonly createdAt: FieldRef<"OtherDeduction", 'DateTime'>
+    readonly updatedAt: FieldRef<"OtherDeduction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OtherDeduction findUnique
+   */
+  export type OtherDeductionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherDeduction to fetch.
+     */
+    where: OtherDeductionWhereUniqueInput
+  }
+
+  /**
+   * OtherDeduction findUniqueOrThrow
+   */
+  export type OtherDeductionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherDeduction to fetch.
+     */
+    where: OtherDeductionWhereUniqueInput
+  }
+
+  /**
+   * OtherDeduction findFirst
+   */
+  export type OtherDeductionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherDeduction to fetch.
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherDeductions to fetch.
+     */
+    orderBy?: OtherDeductionOrderByWithRelationInput | OtherDeductionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OtherDeductions.
+     */
+    cursor?: OtherDeductionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherDeductions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherDeductions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OtherDeductions.
+     */
+    distinct?: OtherDeductionScalarFieldEnum | OtherDeductionScalarFieldEnum[]
+  }
+
+  /**
+   * OtherDeduction findFirstOrThrow
+   */
+  export type OtherDeductionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherDeduction to fetch.
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherDeductions to fetch.
+     */
+    orderBy?: OtherDeductionOrderByWithRelationInput | OtherDeductionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OtherDeductions.
+     */
+    cursor?: OtherDeductionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherDeductions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherDeductions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OtherDeductions.
+     */
+    distinct?: OtherDeductionScalarFieldEnum | OtherDeductionScalarFieldEnum[]
+  }
+
+  /**
+   * OtherDeduction findMany
+   */
+  export type OtherDeductionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherDeductions to fetch.
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherDeductions to fetch.
+     */
+    orderBy?: OtherDeductionOrderByWithRelationInput | OtherDeductionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OtherDeductions.
+     */
+    cursor?: OtherDeductionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherDeductions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherDeductions.
+     */
+    skip?: number
+    distinct?: OtherDeductionScalarFieldEnum | OtherDeductionScalarFieldEnum[]
+  }
+
+  /**
+   * OtherDeduction create
+   */
+  export type OtherDeductionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OtherDeduction.
+     */
+    data: XOR<OtherDeductionCreateInput, OtherDeductionUncheckedCreateInput>
+  }
+
+  /**
+   * OtherDeduction createMany
+   */
+  export type OtherDeductionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OtherDeductions.
+     */
+    data: OtherDeductionCreateManyInput | OtherDeductionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OtherDeduction createManyAndReturn
+   */
+  export type OtherDeductionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * The data used to create many OtherDeductions.
+     */
+    data: OtherDeductionCreateManyInput | OtherDeductionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OtherDeduction update
+   */
+  export type OtherDeductionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OtherDeduction.
+     */
+    data: XOR<OtherDeductionUpdateInput, OtherDeductionUncheckedUpdateInput>
+    /**
+     * Choose, which OtherDeduction to update.
+     */
+    where: OtherDeductionWhereUniqueInput
+  }
+
+  /**
+   * OtherDeduction updateMany
+   */
+  export type OtherDeductionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OtherDeductions.
+     */
+    data: XOR<OtherDeductionUpdateManyMutationInput, OtherDeductionUncheckedUpdateManyInput>
+    /**
+     * Filter which OtherDeductions to update
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * Limit how many OtherDeductions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OtherDeduction updateManyAndReturn
+   */
+  export type OtherDeductionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * The data used to update OtherDeductions.
+     */
+    data: XOR<OtherDeductionUpdateManyMutationInput, OtherDeductionUncheckedUpdateManyInput>
+    /**
+     * Filter which OtherDeductions to update
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * Limit how many OtherDeductions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OtherDeduction upsert
+   */
+  export type OtherDeductionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OtherDeduction to update in case it exists.
+     */
+    where: OtherDeductionWhereUniqueInput
+    /**
+     * In case the OtherDeduction found by the `where` argument doesn't exist, create a new OtherDeduction with this data.
+     */
+    create: XOR<OtherDeductionCreateInput, OtherDeductionUncheckedCreateInput>
+    /**
+     * In case the OtherDeduction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OtherDeductionUpdateInput, OtherDeductionUncheckedUpdateInput>
+  }
+
+  /**
+   * OtherDeduction delete
+   */
+  export type OtherDeductionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+    /**
+     * Filter which OtherDeduction to delete.
+     */
+    where: OtherDeductionWhereUniqueInput
+  }
+
+  /**
+   * OtherDeduction deleteMany
+   */
+  export type OtherDeductionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OtherDeductions to delete
+     */
+    where?: OtherDeductionWhereInput
+    /**
+     * Limit how many OtherDeductions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OtherDeduction without action
+   */
+  export type OtherDeductionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherDeduction
+     */
+    select?: OtherDeductionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherDeduction
+     */
+    omit?: OtherDeductionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherDeductionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OtherIncomeSource
+   */
+
+  export type AggregateOtherIncomeSource = {
+    _count: OtherIncomeSourceCountAggregateOutputType | null
+    _avg: OtherIncomeSourceAvgAggregateOutputType | null
+    _sum: OtherIncomeSourceSumAggregateOutputType | null
+    _min: OtherIncomeSourceMinAggregateOutputType | null
+    _max: OtherIncomeSourceMaxAggregateOutputType | null
+  }
+
+  export type OtherIncomeSourceAvgAggregateOutputType = {
+    id: number | null
+    incomeProfileId: number | null
+    amount: Decimal | null
+  }
+
+  export type OtherIncomeSourceSumAggregateOutputType = {
+    id: number | null
+    incomeProfileId: number | null
+    amount: Decimal | null
+  }
+
+  export type OtherIncomeSourceMinAggregateOutputType = {
+    id: number | null
+    incomeProfileId: number | null
+    sourceType: $Enums.OtherIncomeType | null
+    frequency: $Enums.PaymentFrequency | null
+    amount: Decimal | null
+    additionalContext: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OtherIncomeSourceMaxAggregateOutputType = {
+    id: number | null
+    incomeProfileId: number | null
+    sourceType: $Enums.OtherIncomeType | null
+    frequency: $Enums.PaymentFrequency | null
+    amount: Decimal | null
+    additionalContext: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OtherIncomeSourceCountAggregateOutputType = {
+    id: number
+    incomeProfileId: number
+    sourceType: number
+    frequency: number
+    amount: number
+    additionalContext: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OtherIncomeSourceAvgAggregateInputType = {
+    id?: true
+    incomeProfileId?: true
+    amount?: true
+  }
+
+  export type OtherIncomeSourceSumAggregateInputType = {
+    id?: true
+    incomeProfileId?: true
+    amount?: true
+  }
+
+  export type OtherIncomeSourceMinAggregateInputType = {
+    id?: true
+    incomeProfileId?: true
+    sourceType?: true
+    frequency?: true
+    amount?: true
+    additionalContext?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OtherIncomeSourceMaxAggregateInputType = {
+    id?: true
+    incomeProfileId?: true
+    sourceType?: true
+    frequency?: true
+    amount?: true
+    additionalContext?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OtherIncomeSourceCountAggregateInputType = {
+    id?: true
+    incomeProfileId?: true
+    sourceType?: true
+    frequency?: true
+    amount?: true
+    additionalContext?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OtherIncomeSourceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OtherIncomeSource to aggregate.
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherIncomeSources to fetch.
+     */
+    orderBy?: OtherIncomeSourceOrderByWithRelationInput | OtherIncomeSourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OtherIncomeSourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherIncomeSources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherIncomeSources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OtherIncomeSources
+    **/
+    _count?: true | OtherIncomeSourceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OtherIncomeSourceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OtherIncomeSourceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OtherIncomeSourceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OtherIncomeSourceMaxAggregateInputType
+  }
+
+  export type GetOtherIncomeSourceAggregateType<T extends OtherIncomeSourceAggregateArgs> = {
+        [P in keyof T & keyof AggregateOtherIncomeSource]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOtherIncomeSource[P]>
+      : GetScalarType<T[P], AggregateOtherIncomeSource[P]>
+  }
+
+
+
+
+  export type OtherIncomeSourceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OtherIncomeSourceWhereInput
+    orderBy?: OtherIncomeSourceOrderByWithAggregationInput | OtherIncomeSourceOrderByWithAggregationInput[]
+    by: OtherIncomeSourceScalarFieldEnum[] | OtherIncomeSourceScalarFieldEnum
+    having?: OtherIncomeSourceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OtherIncomeSourceCountAggregateInputType | true
+    _avg?: OtherIncomeSourceAvgAggregateInputType
+    _sum?: OtherIncomeSourceSumAggregateInputType
+    _min?: OtherIncomeSourceMinAggregateInputType
+    _max?: OtherIncomeSourceMaxAggregateInputType
+  }
+
+  export type OtherIncomeSourceGroupByOutputType = {
+    id: number
+    incomeProfileId: number
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal
+    additionalContext: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: OtherIncomeSourceCountAggregateOutputType | null
+    _avg: OtherIncomeSourceAvgAggregateOutputType | null
+    _sum: OtherIncomeSourceSumAggregateOutputType | null
+    _min: OtherIncomeSourceMinAggregateOutputType | null
+    _max: OtherIncomeSourceMaxAggregateOutputType | null
+  }
+
+  type GetOtherIncomeSourceGroupByPayload<T extends OtherIncomeSourceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OtherIncomeSourceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OtherIncomeSourceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OtherIncomeSourceGroupByOutputType[P]>
+            : GetScalarType<T[P], OtherIncomeSourceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OtherIncomeSourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    incomeProfileId?: boolean
+    sourceType?: boolean
+    frequency?: boolean
+    amount?: boolean
+    additionalContext?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherIncomeSource"]>
+
+  export type OtherIncomeSourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    incomeProfileId?: boolean
+    sourceType?: boolean
+    frequency?: boolean
+    amount?: boolean
+    additionalContext?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherIncomeSource"]>
+
+  export type OtherIncomeSourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    incomeProfileId?: boolean
+    sourceType?: boolean
+    frequency?: boolean
+    amount?: boolean
+    additionalContext?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["otherIncomeSource"]>
+
+  export type OtherIncomeSourceSelectScalar = {
+    id?: boolean
+    incomeProfileId?: boolean
+    sourceType?: boolean
+    frequency?: boolean
+    amount?: boolean
+    additionalContext?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OtherIncomeSourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "incomeProfileId" | "sourceType" | "frequency" | "amount" | "additionalContext" | "createdAt" | "updatedAt", ExtArgs["result"]["otherIncomeSource"]>
+  export type OtherIncomeSourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }
+  export type OtherIncomeSourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }
+  export type OtherIncomeSourceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    incomeProfile?: boolean | IncomeProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $OtherIncomeSourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OtherIncomeSource"
+    objects: {
+      incomeProfile: Prisma.$IncomeProfilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      incomeProfileId: number
+      sourceType: $Enums.OtherIncomeType
+      frequency: $Enums.PaymentFrequency
+      amount: Prisma.Decimal
+      additionalContext: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["otherIncomeSource"]>
+    composites: {}
+  }
+
+  type OtherIncomeSourceGetPayload<S extends boolean | null | undefined | OtherIncomeSourceDefaultArgs> = $Result.GetResult<Prisma.$OtherIncomeSourcePayload, S>
+
+  type OtherIncomeSourceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OtherIncomeSourceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OtherIncomeSourceCountAggregateInputType | true
+    }
+
+  export interface OtherIncomeSourceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OtherIncomeSource'], meta: { name: 'OtherIncomeSource' } }
+    /**
+     * Find zero or one OtherIncomeSource that matches the filter.
+     * @param {OtherIncomeSourceFindUniqueArgs} args - Arguments to find a OtherIncomeSource
+     * @example
+     * // Get one OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OtherIncomeSourceFindUniqueArgs>(args: SelectSubset<T, OtherIncomeSourceFindUniqueArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OtherIncomeSource that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OtherIncomeSourceFindUniqueOrThrowArgs} args - Arguments to find a OtherIncomeSource
+     * @example
+     * // Get one OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OtherIncomeSourceFindUniqueOrThrowArgs>(args: SelectSubset<T, OtherIncomeSourceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OtherIncomeSource that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceFindFirstArgs} args - Arguments to find a OtherIncomeSource
+     * @example
+     * // Get one OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OtherIncomeSourceFindFirstArgs>(args?: SelectSubset<T, OtherIncomeSourceFindFirstArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OtherIncomeSource that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceFindFirstOrThrowArgs} args - Arguments to find a OtherIncomeSource
+     * @example
+     * // Get one OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OtherIncomeSourceFindFirstOrThrowArgs>(args?: SelectSubset<T, OtherIncomeSourceFindFirstOrThrowArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OtherIncomeSources that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OtherIncomeSources
+     * const otherIncomeSources = await prisma.otherIncomeSource.findMany()
+     * 
+     * // Get first 10 OtherIncomeSources
+     * const otherIncomeSources = await prisma.otherIncomeSource.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const otherIncomeSourceWithIdOnly = await prisma.otherIncomeSource.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OtherIncomeSourceFindManyArgs>(args?: SelectSubset<T, OtherIncomeSourceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OtherIncomeSource.
+     * @param {OtherIncomeSourceCreateArgs} args - Arguments to create a OtherIncomeSource.
+     * @example
+     * // Create one OtherIncomeSource
+     * const OtherIncomeSource = await prisma.otherIncomeSource.create({
+     *   data: {
+     *     // ... data to create a OtherIncomeSource
+     *   }
+     * })
+     * 
+     */
+    create<T extends OtherIncomeSourceCreateArgs>(args: SelectSubset<T, OtherIncomeSourceCreateArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OtherIncomeSources.
+     * @param {OtherIncomeSourceCreateManyArgs} args - Arguments to create many OtherIncomeSources.
+     * @example
+     * // Create many OtherIncomeSources
+     * const otherIncomeSource = await prisma.otherIncomeSource.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OtherIncomeSourceCreateManyArgs>(args?: SelectSubset<T, OtherIncomeSourceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OtherIncomeSources and returns the data saved in the database.
+     * @param {OtherIncomeSourceCreateManyAndReturnArgs} args - Arguments to create many OtherIncomeSources.
+     * @example
+     * // Create many OtherIncomeSources
+     * const otherIncomeSource = await prisma.otherIncomeSource.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OtherIncomeSources and only return the `id`
+     * const otherIncomeSourceWithIdOnly = await prisma.otherIncomeSource.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OtherIncomeSourceCreateManyAndReturnArgs>(args?: SelectSubset<T, OtherIncomeSourceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OtherIncomeSource.
+     * @param {OtherIncomeSourceDeleteArgs} args - Arguments to delete one OtherIncomeSource.
+     * @example
+     * // Delete one OtherIncomeSource
+     * const OtherIncomeSource = await prisma.otherIncomeSource.delete({
+     *   where: {
+     *     // ... filter to delete one OtherIncomeSource
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OtherIncomeSourceDeleteArgs>(args: SelectSubset<T, OtherIncomeSourceDeleteArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OtherIncomeSource.
+     * @param {OtherIncomeSourceUpdateArgs} args - Arguments to update one OtherIncomeSource.
+     * @example
+     * // Update one OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OtherIncomeSourceUpdateArgs>(args: SelectSubset<T, OtherIncomeSourceUpdateArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OtherIncomeSources.
+     * @param {OtherIncomeSourceDeleteManyArgs} args - Arguments to filter OtherIncomeSources to delete.
+     * @example
+     * // Delete a few OtherIncomeSources
+     * const { count } = await prisma.otherIncomeSource.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OtherIncomeSourceDeleteManyArgs>(args?: SelectSubset<T, OtherIncomeSourceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OtherIncomeSources.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OtherIncomeSources
+     * const otherIncomeSource = await prisma.otherIncomeSource.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OtherIncomeSourceUpdateManyArgs>(args: SelectSubset<T, OtherIncomeSourceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OtherIncomeSources and returns the data updated in the database.
+     * @param {OtherIncomeSourceUpdateManyAndReturnArgs} args - Arguments to update many OtherIncomeSources.
+     * @example
+     * // Update many OtherIncomeSources
+     * const otherIncomeSource = await prisma.otherIncomeSource.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OtherIncomeSources and only return the `id`
+     * const otherIncomeSourceWithIdOnly = await prisma.otherIncomeSource.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OtherIncomeSourceUpdateManyAndReturnArgs>(args: SelectSubset<T, OtherIncomeSourceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OtherIncomeSource.
+     * @param {OtherIncomeSourceUpsertArgs} args - Arguments to update or create a OtherIncomeSource.
+     * @example
+     * // Update or create a OtherIncomeSource
+     * const otherIncomeSource = await prisma.otherIncomeSource.upsert({
+     *   create: {
+     *     // ... data to create a OtherIncomeSource
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OtherIncomeSource we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OtherIncomeSourceUpsertArgs>(args: SelectSubset<T, OtherIncomeSourceUpsertArgs<ExtArgs>>): Prisma__OtherIncomeSourceClient<$Result.GetResult<Prisma.$OtherIncomeSourcePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OtherIncomeSources.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceCountArgs} args - Arguments to filter OtherIncomeSources to count.
+     * @example
+     * // Count the number of OtherIncomeSources
+     * const count = await prisma.otherIncomeSource.count({
+     *   where: {
+     *     // ... the filter for the OtherIncomeSources we want to count
+     *   }
+     * })
+    **/
+    count<T extends OtherIncomeSourceCountArgs>(
+      args?: Subset<T, OtherIncomeSourceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OtherIncomeSourceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OtherIncomeSource.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OtherIncomeSourceAggregateArgs>(args: Subset<T, OtherIncomeSourceAggregateArgs>): Prisma.PrismaPromise<GetOtherIncomeSourceAggregateType<T>>
+
+    /**
+     * Group by OtherIncomeSource.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OtherIncomeSourceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OtherIncomeSourceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OtherIncomeSourceGroupByArgs['orderBy'] }
+        : { orderBy?: OtherIncomeSourceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OtherIncomeSourceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOtherIncomeSourceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OtherIncomeSource model
+   */
+  readonly fields: OtherIncomeSourceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OtherIncomeSource.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OtherIncomeSourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    incomeProfile<T extends IncomeProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IncomeProfileDefaultArgs<ExtArgs>>): Prisma__IncomeProfileClient<$Result.GetResult<Prisma.$IncomeProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OtherIncomeSource model
+   */
+  interface OtherIncomeSourceFieldRefs {
+    readonly id: FieldRef<"OtherIncomeSource", 'Int'>
+    readonly incomeProfileId: FieldRef<"OtherIncomeSource", 'Int'>
+    readonly sourceType: FieldRef<"OtherIncomeSource", 'OtherIncomeType'>
+    readonly frequency: FieldRef<"OtherIncomeSource", 'PaymentFrequency'>
+    readonly amount: FieldRef<"OtherIncomeSource", 'Decimal'>
+    readonly additionalContext: FieldRef<"OtherIncomeSource", 'String'>
+    readonly createdAt: FieldRef<"OtherIncomeSource", 'DateTime'>
+    readonly updatedAt: FieldRef<"OtherIncomeSource", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OtherIncomeSource findUnique
+   */
+  export type OtherIncomeSourceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherIncomeSource to fetch.
+     */
+    where: OtherIncomeSourceWhereUniqueInput
+  }
+
+  /**
+   * OtherIncomeSource findUniqueOrThrow
+   */
+  export type OtherIncomeSourceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherIncomeSource to fetch.
+     */
+    where: OtherIncomeSourceWhereUniqueInput
+  }
+
+  /**
+   * OtherIncomeSource findFirst
+   */
+  export type OtherIncomeSourceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherIncomeSource to fetch.
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherIncomeSources to fetch.
+     */
+    orderBy?: OtherIncomeSourceOrderByWithRelationInput | OtherIncomeSourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OtherIncomeSources.
+     */
+    cursor?: OtherIncomeSourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherIncomeSources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherIncomeSources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OtherIncomeSources.
+     */
+    distinct?: OtherIncomeSourceScalarFieldEnum | OtherIncomeSourceScalarFieldEnum[]
+  }
+
+  /**
+   * OtherIncomeSource findFirstOrThrow
+   */
+  export type OtherIncomeSourceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherIncomeSource to fetch.
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherIncomeSources to fetch.
+     */
+    orderBy?: OtherIncomeSourceOrderByWithRelationInput | OtherIncomeSourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OtherIncomeSources.
+     */
+    cursor?: OtherIncomeSourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherIncomeSources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherIncomeSources.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OtherIncomeSources.
+     */
+    distinct?: OtherIncomeSourceScalarFieldEnum | OtherIncomeSourceScalarFieldEnum[]
+  }
+
+  /**
+   * OtherIncomeSource findMany
+   */
+  export type OtherIncomeSourceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter, which OtherIncomeSources to fetch.
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OtherIncomeSources to fetch.
+     */
+    orderBy?: OtherIncomeSourceOrderByWithRelationInput | OtherIncomeSourceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OtherIncomeSources.
+     */
+    cursor?: OtherIncomeSourceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OtherIncomeSources from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OtherIncomeSources.
+     */
+    skip?: number
+    distinct?: OtherIncomeSourceScalarFieldEnum | OtherIncomeSourceScalarFieldEnum[]
+  }
+
+  /**
+   * OtherIncomeSource create
+   */
+  export type OtherIncomeSourceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OtherIncomeSource.
+     */
+    data: XOR<OtherIncomeSourceCreateInput, OtherIncomeSourceUncheckedCreateInput>
+  }
+
+  /**
+   * OtherIncomeSource createMany
+   */
+  export type OtherIncomeSourceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OtherIncomeSources.
+     */
+    data: OtherIncomeSourceCreateManyInput | OtherIncomeSourceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OtherIncomeSource createManyAndReturn
+   */
+  export type OtherIncomeSourceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * The data used to create many OtherIncomeSources.
+     */
+    data: OtherIncomeSourceCreateManyInput | OtherIncomeSourceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OtherIncomeSource update
+   */
+  export type OtherIncomeSourceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OtherIncomeSource.
+     */
+    data: XOR<OtherIncomeSourceUpdateInput, OtherIncomeSourceUncheckedUpdateInput>
+    /**
+     * Choose, which OtherIncomeSource to update.
+     */
+    where: OtherIncomeSourceWhereUniqueInput
+  }
+
+  /**
+   * OtherIncomeSource updateMany
+   */
+  export type OtherIncomeSourceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OtherIncomeSources.
+     */
+    data: XOR<OtherIncomeSourceUpdateManyMutationInput, OtherIncomeSourceUncheckedUpdateManyInput>
+    /**
+     * Filter which OtherIncomeSources to update
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * Limit how many OtherIncomeSources to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OtherIncomeSource updateManyAndReturn
+   */
+  export type OtherIncomeSourceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * The data used to update OtherIncomeSources.
+     */
+    data: XOR<OtherIncomeSourceUpdateManyMutationInput, OtherIncomeSourceUncheckedUpdateManyInput>
+    /**
+     * Filter which OtherIncomeSources to update
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * Limit how many OtherIncomeSources to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OtherIncomeSource upsert
+   */
+  export type OtherIncomeSourceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OtherIncomeSource to update in case it exists.
+     */
+    where: OtherIncomeSourceWhereUniqueInput
+    /**
+     * In case the OtherIncomeSource found by the `where` argument doesn't exist, create a new OtherIncomeSource with this data.
+     */
+    create: XOR<OtherIncomeSourceCreateInput, OtherIncomeSourceUncheckedCreateInput>
+    /**
+     * In case the OtherIncomeSource was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OtherIncomeSourceUpdateInput, OtherIncomeSourceUncheckedUpdateInput>
+  }
+
+  /**
+   * OtherIncomeSource delete
+   */
+  export type OtherIncomeSourceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
+    /**
+     * Filter which OtherIncomeSource to delete.
+     */
+    where: OtherIncomeSourceWhereUniqueInput
+  }
+
+  /**
+   * OtherIncomeSource deleteMany
+   */
+  export type OtherIncomeSourceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OtherIncomeSources to delete
+     */
+    where?: OtherIncomeSourceWhereInput
+    /**
+     * Limit how many OtherIncomeSources to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OtherIncomeSource without action
+   */
+  export type OtherIncomeSourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OtherIncomeSource
+     */
+    select?: OtherIncomeSourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OtherIncomeSource
+     */
+    omit?: OtherIncomeSourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OtherIncomeSourceInclude<ExtArgs> | null
   }
 
 
@@ -5766,39 +7221,60 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const PostScalarFieldEnum: {
-    id: 'id',
-    title: 'title',
-    content: 'content',
-    published: 'published',
-    authorId: 'authorId'
-  };
-
-  export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
-
-
-  export const SubmissionScalarFieldEnum: {
+  export const IncomeProfileScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    formName: 'formName',
-    data: 'data',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+  export type IncomeProfileScalarFieldEnum = (typeof IncomeProfileScalarFieldEnum)[keyof typeof IncomeProfileScalarFieldEnum]
 
 
-  export const CreditCardScalarFieldEnum: {
+  export const JobScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
-    cardName: 'cardName',
-    bankName: 'bankName',
-    balance: 'balance',
-    interestRate: 'interestRate',
-    createdAt: 'createdAt'
+    incomeProfileId: 'incomeProfileId',
+    employmentStatus: 'employmentStatus',
+    employerName: 'employerName',
+    roleTitle: 'roleTitle',
+    paymentFrequency: 'paymentFrequency',
+    paystubPeriod: 'paystubPeriod',
+    grossSalary: 'grossSalary',
+    taxDeductions: 'taxDeductions',
+    healthInsurance: 'healthInsurance',
+    retirementContributions: 'retirementContributions',
+    netSalary: 'netSalary',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
-  export type CreditCardScalarFieldEnum = (typeof CreditCardScalarFieldEnum)[keyof typeof CreditCardScalarFieldEnum]
+  export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
+
+
+  export const OtherDeductionScalarFieldEnum: {
+    id: 'id',
+    jobId: 'jobId',
+    name: 'name',
+    amount: 'amount',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OtherDeductionScalarFieldEnum = (typeof OtherDeductionScalarFieldEnum)[keyof typeof OtherDeductionScalarFieldEnum]
+
+
+  export const OtherIncomeSourceScalarFieldEnum: {
+    id: 'id',
+    incomeProfileId: 'incomeProfileId',
+    sourceType: 'sourceType',
+    frequency: 'frequency',
+    amount: 'amount',
+    additionalContext: 'additionalContext',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OtherIncomeSourceScalarFieldEnum = (typeof OtherIncomeSourceScalarFieldEnum)[keyof typeof OtherIncomeSourceScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5807,13 +7283,6 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -5830,15 +7299,6 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-  export const JsonNullValueFilter: {
-    DbNull: typeof DbNull,
-    JsonNull: typeof JsonNull,
-    AnyNull: typeof AnyNull
-  };
-
-  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -5903,23 +7363,72 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'EmploymentStatus'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type EnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentStatus'>
     
 
 
   /**
-   * Reference to a field of type 'Json'
+   * Reference to a field of type 'EmploymentStatus[]'
    */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+  export type ListEnumEmploymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmploymentStatus[]'>
     
 
 
   /**
-   * Reference to a field of type 'QueryMode'
+   * Reference to a field of type 'PaymentFrequency'
    */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+  export type EnumPaymentFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentFrequency'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentFrequency[]'
+   */
+  export type ListEnumPaymentFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentFrequency[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaystubPeriod'
+   */
+  export type EnumPaystubPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaystubPeriod'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaystubPeriod[]'
+   */
+  export type ListEnumPaystubPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaystubPeriod[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OtherIncomeType'
+   */
+  export type EnumOtherIncomeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtherIncomeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'OtherIncomeType[]'
+   */
+  export type ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtherIncomeType[]'>
     
 
 
@@ -5953,9 +7462,7 @@ export namespace Prisma {
     verifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     verificationToken?: StringNullableFilter<"User"> | string | null
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    posts?: PostListRelationFilter
-    submissions?: SubmissionListRelationFilter
-    creditcards?: CreditCardListRelationFilter
+    incomeProfile?: XOR<IncomeProfileNullableScalarRelationFilter, IncomeProfileWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5968,9 +7475,7 @@ export namespace Prisma {
     verifiedAt?: SortOrderInput | SortOrder
     verificationToken?: SortOrderInput | SortOrder
     verificationTokenExpiry?: SortOrderInput | SortOrder
-    posts?: PostOrderByRelationAggregateInput
-    submissions?: SubmissionOrderByRelationAggregateInput
-    creditcards?: CreditCardOrderByRelationAggregateInput
+    incomeProfile?: IncomeProfileOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5986,9 +7491,7 @@ export namespace Prisma {
     verifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     verificationToken?: StringNullableFilter<"User"> | string | null
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    posts?: PostListRelationFilter
-    submissions?: SubmissionListRelationFilter
-    creditcards?: CreditCardListRelationFilter
+    incomeProfile?: XOR<IncomeProfileNullableScalarRelationFilter, IncomeProfileWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6023,185 +7526,301 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
 
-  export type PostWhereInput = {
-    AND?: PostWhereInput | PostWhereInput[]
-    OR?: PostWhereInput[]
-    NOT?: PostWhereInput | PostWhereInput[]
-    id?: IntFilter<"Post"> | number
-    title?: StringFilter<"Post"> | string
-    content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolFilter<"Post"> | boolean
-    authorId?: IntFilter<"Post"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type PostOrderByWithRelationInput = {
-    id?: SortOrder
-    title?: SortOrder
-    content?: SortOrderInput | SortOrder
-    published?: SortOrder
-    authorId?: SortOrder
-    author?: UserOrderByWithRelationInput
-  }
-
-  export type PostWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: PostWhereInput | PostWhereInput[]
-    OR?: PostWhereInput[]
-    NOT?: PostWhereInput | PostWhereInput[]
-    title?: StringFilter<"Post"> | string
-    content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolFilter<"Post"> | boolean
-    authorId?: IntFilter<"Post"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
-
-  export type PostOrderByWithAggregationInput = {
-    id?: SortOrder
-    title?: SortOrder
-    content?: SortOrderInput | SortOrder
-    published?: SortOrder
-    authorId?: SortOrder
-    _count?: PostCountOrderByAggregateInput
-    _avg?: PostAvgOrderByAggregateInput
-    _max?: PostMaxOrderByAggregateInput
-    _min?: PostMinOrderByAggregateInput
-    _sum?: PostSumOrderByAggregateInput
-  }
-
-  export type PostScalarWhereWithAggregatesInput = {
-    AND?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
-    OR?: PostScalarWhereWithAggregatesInput[]
-    NOT?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Post"> | number
-    title?: StringWithAggregatesFilter<"Post"> | string
-    content?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    published?: BoolWithAggregatesFilter<"Post"> | boolean
-    authorId?: IntWithAggregatesFilter<"Post"> | number
-  }
-
-  export type SubmissionWhereInput = {
-    AND?: SubmissionWhereInput | SubmissionWhereInput[]
-    OR?: SubmissionWhereInput[]
-    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
-    id?: IntFilter<"Submission"> | number
-    userId?: IntFilter<"Submission"> | number
-    formName?: StringFilter<"Submission"> | string
-    data?: JsonFilter<"Submission">
-    createdAt?: DateTimeFilter<"Submission"> | Date | string
+  export type IncomeProfileWhereInput = {
+    AND?: IncomeProfileWhereInput | IncomeProfileWhereInput[]
+    OR?: IncomeProfileWhereInput[]
+    NOT?: IncomeProfileWhereInput | IncomeProfileWhereInput[]
+    id?: IntFilter<"IncomeProfile"> | number
+    userId?: IntFilter<"IncomeProfile"> | number
+    createdAt?: DateTimeFilter<"IncomeProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"IncomeProfile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    jobs?: JobListRelationFilter
+    otherIncomes?: OtherIncomeSourceListRelationFilter
   }
 
-  export type SubmissionOrderByWithRelationInput = {
+  export type IncomeProfileOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    formName?: SortOrder
-    data?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    jobs?: JobOrderByRelationAggregateInput
+    otherIncomes?: OtherIncomeSourceOrderByRelationAggregateInput
   }
 
-  export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
+  export type IncomeProfileWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: SubmissionWhereInput | SubmissionWhereInput[]
-    OR?: SubmissionWhereInput[]
-    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
-    userId?: IntFilter<"Submission"> | number
-    formName?: StringFilter<"Submission"> | string
-    data?: JsonFilter<"Submission">
-    createdAt?: DateTimeFilter<"Submission"> | Date | string
+    userId?: number
+    AND?: IncomeProfileWhereInput | IncomeProfileWhereInput[]
+    OR?: IncomeProfileWhereInput[]
+    NOT?: IncomeProfileWhereInput | IncomeProfileWhereInput[]
+    createdAt?: DateTimeFilter<"IncomeProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"IncomeProfile"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    jobs?: JobListRelationFilter
+    otherIncomes?: OtherIncomeSourceListRelationFilter
+  }, "id" | "userId">
+
+  export type IncomeProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IncomeProfileCountOrderByAggregateInput
+    _avg?: IncomeProfileAvgOrderByAggregateInput
+    _max?: IncomeProfileMaxOrderByAggregateInput
+    _min?: IncomeProfileMinOrderByAggregateInput
+    _sum?: IncomeProfileSumOrderByAggregateInput
+  }
+
+  export type IncomeProfileScalarWhereWithAggregatesInput = {
+    AND?: IncomeProfileScalarWhereWithAggregatesInput | IncomeProfileScalarWhereWithAggregatesInput[]
+    OR?: IncomeProfileScalarWhereWithAggregatesInput[]
+    NOT?: IncomeProfileScalarWhereWithAggregatesInput | IncomeProfileScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"IncomeProfile"> | number
+    userId?: IntWithAggregatesFilter<"IncomeProfile"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"IncomeProfile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"IncomeProfile"> | Date | string
+  }
+
+  export type JobWhereInput = {
+    AND?: JobWhereInput | JobWhereInput[]
+    OR?: JobWhereInput[]
+    NOT?: JobWhereInput | JobWhereInput[]
+    id?: IntFilter<"Job"> | number
+    incomeProfileId?: IntFilter<"Job"> | number
+    employmentStatus?: EnumEmploymentStatusFilter<"Job"> | $Enums.EmploymentStatus
+    employerName?: StringFilter<"Job"> | string
+    roleTitle?: StringFilter<"Job"> | string
+    paymentFrequency?: EnumPaymentFrequencyFilter<"Job"> | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFilter<"Job"> | $Enums.PaystubPeriod
+    grossSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"Job"> | Date | string
+    updatedAt?: DateTimeFilter<"Job"> | Date | string
+    incomeProfile?: XOR<IncomeProfileScalarRelationFilter, IncomeProfileWhereInput>
+    otherDeductions?: OtherDeductionListRelationFilter
+  }
+
+  export type JobOrderByWithRelationInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    employmentStatus?: SortOrder
+    employerName?: SortOrder
+    roleTitle?: SortOrder
+    paymentFrequency?: SortOrder
+    paystubPeriod?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    incomeProfile?: IncomeProfileOrderByWithRelationInput
+    otherDeductions?: OtherDeductionOrderByRelationAggregateInput
+  }
+
+  export type JobWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: JobWhereInput | JobWhereInput[]
+    OR?: JobWhereInput[]
+    NOT?: JobWhereInput | JobWhereInput[]
+    incomeProfileId?: IntFilter<"Job"> | number
+    employmentStatus?: EnumEmploymentStatusFilter<"Job"> | $Enums.EmploymentStatus
+    employerName?: StringFilter<"Job"> | string
+    roleTitle?: StringFilter<"Job"> | string
+    paymentFrequency?: EnumPaymentFrequencyFilter<"Job"> | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFilter<"Job"> | $Enums.PaystubPeriod
+    grossSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"Job"> | Date | string
+    updatedAt?: DateTimeFilter<"Job"> | Date | string
+    incomeProfile?: XOR<IncomeProfileScalarRelationFilter, IncomeProfileWhereInput>
+    otherDeductions?: OtherDeductionListRelationFilter
   }, "id">
 
-  export type SubmissionOrderByWithAggregationInput = {
+  export type JobOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    formName?: SortOrder
-    data?: SortOrder
+    incomeProfileId?: SortOrder
+    employmentStatus?: SortOrder
+    employerName?: SortOrder
+    roleTitle?: SortOrder
+    paymentFrequency?: SortOrder
+    paystubPeriod?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
     createdAt?: SortOrder
-    _count?: SubmissionCountOrderByAggregateInput
-    _avg?: SubmissionAvgOrderByAggregateInput
-    _max?: SubmissionMaxOrderByAggregateInput
-    _min?: SubmissionMinOrderByAggregateInput
-    _sum?: SubmissionSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    _count?: JobCountOrderByAggregateInput
+    _avg?: JobAvgOrderByAggregateInput
+    _max?: JobMaxOrderByAggregateInput
+    _min?: JobMinOrderByAggregateInput
+    _sum?: JobSumOrderByAggregateInput
   }
 
-  export type SubmissionScalarWhereWithAggregatesInput = {
-    AND?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
-    OR?: SubmissionScalarWhereWithAggregatesInput[]
-    NOT?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Submission"> | number
-    userId?: IntWithAggregatesFilter<"Submission"> | number
-    formName?: StringWithAggregatesFilter<"Submission"> | string
-    data?: JsonWithAggregatesFilter<"Submission">
-    createdAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
+  export type JobScalarWhereWithAggregatesInput = {
+    AND?: JobScalarWhereWithAggregatesInput | JobScalarWhereWithAggregatesInput[]
+    OR?: JobScalarWhereWithAggregatesInput[]
+    NOT?: JobScalarWhereWithAggregatesInput | JobScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Job"> | number
+    incomeProfileId?: IntWithAggregatesFilter<"Job"> | number
+    employmentStatus?: EnumEmploymentStatusWithAggregatesFilter<"Job"> | $Enums.EmploymentStatus
+    employerName?: StringWithAggregatesFilter<"Job"> | string
+    roleTitle?: StringWithAggregatesFilter<"Job"> | string
+    paymentFrequency?: EnumPaymentFrequencyWithAggregatesFilter<"Job"> | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodWithAggregatesFilter<"Job"> | $Enums.PaystubPeriod
+    grossSalary?: DecimalWithAggregatesFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalWithAggregatesFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalWithAggregatesFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalWithAggregatesFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalWithAggregatesFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"Job"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Job"> | Date | string
   }
 
-  export type CreditCardWhereInput = {
-    AND?: CreditCardWhereInput | CreditCardWhereInput[]
-    OR?: CreditCardWhereInput[]
-    NOT?: CreditCardWhereInput | CreditCardWhereInput[]
-    id?: IntFilter<"CreditCard"> | number
-    userId?: IntFilter<"CreditCard"> | number
-    cardName?: StringFilter<"CreditCard"> | string
-    bankName?: StringFilter<"CreditCard"> | string
-    balance?: FloatFilter<"CreditCard"> | number
-    interestRate?: FloatFilter<"CreditCard"> | number
-    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  export type OtherDeductionWhereInput = {
+    AND?: OtherDeductionWhereInput | OtherDeductionWhereInput[]
+    OR?: OtherDeductionWhereInput[]
+    NOT?: OtherDeductionWhereInput | OtherDeductionWhereInput[]
+    id?: IntFilter<"OtherDeduction"> | number
+    jobId?: IntFilter<"OtherDeduction"> | number
+    name?: StringFilter<"OtherDeduction"> | string
+    amount?: DecimalFilter<"OtherDeduction"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"OtherDeduction"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherDeduction"> | Date | string
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }
 
-  export type CreditCardOrderByWithRelationInput = {
+  export type OtherDeductionOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    cardName?: SortOrder
-    bankName?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    jobId?: SortOrder
+    name?: SortOrder
+    amount?: SortOrder
     createdAt?: SortOrder
-    user?: UserOrderByWithRelationInput
+    updatedAt?: SortOrder
+    job?: JobOrderByWithRelationInput
   }
 
-  export type CreditCardWhereUniqueInput = Prisma.AtLeast<{
+  export type OtherDeductionWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: CreditCardWhereInput | CreditCardWhereInput[]
-    OR?: CreditCardWhereInput[]
-    NOT?: CreditCardWhereInput | CreditCardWhereInput[]
-    userId?: IntFilter<"CreditCard"> | number
-    cardName?: StringFilter<"CreditCard"> | string
-    bankName?: StringFilter<"CreditCard"> | string
-    balance?: FloatFilter<"CreditCard"> | number
-    interestRate?: FloatFilter<"CreditCard"> | number
-    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    AND?: OtherDeductionWhereInput | OtherDeductionWhereInput[]
+    OR?: OtherDeductionWhereInput[]
+    NOT?: OtherDeductionWhereInput | OtherDeductionWhereInput[]
+    jobId?: IntFilter<"OtherDeduction"> | number
+    name?: StringFilter<"OtherDeduction"> | string
+    amount?: DecimalFilter<"OtherDeduction"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"OtherDeduction"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherDeduction"> | Date | string
+    job?: XOR<JobScalarRelationFilter, JobWhereInput>
   }, "id">
 
-  export type CreditCardOrderByWithAggregationInput = {
+  export type OtherDeductionOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    cardName?: SortOrder
-    bankName?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    jobId?: SortOrder
+    name?: SortOrder
+    amount?: SortOrder
     createdAt?: SortOrder
-    _count?: CreditCardCountOrderByAggregateInput
-    _avg?: CreditCardAvgOrderByAggregateInput
-    _max?: CreditCardMaxOrderByAggregateInput
-    _min?: CreditCardMinOrderByAggregateInput
-    _sum?: CreditCardSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    _count?: OtherDeductionCountOrderByAggregateInput
+    _avg?: OtherDeductionAvgOrderByAggregateInput
+    _max?: OtherDeductionMaxOrderByAggregateInput
+    _min?: OtherDeductionMinOrderByAggregateInput
+    _sum?: OtherDeductionSumOrderByAggregateInput
   }
 
-  export type CreditCardScalarWhereWithAggregatesInput = {
-    AND?: CreditCardScalarWhereWithAggregatesInput | CreditCardScalarWhereWithAggregatesInput[]
-    OR?: CreditCardScalarWhereWithAggregatesInput[]
-    NOT?: CreditCardScalarWhereWithAggregatesInput | CreditCardScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"CreditCard"> | number
-    userId?: IntWithAggregatesFilter<"CreditCard"> | number
-    cardName?: StringWithAggregatesFilter<"CreditCard"> | string
-    bankName?: StringWithAggregatesFilter<"CreditCard"> | string
-    balance?: FloatWithAggregatesFilter<"CreditCard"> | number
-    interestRate?: FloatWithAggregatesFilter<"CreditCard"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"CreditCard"> | Date | string
+  export type OtherDeductionScalarWhereWithAggregatesInput = {
+    AND?: OtherDeductionScalarWhereWithAggregatesInput | OtherDeductionScalarWhereWithAggregatesInput[]
+    OR?: OtherDeductionScalarWhereWithAggregatesInput[]
+    NOT?: OtherDeductionScalarWhereWithAggregatesInput | OtherDeductionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"OtherDeduction"> | number
+    jobId?: IntWithAggregatesFilter<"OtherDeduction"> | number
+    name?: StringWithAggregatesFilter<"OtherDeduction"> | string
+    amount?: DecimalWithAggregatesFilter<"OtherDeduction"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"OtherDeduction"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OtherDeduction"> | Date | string
+  }
+
+  export type OtherIncomeSourceWhereInput = {
+    AND?: OtherIncomeSourceWhereInput | OtherIncomeSourceWhereInput[]
+    OR?: OtherIncomeSourceWhereInput[]
+    NOT?: OtherIncomeSourceWhereInput | OtherIncomeSourceWhereInput[]
+    id?: IntFilter<"OtherIncomeSource"> | number
+    incomeProfileId?: IntFilter<"OtherIncomeSource"> | number
+    sourceType?: EnumOtherIncomeTypeFilter<"OtherIncomeSource"> | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFilter<"OtherIncomeSource"> | $Enums.PaymentFrequency
+    amount?: DecimalFilter<"OtherIncomeSource"> | Decimal | DecimalJsLike | number | string
+    additionalContext?: StringNullableFilter<"OtherIncomeSource"> | string | null
+    createdAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+    incomeProfile?: XOR<IncomeProfileScalarRelationFilter, IncomeProfileWhereInput>
+  }
+
+  export type OtherIncomeSourceOrderByWithRelationInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    sourceType?: SortOrder
+    frequency?: SortOrder
+    amount?: SortOrder
+    additionalContext?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    incomeProfile?: IncomeProfileOrderByWithRelationInput
+  }
+
+  export type OtherIncomeSourceWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: OtherIncomeSourceWhereInput | OtherIncomeSourceWhereInput[]
+    OR?: OtherIncomeSourceWhereInput[]
+    NOT?: OtherIncomeSourceWhereInput | OtherIncomeSourceWhereInput[]
+    incomeProfileId?: IntFilter<"OtherIncomeSource"> | number
+    sourceType?: EnumOtherIncomeTypeFilter<"OtherIncomeSource"> | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFilter<"OtherIncomeSource"> | $Enums.PaymentFrequency
+    amount?: DecimalFilter<"OtherIncomeSource"> | Decimal | DecimalJsLike | number | string
+    additionalContext?: StringNullableFilter<"OtherIncomeSource"> | string | null
+    createdAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+    incomeProfile?: XOR<IncomeProfileScalarRelationFilter, IncomeProfileWhereInput>
+  }, "id">
+
+  export type OtherIncomeSourceOrderByWithAggregationInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    sourceType?: SortOrder
+    frequency?: SortOrder
+    amount?: SortOrder
+    additionalContext?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OtherIncomeSourceCountOrderByAggregateInput
+    _avg?: OtherIncomeSourceAvgOrderByAggregateInput
+    _max?: OtherIncomeSourceMaxOrderByAggregateInput
+    _min?: OtherIncomeSourceMinOrderByAggregateInput
+    _sum?: OtherIncomeSourceSumOrderByAggregateInput
+  }
+
+  export type OtherIncomeSourceScalarWhereWithAggregatesInput = {
+    AND?: OtherIncomeSourceScalarWhereWithAggregatesInput | OtherIncomeSourceScalarWhereWithAggregatesInput[]
+    OR?: OtherIncomeSourceScalarWhereWithAggregatesInput[]
+    NOT?: OtherIncomeSourceScalarWhereWithAggregatesInput | OtherIncomeSourceScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"OtherIncomeSource"> | number
+    incomeProfileId?: IntWithAggregatesFilter<"OtherIncomeSource"> | number
+    sourceType?: EnumOtherIncomeTypeWithAggregatesFilter<"OtherIncomeSource"> | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyWithAggregatesFilter<"OtherIncomeSource"> | $Enums.PaymentFrequency
+    amount?: DecimalWithAggregatesFilter<"OtherIncomeSource"> | Decimal | DecimalJsLike | number | string
+    additionalContext?: StringNullableWithAggregatesFilter<"OtherIncomeSource"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"OtherIncomeSource"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OtherIncomeSource"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -6213,9 +7832,7 @@ export namespace Prisma {
     verifiedAt?: Date | string | null
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
-    posts?: PostCreateNestedManyWithoutAuthorInput
-    submissions?: SubmissionCreateNestedManyWithoutUserInput
-    creditcards?: CreditCardCreateNestedManyWithoutUserInput
+    incomeProfile?: IncomeProfileCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6228,9 +7845,7 @@ export namespace Prisma {
     verifiedAt?: Date | string | null
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
-    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
-    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
+    incomeProfile?: IncomeProfileUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6242,9 +7857,7 @@ export namespace Prisma {
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUpdateManyWithoutAuthorNestedInput
-    submissions?: SubmissionUpdateManyWithoutUserNestedInput
-    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
+    incomeProfile?: IncomeProfileUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6257,9 +7870,7 @@ export namespace Prisma {
     verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
-    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
+    incomeProfile?: IncomeProfileUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6297,174 +7908,308 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type PostCreateInput = {
-    title: string
-    content?: string | null
-    published?: boolean
-    author: UserCreateNestedOneWithoutPostsInput
-  }
-
-  export type PostUncheckedCreateInput = {
-    id?: number
-    title: string
-    content?: string | null
-    published?: boolean
-    authorId: number
-  }
-
-  export type PostUpdateInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
-    author?: UserUpdateOneRequiredWithoutPostsNestedInput
-  }
-
-  export type PostUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
-    authorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PostCreateManyInput = {
-    id?: number
-    title: string
-    content?: string | null
-    published?: boolean
-    authorId: number
-  }
-
-  export type PostUpdateManyMutationInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type PostUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
-    authorId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type SubmissionCreateInput = {
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
+  export type IncomeProfileCreateInput = {
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutSubmissionsInput
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutIncomeProfileInput
+    jobs?: JobCreateNestedManyWithoutIncomeProfileInput
+    otherIncomes?: OtherIncomeSourceCreateNestedManyWithoutIncomeProfileInput
   }
 
-  export type SubmissionUncheckedCreateInput = {
+  export type IncomeProfileUncheckedCreateInput = {
     id?: number
     userId: number
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    updatedAt?: Date | string
+    jobs?: JobUncheckedCreateNestedManyWithoutIncomeProfileInput
+    otherIncomes?: OtherIncomeSourceUncheckedCreateNestedManyWithoutIncomeProfileInput
   }
 
-  export type SubmissionUpdateInput = {
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
+  export type IncomeProfileUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSubmissionsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutIncomeProfileNestedInput
+    jobs?: JobUpdateManyWithoutIncomeProfileNestedInput
+    otherIncomes?: OtherIncomeSourceUpdateManyWithoutIncomeProfileNestedInput
   }
 
-  export type SubmissionUncheckedUpdateInput = {
+  export type IncomeProfileUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobs?: JobUncheckedUpdateManyWithoutIncomeProfileNestedInput
+    otherIncomes?: OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileNestedInput
   }
 
-  export type SubmissionCreateManyInput = {
+  export type IncomeProfileCreateManyInput = {
     id?: number
     userId: number
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type SubmissionUpdateManyMutationInput = {
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
+  export type IncomeProfileUpdateManyMutationInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmissionUncheckedUpdateManyInput = {
+  export type IncomeProfileUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CreditCardCreateInput = {
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+  export type JobCreateInput = {
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutCreditcardsInput
+    updatedAt?: Date | string
+    incomeProfile: IncomeProfileCreateNestedOneWithoutJobsInput
+    otherDeductions?: OtherDeductionCreateNestedManyWithoutJobInput
   }
 
-  export type CreditCardUncheckedCreateInput = {
+  export type JobUncheckedCreateInput = {
     id?: number
-    userId: number
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+    incomeProfileId: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
+    updatedAt?: Date | string
+    otherDeductions?: OtherDeductionUncheckedCreateNestedManyWithoutJobInput
   }
 
-  export type CreditCardUpdateInput = {
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+  export type JobUpdateInput = {
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutCreditcardsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomeProfile?: IncomeProfileUpdateOneRequiredWithoutJobsNestedInput
+    otherDeductions?: OtherDeductionUpdateManyWithoutJobNestedInput
   }
 
-  export type CreditCardUncheckedUpdateInput = {
+  export type JobUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+    incomeProfileId?: IntFieldUpdateOperationsInput | number
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    otherDeductions?: OtherDeductionUncheckedUpdateManyWithoutJobNestedInput
   }
 
-  export type CreditCardCreateManyInput = {
+  export type JobCreateManyInput = {
     id?: number
-    userId: number
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+    incomeProfileId: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type CreditCardUpdateManyMutationInput = {
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+  export type JobUpdateManyMutationInput = {
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CreditCardUncheckedUpdateManyInput = {
+  export type JobUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+    incomeProfileId?: IntFieldUpdateOperationsInput | number
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionCreateInput = {
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    job: JobCreateNestedOneWithoutOtherDeductionsInput
+  }
+
+  export type OtherDeductionUncheckedCreateInput = {
+    id?: number
+    jobId: number
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherDeductionUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    job?: JobUpdateOneRequiredWithoutOtherDeductionsNestedInput
+  }
+
+  export type OtherDeductionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionCreateManyInput = {
+    id?: number
+    jobId: number
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherDeductionUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceCreateInput = {
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    incomeProfile: IncomeProfileCreateNestedOneWithoutOtherIncomesInput
+  }
+
+  export type OtherIncomeSourceUncheckedCreateInput = {
+    id?: number
+    incomeProfileId: number
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherIncomeSourceUpdateInput = {
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomeProfile?: IncomeProfileUpdateOneRequiredWithoutOtherIncomesNestedInput
+  }
+
+  export type OtherIncomeSourceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    incomeProfileId?: IntFieldUpdateOperationsInput | number
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceCreateManyInput = {
+    id?: number
+    incomeProfileId: number
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherIncomeSourceUpdateManyMutationInput = {
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    incomeProfileId?: IntFieldUpdateOperationsInput | number
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -6526,39 +8271,14 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type PostListRelationFilter = {
-    every?: PostWhereInput
-    some?: PostWhereInput
-    none?: PostWhereInput
-  }
-
-  export type SubmissionListRelationFilter = {
-    every?: SubmissionWhereInput
-    some?: SubmissionWhereInput
-    none?: SubmissionWhereInput
-  }
-
-  export type CreditCardListRelationFilter = {
-    every?: CreditCardWhereInput
-    some?: CreditCardWhereInput
-    none?: CreditCardWhereInput
+  export type IncomeProfileNullableScalarRelationFilter = {
+    is?: IncomeProfileWhereInput | null
+    isNot?: IncomeProfileWhereInput | null
   }
 
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type PostOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type SubmissionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CreditCardOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -6681,81 +8401,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type PostCountOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    content?: SortOrder
-    published?: SortOrder
-    authorId?: SortOrder
-  }
-
-  export type PostAvgOrderByAggregateInput = {
-    id?: SortOrder
-    authorId?: SortOrder
-  }
-
-  export type PostMaxOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    content?: SortOrder
-    published?: SortOrder
-    authorId?: SortOrder
-  }
-
-  export type PostMinOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    content?: SortOrder
-    published?: SortOrder
-    authorId?: SortOrder
-  }
-
-  export type PostSumOrderByAggregateInput = {
-    id?: SortOrder
-    authorId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6767,62 +8412,60 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type SubmissionCountOrderByAggregateInput = {
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type JobListRelationFilter = {
+    every?: JobWhereInput
+    some?: JobWhereInput
+    none?: JobWhereInput
+  }
+
+  export type OtherIncomeSourceListRelationFilter = {
+    every?: OtherIncomeSourceWhereInput
+    some?: OtherIncomeSourceWhereInput
+    none?: OtherIncomeSourceWhereInput
+  }
+
+  export type JobOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OtherIncomeSourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IncomeProfileCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    formName?: SortOrder
-    data?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionAvgOrderByAggregateInput = {
+  export type IncomeProfileAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
   }
 
-  export type SubmissionMaxOrderByAggregateInput = {
+  export type IncomeProfileMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    formName?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionMinOrderByAggregateInput = {
+  export type IncomeProfileMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    formName?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionSumOrderByAggregateInput = {
+  export type IncomeProfileSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6839,117 +8482,286 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type EnumEmploymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmploymentStatus | EnumEmploymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmploymentStatusFilter<$PrismaModel> | $Enums.EmploymentStatus
   }
 
-  export type CreditCardCountOrderByAggregateInput = {
+  export type EnumPaymentFrequencyFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentFrequency | EnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentFrequencyFilter<$PrismaModel> | $Enums.PaymentFrequency
+  }
+
+  export type EnumPaystubPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaystubPeriod | EnumPaystubPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaystubPeriodFilter<$PrismaModel> | $Enums.PaystubPeriod
+  }
+
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type IncomeProfileScalarRelationFilter = {
+    is?: IncomeProfileWhereInput
+    isNot?: IncomeProfileWhereInput
+  }
+
+  export type OtherDeductionListRelationFilter = {
+    every?: OtherDeductionWhereInput
+    some?: OtherDeductionWhereInput
+    none?: OtherDeductionWhereInput
+  }
+
+  export type OtherDeductionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JobCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    cardName?: SortOrder
-    bankName?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    incomeProfileId?: SortOrder
+    employmentStatus?: SortOrder
+    employerName?: SortOrder
+    roleTitle?: SortOrder
+    paymentFrequency?: SortOrder
+    paystubPeriod?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type CreditCardAvgOrderByAggregateInput = {
+  export type JobAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    incomeProfileId?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
   }
 
-  export type CreditCardMaxOrderByAggregateInput = {
+  export type JobMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    cardName?: SortOrder
-    bankName?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    incomeProfileId?: SortOrder
+    employmentStatus?: SortOrder
+    employerName?: SortOrder
+    roleTitle?: SortOrder
+    paymentFrequency?: SortOrder
+    paystubPeriod?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type CreditCardMinOrderByAggregateInput = {
+  export type JobMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    cardName?: SortOrder
-    bankName?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    incomeProfileId?: SortOrder
+    employmentStatus?: SortOrder
+    employerName?: SortOrder
+    roleTitle?: SortOrder
+    paymentFrequency?: SortOrder
+    paystubPeriod?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type CreditCardSumOrderByAggregateInput = {
+  export type JobSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    balance?: SortOrder
-    interestRate?: SortOrder
+    incomeProfileId?: SortOrder
+    grossSalary?: SortOrder
+    taxDeductions?: SortOrder
+    healthInsurance?: SortOrder
+    retirementContributions?: SortOrder
+    netSalary?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type EnumEmploymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmploymentStatus | EnumEmploymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmploymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedEnumEmploymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumEmploymentStatusFilter<$PrismaModel>
   }
 
-  export type PostCreateNestedManyWithoutAuthorInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  export type EnumPaymentFrequencyWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentFrequency | EnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.PaymentFrequency
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentFrequencyFilter<$PrismaModel>
+    _max?: NestedEnumPaymentFrequencyFilter<$PrismaModel>
   }
 
-  export type SubmissionCreateNestedManyWithoutUserInput = {
-    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
-    createMany?: SubmissionCreateManyUserInputEnvelope
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  export type EnumPaystubPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaystubPeriod | EnumPaystubPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaystubPeriodWithAggregatesFilter<$PrismaModel> | $Enums.PaystubPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaystubPeriodFilter<$PrismaModel>
+    _max?: NestedEnumPaystubPeriodFilter<$PrismaModel>
   }
 
-  export type CreditCardCreateNestedManyWithoutUserInput = {
-    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
-    createMany?: CreditCardCreateManyUserInputEnvelope
-    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  export type JobScalarRelationFilter = {
+    is?: JobWhereInput
+    isNot?: JobWhereInput
   }
 
-  export type SubmissionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
-    createMany?: SubmissionCreateManyUserInputEnvelope
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  export type OtherDeductionCountOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    name?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type CreditCardUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
-    createMany?: CreditCardCreateManyUserInputEnvelope
-    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+  export type OtherDeductionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type OtherDeductionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    name?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OtherDeductionMinOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    name?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OtherDeductionSumOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type EnumOtherIncomeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.OtherIncomeType | EnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumOtherIncomeTypeFilter<$PrismaModel> | $Enums.OtherIncomeType
+  }
+
+  export type OtherIncomeSourceCountOrderByAggregateInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    sourceType?: SortOrder
+    frequency?: SortOrder
+    amount?: SortOrder
+    additionalContext?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OtherIncomeSourceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type OtherIncomeSourceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    sourceType?: SortOrder
+    frequency?: SortOrder
+    amount?: SortOrder
+    additionalContext?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OtherIncomeSourceMinOrderByAggregateInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    sourceType?: SortOrder
+    frequency?: SortOrder
+    amount?: SortOrder
+    additionalContext?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OtherIncomeSourceSumOrderByAggregateInput = {
+    id?: SortOrder
+    incomeProfileId?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type EnumOtherIncomeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OtherIncomeType | EnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumOtherIncomeTypeWithAggregatesFilter<$PrismaModel> | $Enums.OtherIncomeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOtherIncomeTypeFilter<$PrismaModel>
+    _max?: NestedEnumOtherIncomeTypeFilter<$PrismaModel>
+  }
+
+  export type IncomeProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutUserInput
+    connect?: IncomeProfileWhereUniqueInput
+  }
+
+  export type IncomeProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutUserInput
+    connect?: IncomeProfileWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6968,46 +8780,14 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type PostUpdateManyWithoutAuthorNestedInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    upsert?: PostUpsertWithWhereUniqueWithoutAuthorInput | PostUpsertWithWhereUniqueWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
-    updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
-    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
-  }
-
-  export type SubmissionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
-    upsert?: SubmissionUpsertWithWhereUniqueWithoutUserInput | SubmissionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SubmissionCreateManyUserInputEnvelope
-    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    update?: SubmissionUpdateWithWhereUniqueWithoutUserInput | SubmissionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SubmissionUpdateManyWithWhereWithoutUserInput | SubmissionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-  }
-
-  export type CreditCardUpdateManyWithoutUserNestedInput = {
-    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
-    upsert?: CreditCardUpsertWithWhereUniqueWithoutUserInput | CreditCardUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: CreditCardCreateManyUserInputEnvelope
-    set?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    disconnect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    delete?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    update?: CreditCardUpdateWithWhereUniqueWithoutUserInput | CreditCardUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: CreditCardUpdateManyWithWhereWithoutUserInput | CreditCardUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
+  export type IncomeProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutUserInput
+    upsert?: IncomeProfileUpsertWithoutUserInput
+    disconnect?: IncomeProfileWhereInput | boolean
+    delete?: IncomeProfileWhereInput | boolean
+    connect?: IncomeProfileWhereUniqueInput
+    update?: XOR<XOR<IncomeProfileUpdateToOneWithWhereWithoutUserInput, IncomeProfileUpdateWithoutUserInput>, IncomeProfileUncheckedUpdateWithoutUserInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -7018,104 +8798,224 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    upsert?: PostUpsertWithWhereUniqueWithoutAuthorInput | PostUpsertWithWhereUniqueWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
-    updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
-    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  export type IncomeProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutUserInput
+    upsert?: IncomeProfileUpsertWithoutUserInput
+    disconnect?: IncomeProfileWhereInput | boolean
+    delete?: IncomeProfileWhereInput | boolean
+    connect?: IncomeProfileWhereUniqueInput
+    update?: XOR<XOR<IncomeProfileUpdateToOneWithWhereWithoutUserInput, IncomeProfileUpdateWithoutUserInput>, IncomeProfileUncheckedUpdateWithoutUserInput>
   }
 
-  export type SubmissionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput> | SubmissionCreateWithoutUserInput[] | SubmissionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
-    upsert?: SubmissionUpsertWithWhereUniqueWithoutUserInput | SubmissionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SubmissionCreateManyUserInputEnvelope
-    set?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    disconnect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    delete?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
-    update?: SubmissionUpdateWithWhereUniqueWithoutUserInput | SubmissionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SubmissionUpdateManyWithWhereWithoutUserInput | SubmissionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-  }
-
-  export type CreditCardUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
-    upsert?: CreditCardUpsertWithWhereUniqueWithoutUserInput | CreditCardUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: CreditCardCreateManyUserInputEnvelope
-    set?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    disconnect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    delete?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
-    update?: CreditCardUpdateWithWhereUniqueWithoutUserInput | CreditCardUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: CreditCardUpdateManyWithWhereWithoutUserInput | CreditCardUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutPostsInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
+  export type UserCreateNestedOneWithoutIncomeProfileInput = {
+    create?: XOR<UserCreateWithoutIncomeProfileInput, UserUncheckedCreateWithoutIncomeProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIncomeProfileInput
     connect?: UserWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type JobCreateNestedManyWithoutIncomeProfileInput = {
+    create?: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput> | JobCreateWithoutIncomeProfileInput[] | JobUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: JobCreateOrConnectWithoutIncomeProfileInput | JobCreateOrConnectWithoutIncomeProfileInput[]
+    createMany?: JobCreateManyIncomeProfileInputEnvelope
+    connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
-    upsert?: UserUpsertWithoutPostsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
+  export type OtherIncomeSourceCreateNestedManyWithoutIncomeProfileInput = {
+    create?: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput> | OtherIncomeSourceCreateWithoutIncomeProfileInput[] | OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput | OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput[]
+    createMany?: OtherIncomeSourceCreateManyIncomeProfileInputEnvelope
+    connect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutSubmissionsInput = {
-    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
-    connect?: UserWhereUniqueInput
+  export type JobUncheckedCreateNestedManyWithoutIncomeProfileInput = {
+    create?: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput> | JobCreateWithoutIncomeProfileInput[] | JobUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: JobCreateOrConnectWithoutIncomeProfileInput | JobCreateOrConnectWithoutIncomeProfileInput[]
+    createMany?: JobCreateManyIncomeProfileInputEnvelope
+    connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
+  }
+
+  export type OtherIncomeSourceUncheckedCreateNestedManyWithoutIncomeProfileInput = {
+    create?: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput> | OtherIncomeSourceCreateWithoutIncomeProfileInput[] | OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput | OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput[]
+    createMany?: OtherIncomeSourceCreateManyIncomeProfileInputEnvelope
+    connect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
 
-  export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
-    create?: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSubmissionsInput
-    upsert?: UserUpsertWithoutSubmissionsInput
+  export type UserUpdateOneRequiredWithoutIncomeProfileNestedInput = {
+    create?: XOR<UserCreateWithoutIncomeProfileInput, UserUncheckedCreateWithoutIncomeProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIncomeProfileInput
+    upsert?: UserUpsertWithoutIncomeProfileInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmissionsInput, UserUpdateWithoutSubmissionsInput>, UserUncheckedUpdateWithoutSubmissionsInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutIncomeProfileInput, UserUpdateWithoutIncomeProfileInput>, UserUncheckedUpdateWithoutIncomeProfileInput>
   }
 
-  export type UserCreateNestedOneWithoutCreditcardsInput = {
-    create?: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCreditcardsInput
-    connect?: UserWhereUniqueInput
+  export type JobUpdateManyWithoutIncomeProfileNestedInput = {
+    create?: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput> | JobCreateWithoutIncomeProfileInput[] | JobUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: JobCreateOrConnectWithoutIncomeProfileInput | JobCreateOrConnectWithoutIncomeProfileInput[]
+    upsert?: JobUpsertWithWhereUniqueWithoutIncomeProfileInput | JobUpsertWithWhereUniqueWithoutIncomeProfileInput[]
+    createMany?: JobCreateManyIncomeProfileInputEnvelope
+    set?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    disconnect?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    delete?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    update?: JobUpdateWithWhereUniqueWithoutIncomeProfileInput | JobUpdateWithWhereUniqueWithoutIncomeProfileInput[]
+    updateMany?: JobUpdateManyWithWhereWithoutIncomeProfileInput | JobUpdateManyWithWhereWithoutIncomeProfileInput[]
+    deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type OtherIncomeSourceUpdateManyWithoutIncomeProfileNestedInput = {
+    create?: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput> | OtherIncomeSourceCreateWithoutIncomeProfileInput[] | OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput | OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput[]
+    upsert?: OtherIncomeSourceUpsertWithWhereUniqueWithoutIncomeProfileInput | OtherIncomeSourceUpsertWithWhereUniqueWithoutIncomeProfileInput[]
+    createMany?: OtherIncomeSourceCreateManyIncomeProfileInputEnvelope
+    set?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    disconnect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    delete?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    connect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    update?: OtherIncomeSourceUpdateWithWhereUniqueWithoutIncomeProfileInput | OtherIncomeSourceUpdateWithWhereUniqueWithoutIncomeProfileInput[]
+    updateMany?: OtherIncomeSourceUpdateManyWithWhereWithoutIncomeProfileInput | OtherIncomeSourceUpdateManyWithWhereWithoutIncomeProfileInput[]
+    deleteMany?: OtherIncomeSourceScalarWhereInput | OtherIncomeSourceScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutCreditcardsNestedInput = {
-    create?: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCreditcardsInput
-    upsert?: UserUpsertWithoutCreditcardsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreditcardsInput, UserUpdateWithoutCreditcardsInput>, UserUncheckedUpdateWithoutCreditcardsInput>
+  export type JobUncheckedUpdateManyWithoutIncomeProfileNestedInput = {
+    create?: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput> | JobCreateWithoutIncomeProfileInput[] | JobUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: JobCreateOrConnectWithoutIncomeProfileInput | JobCreateOrConnectWithoutIncomeProfileInput[]
+    upsert?: JobUpsertWithWhereUniqueWithoutIncomeProfileInput | JobUpsertWithWhereUniqueWithoutIncomeProfileInput[]
+    createMany?: JobCreateManyIncomeProfileInputEnvelope
+    set?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    disconnect?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    delete?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    connect?: JobWhereUniqueInput | JobWhereUniqueInput[]
+    update?: JobUpdateWithWhereUniqueWithoutIncomeProfileInput | JobUpdateWithWhereUniqueWithoutIncomeProfileInput[]
+    updateMany?: JobUpdateManyWithWhereWithoutIncomeProfileInput | JobUpdateManyWithWhereWithoutIncomeProfileInput[]
+    deleteMany?: JobScalarWhereInput | JobScalarWhereInput[]
+  }
+
+  export type OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileNestedInput = {
+    create?: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput> | OtherIncomeSourceCreateWithoutIncomeProfileInput[] | OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput[]
+    connectOrCreate?: OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput | OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput[]
+    upsert?: OtherIncomeSourceUpsertWithWhereUniqueWithoutIncomeProfileInput | OtherIncomeSourceUpsertWithWhereUniqueWithoutIncomeProfileInput[]
+    createMany?: OtherIncomeSourceCreateManyIncomeProfileInputEnvelope
+    set?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    disconnect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    delete?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    connect?: OtherIncomeSourceWhereUniqueInput | OtherIncomeSourceWhereUniqueInput[]
+    update?: OtherIncomeSourceUpdateWithWhereUniqueWithoutIncomeProfileInput | OtherIncomeSourceUpdateWithWhereUniqueWithoutIncomeProfileInput[]
+    updateMany?: OtherIncomeSourceUpdateManyWithWhereWithoutIncomeProfileInput | OtherIncomeSourceUpdateManyWithWhereWithoutIncomeProfileInput[]
+    deleteMany?: OtherIncomeSourceScalarWhereInput | OtherIncomeSourceScalarWhereInput[]
+  }
+
+  export type IncomeProfileCreateNestedOneWithoutJobsInput = {
+    create?: XOR<IncomeProfileCreateWithoutJobsInput, IncomeProfileUncheckedCreateWithoutJobsInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutJobsInput
+    connect?: IncomeProfileWhereUniqueInput
+  }
+
+  export type OtherDeductionCreateNestedManyWithoutJobInput = {
+    create?: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput> | OtherDeductionCreateWithoutJobInput[] | OtherDeductionUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: OtherDeductionCreateOrConnectWithoutJobInput | OtherDeductionCreateOrConnectWithoutJobInput[]
+    createMany?: OtherDeductionCreateManyJobInputEnvelope
+    connect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+  }
+
+  export type OtherDeductionUncheckedCreateNestedManyWithoutJobInput = {
+    create?: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput> | OtherDeductionCreateWithoutJobInput[] | OtherDeductionUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: OtherDeductionCreateOrConnectWithoutJobInput | OtherDeductionCreateOrConnectWithoutJobInput[]
+    createMany?: OtherDeductionCreateManyJobInputEnvelope
+    connect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+  }
+
+  export type EnumEmploymentStatusFieldUpdateOperationsInput = {
+    set?: $Enums.EmploymentStatus
+  }
+
+  export type EnumPaymentFrequencyFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentFrequency
+  }
+
+  export type EnumPaystubPeriodFieldUpdateOperationsInput = {
+    set?: $Enums.PaystubPeriod
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type IncomeProfileUpdateOneRequiredWithoutJobsNestedInput = {
+    create?: XOR<IncomeProfileCreateWithoutJobsInput, IncomeProfileUncheckedCreateWithoutJobsInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutJobsInput
+    upsert?: IncomeProfileUpsertWithoutJobsInput
+    connect?: IncomeProfileWhereUniqueInput
+    update?: XOR<XOR<IncomeProfileUpdateToOneWithWhereWithoutJobsInput, IncomeProfileUpdateWithoutJobsInput>, IncomeProfileUncheckedUpdateWithoutJobsInput>
+  }
+
+  export type OtherDeductionUpdateManyWithoutJobNestedInput = {
+    create?: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput> | OtherDeductionCreateWithoutJobInput[] | OtherDeductionUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: OtherDeductionCreateOrConnectWithoutJobInput | OtherDeductionCreateOrConnectWithoutJobInput[]
+    upsert?: OtherDeductionUpsertWithWhereUniqueWithoutJobInput | OtherDeductionUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: OtherDeductionCreateManyJobInputEnvelope
+    set?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    disconnect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    delete?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    connect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    update?: OtherDeductionUpdateWithWhereUniqueWithoutJobInput | OtherDeductionUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: OtherDeductionUpdateManyWithWhereWithoutJobInput | OtherDeductionUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: OtherDeductionScalarWhereInput | OtherDeductionScalarWhereInput[]
+  }
+
+  export type OtherDeductionUncheckedUpdateManyWithoutJobNestedInput = {
+    create?: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput> | OtherDeductionCreateWithoutJobInput[] | OtherDeductionUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: OtherDeductionCreateOrConnectWithoutJobInput | OtherDeductionCreateOrConnectWithoutJobInput[]
+    upsert?: OtherDeductionUpsertWithWhereUniqueWithoutJobInput | OtherDeductionUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: OtherDeductionCreateManyJobInputEnvelope
+    set?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    disconnect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    delete?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    connect?: OtherDeductionWhereUniqueInput | OtherDeductionWhereUniqueInput[]
+    update?: OtherDeductionUpdateWithWhereUniqueWithoutJobInput | OtherDeductionUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: OtherDeductionUpdateManyWithWhereWithoutJobInput | OtherDeductionUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: OtherDeductionScalarWhereInput | OtherDeductionScalarWhereInput[]
+  }
+
+  export type JobCreateNestedOneWithoutOtherDeductionsInput = {
+    create?: XOR<JobCreateWithoutOtherDeductionsInput, JobUncheckedCreateWithoutOtherDeductionsInput>
+    connectOrCreate?: JobCreateOrConnectWithoutOtherDeductionsInput
+    connect?: JobWhereUniqueInput
+  }
+
+  export type JobUpdateOneRequiredWithoutOtherDeductionsNestedInput = {
+    create?: XOR<JobCreateWithoutOtherDeductionsInput, JobUncheckedCreateWithoutOtherDeductionsInput>
+    connectOrCreate?: JobCreateOrConnectWithoutOtherDeductionsInput
+    upsert?: JobUpsertWithoutOtherDeductionsInput
+    connect?: JobWhereUniqueInput
+    update?: XOR<XOR<JobUpdateToOneWithWhereWithoutOtherDeductionsInput, JobUpdateWithoutOtherDeductionsInput>, JobUncheckedUpdateWithoutOtherDeductionsInput>
+  }
+
+  export type IncomeProfileCreateNestedOneWithoutOtherIncomesInput = {
+    create?: XOR<IncomeProfileCreateWithoutOtherIncomesInput, IncomeProfileUncheckedCreateWithoutOtherIncomesInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutOtherIncomesInput
+    connect?: IncomeProfileWhereUniqueInput
+  }
+
+  export type EnumOtherIncomeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.OtherIncomeType
+  }
+
+  export type IncomeProfileUpdateOneRequiredWithoutOtherIncomesNestedInput = {
+    create?: XOR<IncomeProfileCreateWithoutOtherIncomesInput, IncomeProfileUncheckedCreateWithoutOtherIncomesInput>
+    connectOrCreate?: IncomeProfileCreateOrConnectWithoutOtherIncomesInput
+    upsert?: IncomeProfileUpsertWithoutOtherIncomesInput
+    connect?: IncomeProfileWhereUniqueInput
+    update?: XOR<XOR<IncomeProfileUpdateToOneWithWhereWithoutOtherIncomesInput, IncomeProfileUpdateWithoutOtherIncomesInput>, IncomeProfileUncheckedUpdateWithoutOtherIncomesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -7271,19 +9171,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -7293,29 +9180,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -7332,475 +9196,707 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+  export type NestedEnumEmploymentStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmploymentStatus | EnumEmploymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmploymentStatusFilter<$PrismaModel> | $Enums.EmploymentStatus
+  }
+
+  export type NestedEnumPaymentFrequencyFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentFrequency | EnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentFrequencyFilter<$PrismaModel> | $Enums.PaymentFrequency
+  }
+
+  export type NestedEnumPaystubPeriodFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaystubPeriod | EnumPaystubPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaystubPeriodFilter<$PrismaModel> | $Enums.PaystubPeriod
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedEnumEmploymentStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EmploymentStatus | EnumEmploymentStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EmploymentStatus[] | ListEnumEmploymentStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEmploymentStatusWithAggregatesFilter<$PrismaModel> | $Enums.EmploymentStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedEnumEmploymentStatusFilter<$PrismaModel>
+    _max?: NestedEnumEmploymentStatusFilter<$PrismaModel>
   }
 
-  export type PostCreateWithoutAuthorInput = {
-    title: string
-    content?: string | null
-    published?: boolean
+  export type NestedEnumPaymentFrequencyWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentFrequency | EnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentFrequency[] | ListEnumPaymentFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.PaymentFrequency
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentFrequencyFilter<$PrismaModel>
+    _max?: NestedEnumPaymentFrequencyFilter<$PrismaModel>
   }
 
-  export type PostUncheckedCreateWithoutAuthorInput = {
+  export type NestedEnumPaystubPeriodWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaystubPeriod | EnumPaystubPeriodFieldRefInput<$PrismaModel>
+    in?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaystubPeriod[] | ListEnumPaystubPeriodFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaystubPeriodWithAggregatesFilter<$PrismaModel> | $Enums.PaystubPeriod
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaystubPeriodFilter<$PrismaModel>
+    _max?: NestedEnumPaystubPeriodFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOtherIncomeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.OtherIncomeType | EnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumOtherIncomeTypeFilter<$PrismaModel> | $Enums.OtherIncomeType
+  }
+
+  export type NestedEnumOtherIncomeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OtherIncomeType | EnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OtherIncomeType[] | ListEnumOtherIncomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumOtherIncomeTypeWithAggregatesFilter<$PrismaModel> | $Enums.OtherIncomeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOtherIncomeTypeFilter<$PrismaModel>
+    _max?: NestedEnumOtherIncomeTypeFilter<$PrismaModel>
+  }
+
+  export type IncomeProfileCreateWithoutUserInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    jobs?: JobCreateNestedManyWithoutIncomeProfileInput
+    otherIncomes?: OtherIncomeSourceCreateNestedManyWithoutIncomeProfileInput
+  }
+
+  export type IncomeProfileUncheckedCreateWithoutUserInput = {
     id?: number
-    title: string
-    content?: string | null
-    published?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    jobs?: JobUncheckedCreateNestedManyWithoutIncomeProfileInput
+    otherIncomes?: OtherIncomeSourceUncheckedCreateNestedManyWithoutIncomeProfileInput
   }
 
-  export type PostCreateOrConnectWithoutAuthorInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput>
+  export type IncomeProfileCreateOrConnectWithoutUserInput = {
+    where: IncomeProfileWhereUniqueInput
+    create: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
   }
 
-  export type PostCreateManyAuthorInputEnvelope = {
-    data: PostCreateManyAuthorInput | PostCreateManyAuthorInput[]
+  export type IncomeProfileUpsertWithoutUserInput = {
+    update: XOR<IncomeProfileUpdateWithoutUserInput, IncomeProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<IncomeProfileCreateWithoutUserInput, IncomeProfileUncheckedCreateWithoutUserInput>
+    where?: IncomeProfileWhereInput
+  }
+
+  export type IncomeProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: IncomeProfileWhereInput
+    data: XOR<IncomeProfileUpdateWithoutUserInput, IncomeProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type IncomeProfileUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobs?: JobUpdateManyWithoutIncomeProfileNestedInput
+    otherIncomes?: OtherIncomeSourceUpdateManyWithoutIncomeProfileNestedInput
+  }
+
+  export type IncomeProfileUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobs?: JobUncheckedUpdateManyWithoutIncomeProfileNestedInput
+    otherIncomes?: OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileNestedInput
+  }
+
+  export type UserCreateWithoutIncomeProfileInput = {
+    email: string
+    name?: string | null
+    hashedPassword: string
+    type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verifiedAt?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+  }
+
+  export type UserUncheckedCreateWithoutIncomeProfileInput = {
+    id?: number
+    email: string
+    name?: string | null
+    hashedPassword: string
+    type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verifiedAt?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+  }
+
+  export type UserCreateOrConnectWithoutIncomeProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutIncomeProfileInput, UserUncheckedCreateWithoutIncomeProfileInput>
+  }
+
+  export type JobCreateWithoutIncomeProfileInput = {
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    otherDeductions?: OtherDeductionCreateNestedManyWithoutJobInput
+  }
+
+  export type JobUncheckedCreateWithoutIncomeProfileInput = {
+    id?: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    otherDeductions?: OtherDeductionUncheckedCreateNestedManyWithoutJobInput
+  }
+
+  export type JobCreateOrConnectWithoutIncomeProfileInput = {
+    where: JobWhereUniqueInput
+    create: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput>
+  }
+
+  export type JobCreateManyIncomeProfileInputEnvelope = {
+    data: JobCreateManyIncomeProfileInput | JobCreateManyIncomeProfileInput[]
     skipDuplicates?: boolean
   }
 
-  export type SubmissionCreateWithoutUserInput = {
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
+  export type OtherIncomeSourceCreateWithoutIncomeProfileInput = {
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type SubmissionUncheckedCreateWithoutUserInput = {
+  export type OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput = {
     id?: number
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type SubmissionCreateOrConnectWithoutUserInput = {
-    where: SubmissionWhereUniqueInput
-    create: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput>
+  export type OtherIncomeSourceCreateOrConnectWithoutIncomeProfileInput = {
+    where: OtherIncomeSourceWhereUniqueInput
+    create: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput>
   }
 
-  export type SubmissionCreateManyUserInputEnvelope = {
-    data: SubmissionCreateManyUserInput | SubmissionCreateManyUserInput[]
+  export type OtherIncomeSourceCreateManyIncomeProfileInputEnvelope = {
+    data: OtherIncomeSourceCreateManyIncomeProfileInput | OtherIncomeSourceCreateManyIncomeProfileInput[]
     skipDuplicates?: boolean
   }
 
-  export type CreditCardCreateWithoutUserInput = {
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
-    createdAt?: Date | string
+  export type UserUpsertWithoutIncomeProfileInput = {
+    update: XOR<UserUpdateWithoutIncomeProfileInput, UserUncheckedUpdateWithoutIncomeProfileInput>
+    create: XOR<UserCreateWithoutIncomeProfileInput, UserUncheckedCreateWithoutIncomeProfileInput>
+    where?: UserWhereInput
   }
 
-  export type CreditCardUncheckedCreateWithoutUserInput = {
+  export type UserUpdateToOneWithWhereWithoutIncomeProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutIncomeProfileInput, UserUncheckedUpdateWithoutIncomeProfileInput>
+  }
+
+  export type UserUpdateWithoutIncomeProfileInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserUncheckedUpdateWithoutIncomeProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type JobUpsertWithWhereUniqueWithoutIncomeProfileInput = {
+    where: JobWhereUniqueInput
+    update: XOR<JobUpdateWithoutIncomeProfileInput, JobUncheckedUpdateWithoutIncomeProfileInput>
+    create: XOR<JobCreateWithoutIncomeProfileInput, JobUncheckedCreateWithoutIncomeProfileInput>
+  }
+
+  export type JobUpdateWithWhereUniqueWithoutIncomeProfileInput = {
+    where: JobWhereUniqueInput
+    data: XOR<JobUpdateWithoutIncomeProfileInput, JobUncheckedUpdateWithoutIncomeProfileInput>
+  }
+
+  export type JobUpdateManyWithWhereWithoutIncomeProfileInput = {
+    where: JobScalarWhereInput
+    data: XOR<JobUpdateManyMutationInput, JobUncheckedUpdateManyWithoutIncomeProfileInput>
+  }
+
+  export type JobScalarWhereInput = {
+    AND?: JobScalarWhereInput | JobScalarWhereInput[]
+    OR?: JobScalarWhereInput[]
+    NOT?: JobScalarWhereInput | JobScalarWhereInput[]
+    id?: IntFilter<"Job"> | number
+    incomeProfileId?: IntFilter<"Job"> | number
+    employmentStatus?: EnumEmploymentStatusFilter<"Job"> | $Enums.EmploymentStatus
+    employerName?: StringFilter<"Job"> | string
+    roleTitle?: StringFilter<"Job"> | string
+    paymentFrequency?: EnumPaymentFrequencyFilter<"Job"> | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFilter<"Job"> | $Enums.PaystubPeriod
+    grossSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFilter<"Job"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"Job"> | Date | string
+    updatedAt?: DateTimeFilter<"Job"> | Date | string
+  }
+
+  export type OtherIncomeSourceUpsertWithWhereUniqueWithoutIncomeProfileInput = {
+    where: OtherIncomeSourceWhereUniqueInput
+    update: XOR<OtherIncomeSourceUpdateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedUpdateWithoutIncomeProfileInput>
+    create: XOR<OtherIncomeSourceCreateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedCreateWithoutIncomeProfileInput>
+  }
+
+  export type OtherIncomeSourceUpdateWithWhereUniqueWithoutIncomeProfileInput = {
+    where: OtherIncomeSourceWhereUniqueInput
+    data: XOR<OtherIncomeSourceUpdateWithoutIncomeProfileInput, OtherIncomeSourceUncheckedUpdateWithoutIncomeProfileInput>
+  }
+
+  export type OtherIncomeSourceUpdateManyWithWhereWithoutIncomeProfileInput = {
+    where: OtherIncomeSourceScalarWhereInput
+    data: XOR<OtherIncomeSourceUpdateManyMutationInput, OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileInput>
+  }
+
+  export type OtherIncomeSourceScalarWhereInput = {
+    AND?: OtherIncomeSourceScalarWhereInput | OtherIncomeSourceScalarWhereInput[]
+    OR?: OtherIncomeSourceScalarWhereInput[]
+    NOT?: OtherIncomeSourceScalarWhereInput | OtherIncomeSourceScalarWhereInput[]
+    id?: IntFilter<"OtherIncomeSource"> | number
+    incomeProfileId?: IntFilter<"OtherIncomeSource"> | number
+    sourceType?: EnumOtherIncomeTypeFilter<"OtherIncomeSource"> | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFilter<"OtherIncomeSource"> | $Enums.PaymentFrequency
+    amount?: DecimalFilter<"OtherIncomeSource"> | Decimal | DecimalJsLike | number | string
+    additionalContext?: StringNullableFilter<"OtherIncomeSource"> | string | null
+    createdAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherIncomeSource"> | Date | string
+  }
+
+  export type IncomeProfileCreateWithoutJobsInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutIncomeProfileInput
+    otherIncomes?: OtherIncomeSourceCreateNestedManyWithoutIncomeProfileInput
+  }
+
+  export type IncomeProfileUncheckedCreateWithoutJobsInput = {
     id?: number
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+    userId: number
     createdAt?: Date | string
+    updatedAt?: Date | string
+    otherIncomes?: OtherIncomeSourceUncheckedCreateNestedManyWithoutIncomeProfileInput
   }
 
-  export type CreditCardCreateOrConnectWithoutUserInput = {
-    where: CreditCardWhereUniqueInput
-    create: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput>
+  export type IncomeProfileCreateOrConnectWithoutJobsInput = {
+    where: IncomeProfileWhereUniqueInput
+    create: XOR<IncomeProfileCreateWithoutJobsInput, IncomeProfileUncheckedCreateWithoutJobsInput>
   }
 
-  export type CreditCardCreateManyUserInputEnvelope = {
-    data: CreditCardCreateManyUserInput | CreditCardCreateManyUserInput[]
+  export type OtherDeductionCreateWithoutJobInput = {
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherDeductionUncheckedCreateWithoutJobInput = {
+    id?: number
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherDeductionCreateOrConnectWithoutJobInput = {
+    where: OtherDeductionWhereUniqueInput
+    create: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput>
+  }
+
+  export type OtherDeductionCreateManyJobInputEnvelope = {
+    data: OtherDeductionCreateManyJobInput | OtherDeductionCreateManyJobInput[]
     skipDuplicates?: boolean
   }
 
-  export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
-    where: PostWhereUniqueInput
-    update: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
-    create: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput>
+  export type IncomeProfileUpsertWithoutJobsInput = {
+    update: XOR<IncomeProfileUpdateWithoutJobsInput, IncomeProfileUncheckedUpdateWithoutJobsInput>
+    create: XOR<IncomeProfileCreateWithoutJobsInput, IncomeProfileUncheckedCreateWithoutJobsInput>
+    where?: IncomeProfileWhereInput
   }
 
-  export type PostUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: PostWhereUniqueInput
-    data: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
+  export type IncomeProfileUpdateToOneWithWhereWithoutJobsInput = {
+    where?: IncomeProfileWhereInput
+    data: XOR<IncomeProfileUpdateWithoutJobsInput, IncomeProfileUncheckedUpdateWithoutJobsInput>
   }
 
-  export type PostUpdateManyWithWhereWithoutAuthorInput = {
-    where: PostScalarWhereInput
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutAuthorInput>
+  export type IncomeProfileUpdateWithoutJobsInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutIncomeProfileNestedInput
+    otherIncomes?: OtherIncomeSourceUpdateManyWithoutIncomeProfileNestedInput
   }
 
-  export type PostScalarWhereInput = {
-    AND?: PostScalarWhereInput | PostScalarWhereInput[]
-    OR?: PostScalarWhereInput[]
-    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
-    id?: IntFilter<"Post"> | number
-    title?: StringFilter<"Post"> | string
-    content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolFilter<"Post"> | boolean
-    authorId?: IntFilter<"Post"> | number
-  }
-
-  export type SubmissionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SubmissionWhereUniqueInput
-    update: XOR<SubmissionUpdateWithoutUserInput, SubmissionUncheckedUpdateWithoutUserInput>
-    create: XOR<SubmissionCreateWithoutUserInput, SubmissionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SubmissionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SubmissionWhereUniqueInput
-    data: XOR<SubmissionUpdateWithoutUserInput, SubmissionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SubmissionUpdateManyWithWhereWithoutUserInput = {
-    where: SubmissionScalarWhereInput
-    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SubmissionScalarWhereInput = {
-    AND?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-    OR?: SubmissionScalarWhereInput[]
-    NOT?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
-    id?: IntFilter<"Submission"> | number
-    userId?: IntFilter<"Submission"> | number
-    formName?: StringFilter<"Submission"> | string
-    data?: JsonFilter<"Submission">
-    createdAt?: DateTimeFilter<"Submission"> | Date | string
-  }
-
-  export type CreditCardUpsertWithWhereUniqueWithoutUserInput = {
-    where: CreditCardWhereUniqueInput
-    update: XOR<CreditCardUpdateWithoutUserInput, CreditCardUncheckedUpdateWithoutUserInput>
-    create: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput>
-  }
-
-  export type CreditCardUpdateWithWhereUniqueWithoutUserInput = {
-    where: CreditCardWhereUniqueInput
-    data: XOR<CreditCardUpdateWithoutUserInput, CreditCardUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CreditCardUpdateManyWithWhereWithoutUserInput = {
-    where: CreditCardScalarWhereInput
-    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type CreditCardScalarWhereInput = {
-    AND?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
-    OR?: CreditCardScalarWhereInput[]
-    NOT?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
-    id?: IntFilter<"CreditCard"> | number
-    userId?: IntFilter<"CreditCard"> | number
-    cardName?: StringFilter<"CreditCard"> | string
-    bankName?: StringFilter<"CreditCard"> | string
-    balance?: FloatFilter<"CreditCard"> | number
-    interestRate?: FloatFilter<"CreditCard"> | number
-    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
-  }
-
-  export type UserCreateWithoutPostsInput = {
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    submissions?: SubmissionCreateNestedManyWithoutUserInput
-    creditcards?: CreditCardCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutPostsInput = {
-    id?: number
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
-    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutPostsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type UserUpsertWithoutPostsInput = {
-    update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutPostsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type UserUpdateWithoutPostsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submissions?: SubmissionUpdateManyWithoutUserNestedInput
-    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutPostsInput = {
+  export type IncomeProfileUncheckedUpdateWithoutJobsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
-    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    otherIncomes?: OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileNestedInput
   }
 
-  export type UserCreateWithoutSubmissionsInput = {
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    posts?: PostCreateNestedManyWithoutAuthorInput
-    creditcards?: CreditCardCreateNestedManyWithoutUserInput
+  export type OtherDeductionUpsertWithWhereUniqueWithoutJobInput = {
+    where: OtherDeductionWhereUniqueInput
+    update: XOR<OtherDeductionUpdateWithoutJobInput, OtherDeductionUncheckedUpdateWithoutJobInput>
+    create: XOR<OtherDeductionCreateWithoutJobInput, OtherDeductionUncheckedCreateWithoutJobInput>
   }
 
-  export type UserUncheckedCreateWithoutSubmissionsInput = {
-    id?: number
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
+  export type OtherDeductionUpdateWithWhereUniqueWithoutJobInput = {
+    where: OtherDeductionWhereUniqueInput
+    data: XOR<OtherDeductionUpdateWithoutJobInput, OtherDeductionUncheckedUpdateWithoutJobInput>
   }
 
-  export type UserCreateOrConnectWithoutSubmissionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
+  export type OtherDeductionUpdateManyWithWhereWithoutJobInput = {
+    where: OtherDeductionScalarWhereInput
+    data: XOR<OtherDeductionUpdateManyMutationInput, OtherDeductionUncheckedUpdateManyWithoutJobInput>
   }
 
-  export type UserUpsertWithoutSubmissionsInput = {
-    update: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
-    create: XOR<UserCreateWithoutSubmissionsInput, UserUncheckedCreateWithoutSubmissionsInput>
-    where?: UserWhereInput
+  export type OtherDeductionScalarWhereInput = {
+    AND?: OtherDeductionScalarWhereInput | OtherDeductionScalarWhereInput[]
+    OR?: OtherDeductionScalarWhereInput[]
+    NOT?: OtherDeductionScalarWhereInput | OtherDeductionScalarWhereInput[]
+    id?: IntFilter<"OtherDeduction"> | number
+    jobId?: IntFilter<"OtherDeduction"> | number
+    name?: StringFilter<"OtherDeduction"> | string
+    amount?: DecimalFilter<"OtherDeduction"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"OtherDeduction"> | Date | string
+    updatedAt?: DateTimeFilter<"OtherDeduction"> | Date | string
   }
 
-  export type UserUpdateToOneWithWhereWithoutSubmissionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSubmissionsInput, UserUncheckedUpdateWithoutSubmissionsInput>
-  }
-
-  export type UserUpdateWithoutSubmissionsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUpdateManyWithoutAuthorNestedInput
-    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutSubmissionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutCreditcardsInput = {
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    posts?: PostCreateNestedManyWithoutAuthorInput
-    submissions?: SubmissionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutCreditcardsInput = {
-    id?: number
-    email: string
-    name?: string | null
-    hashedPassword: string
-    type?: $Enums.UserType
-    emailVerified?: Date | string | null
-    verifiedAt?: Date | string | null
-    verificationToken?: string | null
-    verificationTokenExpiry?: Date | string | null
-    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutCreditcardsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
-  }
-
-  export type UserUpsertWithoutCreditcardsInput = {
-    update: XOR<UserUpdateWithoutCreditcardsInput, UserUncheckedUpdateWithoutCreditcardsInput>
-    create: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutCreditcardsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutCreditcardsInput, UserUncheckedUpdateWithoutCreditcardsInput>
-  }
-
-  export type UserUpdateWithoutCreditcardsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUpdateManyWithoutAuthorNestedInput
-    submissions?: SubmissionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutCreditcardsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    hashedPassword?: StringFieldUpdateOperationsInput | string
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
-    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type PostCreateManyAuthorInput = {
-    id?: number
-    title: string
-    content?: string | null
-    published?: boolean
-  }
-
-  export type SubmissionCreateManyUserInput = {
-    id?: number
-    formName: string
-    data: JsonNullValueInput | InputJsonValue
+  export type JobCreateWithoutOtherDeductionsInput = {
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
+    updatedAt?: Date | string
+    incomeProfile: IncomeProfileCreateNestedOneWithoutJobsInput
   }
 
-  export type CreditCardCreateManyUserInput = {
+  export type JobUncheckedCreateWithoutOtherDeductionsInput = {
     id?: number
-    cardName: string
-    bankName: string
-    balance: number
-    interestRate: number
+    incomeProfileId: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type PostUpdateWithoutAuthorInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
+  export type JobCreateOrConnectWithoutOtherDeductionsInput = {
+    where: JobWhereUniqueInput
+    create: XOR<JobCreateWithoutOtherDeductionsInput, JobUncheckedCreateWithoutOtherDeductionsInput>
   }
 
-  export type PostUncheckedUpdateWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
+  export type JobUpsertWithoutOtherDeductionsInput = {
+    update: XOR<JobUpdateWithoutOtherDeductionsInput, JobUncheckedUpdateWithoutOtherDeductionsInput>
+    create: XOR<JobCreateWithoutOtherDeductionsInput, JobUncheckedCreateWithoutOtherDeductionsInput>
+    where?: JobWhereInput
   }
 
-  export type PostUncheckedUpdateManyWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: BoolFieldUpdateOperationsInput | boolean
+  export type JobUpdateToOneWithWhereWithoutOtherDeductionsInput = {
+    where?: JobWhereInput
+    data: XOR<JobUpdateWithoutOtherDeductionsInput, JobUncheckedUpdateWithoutOtherDeductionsInput>
   }
 
-  export type SubmissionUpdateWithoutUserInput = {
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
+  export type JobUpdateWithoutOtherDeductionsInput = {
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomeProfile?: IncomeProfileUpdateOneRequiredWithoutJobsNestedInput
   }
 
-  export type SubmissionUncheckedUpdateWithoutUserInput = {
+  export type JobUncheckedUpdateWithoutOtherDeductionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
+    incomeProfileId?: IntFieldUpdateOperationsInput | number
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmissionUncheckedUpdateManyWithoutUserInput = {
+  export type IncomeProfileCreateWithoutOtherIncomesInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutIncomeProfileInput
+    jobs?: JobCreateNestedManyWithoutIncomeProfileInput
+  }
+
+  export type IncomeProfileUncheckedCreateWithoutOtherIncomesInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    jobs?: JobUncheckedCreateNestedManyWithoutIncomeProfileInput
+  }
+
+  export type IncomeProfileCreateOrConnectWithoutOtherIncomesInput = {
+    where: IncomeProfileWhereUniqueInput
+    create: XOR<IncomeProfileCreateWithoutOtherIncomesInput, IncomeProfileUncheckedCreateWithoutOtherIncomesInput>
+  }
+
+  export type IncomeProfileUpsertWithoutOtherIncomesInput = {
+    update: XOR<IncomeProfileUpdateWithoutOtherIncomesInput, IncomeProfileUncheckedUpdateWithoutOtherIncomesInput>
+    create: XOR<IncomeProfileCreateWithoutOtherIncomesInput, IncomeProfileUncheckedCreateWithoutOtherIncomesInput>
+    where?: IncomeProfileWhereInput
+  }
+
+  export type IncomeProfileUpdateToOneWithWhereWithoutOtherIncomesInput = {
+    where?: IncomeProfileWhereInput
+    data: XOR<IncomeProfileUpdateWithoutOtherIncomesInput, IncomeProfileUncheckedUpdateWithoutOtherIncomesInput>
+  }
+
+  export type IncomeProfileUpdateWithoutOtherIncomesInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutIncomeProfileNestedInput
+    jobs?: JobUpdateManyWithoutIncomeProfileNestedInput
+  }
+
+  export type IncomeProfileUncheckedUpdateWithoutOtherIncomesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    formName?: StringFieldUpdateOperationsInput | string
-    data?: JsonNullValueInput | InputJsonValue
+    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobs?: JobUncheckedUpdateManyWithoutIncomeProfileNestedInput
   }
 
-  export type CreditCardUpdateWithoutUserInput = {
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type JobCreateManyIncomeProfileInput = {
+    id?: number
+    employmentStatus: $Enums.EmploymentStatus
+    employerName: string
+    roleTitle: string
+    paymentFrequency: $Enums.PaymentFrequency
+    paystubPeriod: $Enums.PaystubPeriod
+    grossSalary: Decimal | DecimalJsLike | number | string
+    taxDeductions: Decimal | DecimalJsLike | number | string
+    healthInsurance: Decimal | DecimalJsLike | number | string
+    retirementContributions: Decimal | DecimalJsLike | number | string
+    netSalary: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type CreditCardUncheckedUpdateWithoutUserInput = {
+  export type OtherIncomeSourceCreateManyIncomeProfileInput = {
+    id?: number
+    sourceType: $Enums.OtherIncomeType
+    frequency: $Enums.PaymentFrequency
+    amount: Decimal | DecimalJsLike | number | string
+    additionalContext?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type JobUpdateWithoutIncomeProfileInput = {
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    otherDeductions?: OtherDeductionUpdateManyWithoutJobNestedInput
+  }
+
+  export type JobUncheckedUpdateWithoutIncomeProfileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    otherDeductions?: OtherDeductionUncheckedUpdateManyWithoutJobNestedInput
   }
 
-  export type CreditCardUncheckedUpdateManyWithoutUserInput = {
+  export type JobUncheckedUpdateManyWithoutIncomeProfileInput = {
     id?: IntFieldUpdateOperationsInput | number
-    cardName?: StringFieldUpdateOperationsInput | string
-    bankName?: StringFieldUpdateOperationsInput | string
-    balance?: FloatFieldUpdateOperationsInput | number
-    interestRate?: FloatFieldUpdateOperationsInput | number
+    employmentStatus?: EnumEmploymentStatusFieldUpdateOperationsInput | $Enums.EmploymentStatus
+    employerName?: StringFieldUpdateOperationsInput | string
+    roleTitle?: StringFieldUpdateOperationsInput | string
+    paymentFrequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    paystubPeriod?: EnumPaystubPeriodFieldUpdateOperationsInput | $Enums.PaystubPeriod
+    grossSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    taxDeductions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    healthInsurance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    retirementContributions?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    netSalary?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceUpdateWithoutIncomeProfileInput = {
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceUncheckedUpdateWithoutIncomeProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherIncomeSourceUncheckedUpdateManyWithoutIncomeProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    sourceType?: EnumOtherIncomeTypeFieldUpdateOperationsInput | $Enums.OtherIncomeType
+    frequency?: EnumPaymentFrequencyFieldUpdateOperationsInput | $Enums.PaymentFrequency
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    additionalContext?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionCreateManyJobInput = {
+    id?: number
+    name: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OtherDeductionUpdateWithoutJobInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionUncheckedUpdateWithoutJobInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OtherDeductionUncheckedUpdateManyWithoutJobInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

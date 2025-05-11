@@ -132,39 +132,53 @@ exports.Prisma.UserScalarFieldEnum = {
   verificationTokenExpiry: 'verificationTokenExpiry'
 };
 
-exports.Prisma.PostScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  content: 'content',
-  published: 'published',
-  authorId: 'authorId'
-};
-
-exports.Prisma.SubmissionScalarFieldEnum = {
+exports.Prisma.IncomeProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  formName: 'formName',
-  data: 'data',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.CreditCardScalarFieldEnum = {
+exports.Prisma.JobScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  cardName: 'cardName',
-  bankName: 'bankName',
-  balance: 'balance',
-  interestRate: 'interestRate',
-  createdAt: 'createdAt'
+  incomeProfileId: 'incomeProfileId',
+  employmentStatus: 'employmentStatus',
+  employerName: 'employerName',
+  roleTitle: 'roleTitle',
+  paymentFrequency: 'paymentFrequency',
+  paystubPeriod: 'paystubPeriod',
+  grossSalary: 'grossSalary',
+  taxDeductions: 'taxDeductions',
+  healthInsurance: 'healthInsurance',
+  retirementContributions: 'retirementContributions',
+  netSalary: 'netSalary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OtherDeductionScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  name: 'name',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OtherIncomeSourceScalarFieldEnum = {
+  id: 'id',
+  incomeProfileId: 'incomeProfileId',
+  sourceType: 'sourceType',
+  frequency: 'frequency',
+  amount: 'amount',
+  additionalContext: 'additionalContext',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
-};
-
-exports.Prisma.JsonNullValueInput = {
-  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -176,22 +190,56 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
-};
 exports.UserType = exports.$Enums.UserType = {
   admin: 'admin',
   user: 'user'
 };
 
+exports.EmploymentStatus = exports.$Enums.EmploymentStatus = {
+  FULL_TIME: 'FULL_TIME',
+  PART_TIME: 'PART_TIME',
+  SEASONAL: 'SEASONAL',
+  RETIRED: 'RETIRED',
+  UNEMPLOYED: 'UNEMPLOYED',
+  STUDENT: 'STUDENT'
+};
+
+exports.PaymentFrequency = exports.$Enums.PaymentFrequency = {
+  WEEKLY: 'WEEKLY',
+  BIWEEKLY: 'BIWEEKLY',
+  MONTHLY: 'MONTHLY',
+  SEMIMONTHLY: 'SEMIMONTHLY'
+};
+
+exports.PaystubPeriod = exports.$Enums.PaystubPeriod = {
+  ONE_WEEK: 'ONE_WEEK',
+  TWO_WEEKS: 'TWO_WEEKS',
+  HALF_MONTH: 'HALF_MONTH',
+  ONE_MONTH: 'ONE_MONTH'
+};
+
+exports.OtherIncomeType = exports.$Enums.OtherIncomeType = {
+  UNEMPLOYMENT: 'UNEMPLOYMENT',
+  DISABILITY: 'DISABILITY',
+  RETIREMENT: 'RETIREMENT',
+  PUBLIC_ASSISTANCE: 'PUBLIC_ASSISTANCE',
+  CHILD_SUPPORT: 'CHILD_SUPPORT',
+  VETERANS_BENEFITS: 'VETERANS_BENEFITS',
+  ALIMONY: 'ALIMONY',
+  STUDENT_LOANS_GRANTS: 'STUDENT_LOANS_GRANTS',
+  SCHOLARSHIPS: 'SCHOLARSHIPS',
+  TAX_REFUND: 'TAX_REFUND',
+  RENTAL_INCOME: 'RENTAL_INCOME',
+  INVESTMENT_INCOME: 'INVESTMENT_INCOME',
+  OTHER: 'OTHER'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
-  Post: 'Post',
-  Submission: 'Submission',
-  CreditCard: 'CreditCard'
+  IncomeProfile: 'IncomeProfile',
+  Job: 'Job',
+  OtherDeduction: 'OtherDeduction',
+  OtherIncomeSource: 'OtherIncomeSource'
 };
 
 /**

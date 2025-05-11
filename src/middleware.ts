@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest) {
   const ip = forwardedFor?.split(',')[0]?.trim() || 'unknown'
 
   // --- 🔥 Rate limiting for sensitive API routes ---
-  if (path.startsWith('/api/auth')) {
+  if (path.startsWith('/api/auth') || path.startsWith('/api/admin')) {
     const { success, limit, remaining, reset } = await ratelimit.limit(ip)
 
     if (!success) {
