@@ -7,6 +7,12 @@ export async function GET() {
   const session = await auth()
 
   if (!session?.user || session.user.type !== 'admin') {
+    console.warn(
+      `[SECURITY] Unauthorized access attempt by user: ${
+        session?.user?.email ?? 'unknown'
+      }`
+    )
+
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 

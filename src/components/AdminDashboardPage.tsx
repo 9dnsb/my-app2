@@ -6,48 +6,42 @@ import { saveAs } from 'file-saver'
 import { Session } from 'next-auth'
 import LogoutButton from '@/components/LogoutButton'
 
-interface CreditCardEntry {
+interface CreditCardRecord {
+  id: number
+  userEmail: string
   cardName: string
   bankName: string
   balance: number
   interestRate: number
-}
-
-interface Submission {
-  id: number
-  userEmail: string
-  formName: string
-  data: CreditCardEntry[]
   createdAt: string
 }
 
 export default function AdminDashboardPage({ session }: { session: Session }) {
-  const [submissions, setSubmissions] = useState<Submission[]>([])
+  const [creditCards, setCreditCards] = useState<CreditCardRecord[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchSubmissions() {
+    async function fetchCreditCards() {
       try {
-        const res = await fetch('/api/admin/submissions')
-        const data = await res.json()
-        setSubmissions(data.submissions)
+        const res = await fetch('/api/admin/credit-cards')
+        const data: { creditCards: CreditCardRecord[] } = await res.json()
+        setCreditCards(data.creditCards)
       } catch (error) {
-        console.error('Failed to fetch submissions', error)
+        console.error('Failed to fetch credit cards', error)
       } finally {
         setLoading(false)
       }
     }
-    fetchSubmissions()
+    fetchCreditCards()
   }, [])
 
   const exportToExcel = async () => {
     const workbook = new Workbook()
-    const worksheet = workbook.addWorksheet('Submissions')
+    const worksheet = workbook.addWorksheet('Credit Cards')
 
     worksheet.addRow([
-      'Submission ID',
+      'ID',
       'User Email',
-      'Form Name',
       'Card Name',
       'Bank Name',
       'Balance',
@@ -55,31 +49,26 @@ export default function AdminDashboardPage({ session }: { session: Session }) {
       'Created At',
     ])
 
-    submissions.forEach((submission) => {
-      if (Array.isArray(submission.data)) {
-        submission.data.forEach((card) => {
-          worksheet.addRow([
-            submission.id,
-            submission.userEmail,
-            submission.formName,
-            card.cardName,
-            card.bankName,
-            card.balance,
-            card.interestRate,
-            submission.createdAt,
-          ])
-        })
-      }
+    creditCards.forEach((card) => {
+      worksheet.addRow([
+        card.id,
+        card.userEmail,
+        card.cardName,
+        card.bankName,
+        card.balance,
+        card.interestRate,
+        new Date(card.createdAt).toLocaleString(),
+      ])
     })
 
     const buffer = await workbook.xlsx.writeBuffer()
-    saveAs(new Blob([buffer]), 'submissions.xlsx')
+    saveAs(new Blob([buffer]), 'credit_cards.xlsx')
   }
 
   if (loading) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p>Loading submissions...</p>
+        <p>Loading credit cards...</p>
       </main>
     )
   }
@@ -93,7 +82,7 @@ export default function AdminDashboardPage({ session }: { session: Session }) {
 
       <div className="mt-12">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">All Credit Card Submissions</h2>
+          <h2 className="text-2xl font-bold">All Credit Cards</h2>
           <button
             onClick={exportToExcel}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
@@ -106,9 +95,8 @@ export default function AdminDashboardPage({ session }: { session: Session }) {
           <table className="min-w-full border">
             <thead>
               <tr className="bg-gray-100 text-center">
-                <th className="p-2 border">Submission ID</th>
+                <th className="p-2 border">ID</th>
                 <th className="p-2 border">User Email</th>
-                <th className="p-2 border">Form Name</th>
                 <th className="p-2 border">Card Name</th>
                 <th className="p-2 border">Bank Name</th>
                 <th className="p-2 border">Balance</th>
@@ -117,42 +105,38 @@ export default function AdminDashboardPage({ session }: { session: Session }) {
               </tr>
             </thead>
             <tbody>
-              {submissions
-                .filter((submission) => submission.formName === 'creditCards')
-                .map((submission) =>
-                  Array.isArray(submission.data) ? (
-                    submission.data.map(
-                      (card: CreditCardEntry, idx: number) => (
-                        <tr
-                          key={`${submission.id}-${idx}`}
-                          className="text-center"
-                        >
-                          <td className="p-2 border">{submission.id}</td>
-                          <td className="p-2 border">{submission.userEmail}</td>
-                          <td className="p-2 border">{submission.formName}</td>
-                          <td className="p-2 border">{card.cardName}</td>
-                          <td className="p-2 border">{card.bankName}</td>
-                          <td className="p-2 border">
-                            ${card.balance.toFixed(2)}
-                          </td>
-                          <td className="p-2 border">{card.interestRate}%</td>
-                          <td className="p-2 border">
-                            {new Date(submission.createdAt).toLocaleString()}
-                          </td>
-                        </tr>
-                      )
-                    )
-                  ) : (
-                    <tr
-                      key={`invalid-${submission.id}`}
-                      className="text-center text-red-600"
-                    >
-                      <td className="p-2 border" colSpan={8}>
-                        Invalid data format
-                      </td>
-                    </tr>
-                  )
-                )}
+              {creditCards.length === 0 ? (
+                <tr>
+                  <td className="p-4 text-center" colSpan={7}>
+                    No credit card entries found.
+                  </td>
+                </tr>
+              ) : (
+                creditCards.map((card) => (
+                  <tr key={card.id} className="text-center">
+                    <td className="p-2 border">{card.id}</td>
+                    <td className="p-2 border">{card.userEmail || '-'}</td>
+                    <td className="p-2 border">{card.cardName || '-'}</td>
+                    <td className="p-2 border">{card.bankName || '-'}</td>
+                    <td className="p-2 border">
+                      {typeof card.balance === 'number'
+                        ? new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                          }).format(card.balance)
+                        : '-'}
+                    </td>
+                    <td className="p-2 border">
+                      {typeof card.interestRate === 'number'
+                        ? `${card.interestRate}%`
+                        : '-'}
+                    </td>
+                    <td className="p-2 border">
+                      {new Date(card.createdAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -28,6 +28,11 @@ export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
  * 
  */
 export type Submission = $Result.DefaultSelection<Prisma.$SubmissionPayload>
+/**
+ * Model CreditCard
+ * 
+ */
+export type CreditCard = $Result.DefaultSelection<Prisma.$CreditCardPayload>
 
 /**
  * Enums
@@ -200,6 +205,16 @@ export class PrismaClient<
     * ```
     */
   get submission(): Prisma.SubmissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.creditCard`: Exposes CRUD operations for the **CreditCard** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CreditCards
+    * const creditCards = await prisma.creditCard.findMany()
+    * ```
+    */
+  get creditCard(): Prisma.CreditCardDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -642,7 +657,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Post: 'Post',
-    Submission: 'Submission'
+    Submission: 'Submission',
+    CreditCard: 'CreditCard'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -661,7 +677,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post" | "submission"
+      modelProps: "user" | "post" | "submission" | "creditCard"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -887,6 +903,80 @@ export namespace Prisma {
           }
         }
       }
+      CreditCard: {
+        payload: Prisma.$CreditCardPayload<ExtArgs>
+        fields: Prisma.CreditCardFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CreditCardFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CreditCardFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          findFirst: {
+            args: Prisma.CreditCardFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CreditCardFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          findMany: {
+            args: Prisma.CreditCardFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+          }
+          create: {
+            args: Prisma.CreditCardCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          createMany: {
+            args: Prisma.CreditCardCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CreditCardCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+          }
+          delete: {
+            args: Prisma.CreditCardDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          update: {
+            args: Prisma.CreditCardUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          deleteMany: {
+            args: Prisma.CreditCardDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CreditCardUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CreditCardUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>[]
+          }
+          upsert: {
+            args: Prisma.CreditCardUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CreditCardPayload>
+          }
+          aggregate: {
+            args: Prisma.CreditCardAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCreditCard>
+          }
+          groupBy: {
+            args: Prisma.CreditCardGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CreditCardGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CreditCardCountArgs<ExtArgs>
+            result: $Utils.Optional<CreditCardCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -974,6 +1064,7 @@ export namespace Prisma {
     user?: UserOmit
     post?: PostOmit
     submission?: SubmissionOmit
+    creditCard?: CreditCardOmit
   }
 
   /* Types for Logging */
@@ -1070,11 +1161,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     posts: number
     submissions: number
+    creditcards: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | UserCountOutputTypeCountPostsArgs
     submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
+    creditcards?: boolean | UserCountOutputTypeCountCreditcardsArgs
   }
 
   // Custom InputTypes
@@ -1100,6 +1193,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SubmissionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreditcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CreditCardWhereInput
   }
 
 
@@ -1339,6 +1439,7 @@ export namespace Prisma {
     verificationTokenExpiry?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
     submissions?: boolean | User$submissionsArgs<ExtArgs>
+    creditcards?: boolean | User$creditcardsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1382,6 +1483,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
     submissions?: boolean | User$submissionsArgs<ExtArgs>
+    creditcards?: boolean | User$creditcardsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1392,6 +1494,7 @@ export namespace Prisma {
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[]
       submissions: Prisma.$SubmissionPayload<ExtArgs>[]
+      creditcards: Prisma.$CreditCardPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1799,6 +1902,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submissions<T extends User$submissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    creditcards<T extends User$creditcardsArgs<ExtArgs> = {}>(args?: Subset<T, User$creditcardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2270,6 +2374,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+  }
+
+  /**
+   * User.creditcards
+   */
+  export type User$creditcardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    where?: CreditCardWhereInput
+    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    cursor?: CreditCardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
   }
 
   /**
@@ -4480,6 +4608,1136 @@ export namespace Prisma {
 
 
   /**
+   * Model CreditCard
+   */
+
+  export type AggregateCreditCard = {
+    _count: CreditCardCountAggregateOutputType | null
+    _avg: CreditCardAvgAggregateOutputType | null
+    _sum: CreditCardSumAggregateOutputType | null
+    _min: CreditCardMinAggregateOutputType | null
+    _max: CreditCardMaxAggregateOutputType | null
+  }
+
+  export type CreditCardAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    balance: number | null
+    interestRate: number | null
+  }
+
+  export type CreditCardSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    balance: number | null
+    interestRate: number | null
+  }
+
+  export type CreditCardMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    cardName: string | null
+    bankName: string | null
+    balance: number | null
+    interestRate: number | null
+    createdAt: Date | null
+  }
+
+  export type CreditCardMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    cardName: string | null
+    bankName: string | null
+    balance: number | null
+    interestRate: number | null
+    createdAt: Date | null
+  }
+
+  export type CreditCardCountAggregateOutputType = {
+    id: number
+    userId: number
+    cardName: number
+    bankName: number
+    balance: number
+    interestRate: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CreditCardAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    balance?: true
+    interestRate?: true
+  }
+
+  export type CreditCardSumAggregateInputType = {
+    id?: true
+    userId?: true
+    balance?: true
+    interestRate?: true
+  }
+
+  export type CreditCardMinAggregateInputType = {
+    id?: true
+    userId?: true
+    cardName?: true
+    bankName?: true
+    balance?: true
+    interestRate?: true
+    createdAt?: true
+  }
+
+  export type CreditCardMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    cardName?: true
+    bankName?: true
+    balance?: true
+    interestRate?: true
+    createdAt?: true
+  }
+
+  export type CreditCardCountAggregateInputType = {
+    id?: true
+    userId?: true
+    cardName?: true
+    bankName?: true
+    balance?: true
+    interestRate?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CreditCardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CreditCard to aggregate.
+     */
+    where?: CreditCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CreditCards to fetch.
+     */
+    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CreditCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CreditCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CreditCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CreditCards
+    **/
+    _count?: true | CreditCardCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CreditCardAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CreditCardSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CreditCardMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CreditCardMaxAggregateInputType
+  }
+
+  export type GetCreditCardAggregateType<T extends CreditCardAggregateArgs> = {
+        [P in keyof T & keyof AggregateCreditCard]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCreditCard[P]>
+      : GetScalarType<T[P], AggregateCreditCard[P]>
+  }
+
+
+
+
+  export type CreditCardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CreditCardWhereInput
+    orderBy?: CreditCardOrderByWithAggregationInput | CreditCardOrderByWithAggregationInput[]
+    by: CreditCardScalarFieldEnum[] | CreditCardScalarFieldEnum
+    having?: CreditCardScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CreditCardCountAggregateInputType | true
+    _avg?: CreditCardAvgAggregateInputType
+    _sum?: CreditCardSumAggregateInputType
+    _min?: CreditCardMinAggregateInputType
+    _max?: CreditCardMaxAggregateInputType
+  }
+
+  export type CreditCardGroupByOutputType = {
+    id: number
+    userId: number
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt: Date
+    _count: CreditCardCountAggregateOutputType | null
+    _avg: CreditCardAvgAggregateOutputType | null
+    _sum: CreditCardSumAggregateOutputType | null
+    _min: CreditCardMinAggregateOutputType | null
+    _max: CreditCardMaxAggregateOutputType | null
+  }
+
+  type GetCreditCardGroupByPayload<T extends CreditCardGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CreditCardGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CreditCardGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CreditCardGroupByOutputType[P]>
+            : GetScalarType<T[P], CreditCardGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CreditCardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    cardName?: boolean
+    bankName?: boolean
+    balance?: boolean
+    interestRate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["creditCard"]>
+
+  export type CreditCardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    cardName?: boolean
+    bankName?: boolean
+    balance?: boolean
+    interestRate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["creditCard"]>
+
+  export type CreditCardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    cardName?: boolean
+    bankName?: boolean
+    balance?: boolean
+    interestRate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["creditCard"]>
+
+  export type CreditCardSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    cardName?: boolean
+    bankName?: boolean
+    balance?: boolean
+    interestRate?: boolean
+    createdAt?: boolean
+  }
+
+  export type CreditCardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "cardName" | "bankName" | "balance" | "interestRate" | "createdAt", ExtArgs["result"]["creditCard"]>
+  export type CreditCardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CreditCardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CreditCardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CreditCardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CreditCard"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      cardName: string
+      bankName: string
+      balance: number
+      interestRate: number
+      createdAt: Date
+    }, ExtArgs["result"]["creditCard"]>
+    composites: {}
+  }
+
+  type CreditCardGetPayload<S extends boolean | null | undefined | CreditCardDefaultArgs> = $Result.GetResult<Prisma.$CreditCardPayload, S>
+
+  type CreditCardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CreditCardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CreditCardCountAggregateInputType | true
+    }
+
+  export interface CreditCardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CreditCard'], meta: { name: 'CreditCard' } }
+    /**
+     * Find zero or one CreditCard that matches the filter.
+     * @param {CreditCardFindUniqueArgs} args - Arguments to find a CreditCard
+     * @example
+     * // Get one CreditCard
+     * const creditCard = await prisma.creditCard.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CreditCardFindUniqueArgs>(args: SelectSubset<T, CreditCardFindUniqueArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CreditCard that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CreditCardFindUniqueOrThrowArgs} args - Arguments to find a CreditCard
+     * @example
+     * // Get one CreditCard
+     * const creditCard = await prisma.creditCard.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CreditCardFindUniqueOrThrowArgs>(args: SelectSubset<T, CreditCardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CreditCard that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardFindFirstArgs} args - Arguments to find a CreditCard
+     * @example
+     * // Get one CreditCard
+     * const creditCard = await prisma.creditCard.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CreditCardFindFirstArgs>(args?: SelectSubset<T, CreditCardFindFirstArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CreditCard that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardFindFirstOrThrowArgs} args - Arguments to find a CreditCard
+     * @example
+     * // Get one CreditCard
+     * const creditCard = await prisma.creditCard.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CreditCardFindFirstOrThrowArgs>(args?: SelectSubset<T, CreditCardFindFirstOrThrowArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CreditCards that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CreditCards
+     * const creditCards = await prisma.creditCard.findMany()
+     * 
+     * // Get first 10 CreditCards
+     * const creditCards = await prisma.creditCard.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const creditCardWithIdOnly = await prisma.creditCard.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CreditCardFindManyArgs>(args?: SelectSubset<T, CreditCardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CreditCard.
+     * @param {CreditCardCreateArgs} args - Arguments to create a CreditCard.
+     * @example
+     * // Create one CreditCard
+     * const CreditCard = await prisma.creditCard.create({
+     *   data: {
+     *     // ... data to create a CreditCard
+     *   }
+     * })
+     * 
+     */
+    create<T extends CreditCardCreateArgs>(args: SelectSubset<T, CreditCardCreateArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CreditCards.
+     * @param {CreditCardCreateManyArgs} args - Arguments to create many CreditCards.
+     * @example
+     * // Create many CreditCards
+     * const creditCard = await prisma.creditCard.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CreditCardCreateManyArgs>(args?: SelectSubset<T, CreditCardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CreditCards and returns the data saved in the database.
+     * @param {CreditCardCreateManyAndReturnArgs} args - Arguments to create many CreditCards.
+     * @example
+     * // Create many CreditCards
+     * const creditCard = await prisma.creditCard.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CreditCards and only return the `id`
+     * const creditCardWithIdOnly = await prisma.creditCard.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CreditCardCreateManyAndReturnArgs>(args?: SelectSubset<T, CreditCardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CreditCard.
+     * @param {CreditCardDeleteArgs} args - Arguments to delete one CreditCard.
+     * @example
+     * // Delete one CreditCard
+     * const CreditCard = await prisma.creditCard.delete({
+     *   where: {
+     *     // ... filter to delete one CreditCard
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CreditCardDeleteArgs>(args: SelectSubset<T, CreditCardDeleteArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CreditCard.
+     * @param {CreditCardUpdateArgs} args - Arguments to update one CreditCard.
+     * @example
+     * // Update one CreditCard
+     * const creditCard = await prisma.creditCard.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CreditCardUpdateArgs>(args: SelectSubset<T, CreditCardUpdateArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CreditCards.
+     * @param {CreditCardDeleteManyArgs} args - Arguments to filter CreditCards to delete.
+     * @example
+     * // Delete a few CreditCards
+     * const { count } = await prisma.creditCard.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CreditCardDeleteManyArgs>(args?: SelectSubset<T, CreditCardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CreditCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CreditCards
+     * const creditCard = await prisma.creditCard.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CreditCardUpdateManyArgs>(args: SelectSubset<T, CreditCardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CreditCards and returns the data updated in the database.
+     * @param {CreditCardUpdateManyAndReturnArgs} args - Arguments to update many CreditCards.
+     * @example
+     * // Update many CreditCards
+     * const creditCard = await prisma.creditCard.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CreditCards and only return the `id`
+     * const creditCardWithIdOnly = await prisma.creditCard.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CreditCardUpdateManyAndReturnArgs>(args: SelectSubset<T, CreditCardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CreditCard.
+     * @param {CreditCardUpsertArgs} args - Arguments to update or create a CreditCard.
+     * @example
+     * // Update or create a CreditCard
+     * const creditCard = await prisma.creditCard.upsert({
+     *   create: {
+     *     // ... data to create a CreditCard
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CreditCard we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CreditCardUpsertArgs>(args: SelectSubset<T, CreditCardUpsertArgs<ExtArgs>>): Prisma__CreditCardClient<$Result.GetResult<Prisma.$CreditCardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CreditCards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardCountArgs} args - Arguments to filter CreditCards to count.
+     * @example
+     * // Count the number of CreditCards
+     * const count = await prisma.creditCard.count({
+     *   where: {
+     *     // ... the filter for the CreditCards we want to count
+     *   }
+     * })
+    **/
+    count<T extends CreditCardCountArgs>(
+      args?: Subset<T, CreditCardCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CreditCardCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CreditCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CreditCardAggregateArgs>(args: Subset<T, CreditCardAggregateArgs>): Prisma.PrismaPromise<GetCreditCardAggregateType<T>>
+
+    /**
+     * Group by CreditCard.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CreditCardGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CreditCardGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CreditCardGroupByArgs['orderBy'] }
+        : { orderBy?: CreditCardGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CreditCardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCreditCardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CreditCard model
+   */
+  readonly fields: CreditCardFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CreditCard.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CreditCardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CreditCard model
+   */
+  interface CreditCardFieldRefs {
+    readonly id: FieldRef<"CreditCard", 'Int'>
+    readonly userId: FieldRef<"CreditCard", 'Int'>
+    readonly cardName: FieldRef<"CreditCard", 'String'>
+    readonly bankName: FieldRef<"CreditCard", 'String'>
+    readonly balance: FieldRef<"CreditCard", 'Float'>
+    readonly interestRate: FieldRef<"CreditCard", 'Float'>
+    readonly createdAt: FieldRef<"CreditCard", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CreditCard findUnique
+   */
+  export type CreditCardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter, which CreditCard to fetch.
+     */
+    where: CreditCardWhereUniqueInput
+  }
+
+  /**
+   * CreditCard findUniqueOrThrow
+   */
+  export type CreditCardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter, which CreditCard to fetch.
+     */
+    where: CreditCardWhereUniqueInput
+  }
+
+  /**
+   * CreditCard findFirst
+   */
+  export type CreditCardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter, which CreditCard to fetch.
+     */
+    where?: CreditCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CreditCards to fetch.
+     */
+    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CreditCards.
+     */
+    cursor?: CreditCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CreditCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CreditCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CreditCards.
+     */
+    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+  }
+
+  /**
+   * CreditCard findFirstOrThrow
+   */
+  export type CreditCardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter, which CreditCard to fetch.
+     */
+    where?: CreditCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CreditCards to fetch.
+     */
+    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CreditCards.
+     */
+    cursor?: CreditCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CreditCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CreditCards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CreditCards.
+     */
+    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+  }
+
+  /**
+   * CreditCard findMany
+   */
+  export type CreditCardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter, which CreditCards to fetch.
+     */
+    where?: CreditCardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CreditCards to fetch.
+     */
+    orderBy?: CreditCardOrderByWithRelationInput | CreditCardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CreditCards.
+     */
+    cursor?: CreditCardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CreditCards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CreditCards.
+     */
+    skip?: number
+    distinct?: CreditCardScalarFieldEnum | CreditCardScalarFieldEnum[]
+  }
+
+  /**
+   * CreditCard create
+   */
+  export type CreditCardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CreditCard.
+     */
+    data: XOR<CreditCardCreateInput, CreditCardUncheckedCreateInput>
+  }
+
+  /**
+   * CreditCard createMany
+   */
+  export type CreditCardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CreditCards.
+     */
+    data: CreditCardCreateManyInput | CreditCardCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CreditCard createManyAndReturn
+   */
+  export type CreditCardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * The data used to create many CreditCards.
+     */
+    data: CreditCardCreateManyInput | CreditCardCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CreditCard update
+   */
+  export type CreditCardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CreditCard.
+     */
+    data: XOR<CreditCardUpdateInput, CreditCardUncheckedUpdateInput>
+    /**
+     * Choose, which CreditCard to update.
+     */
+    where: CreditCardWhereUniqueInput
+  }
+
+  /**
+   * CreditCard updateMany
+   */
+  export type CreditCardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CreditCards.
+     */
+    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyInput>
+    /**
+     * Filter which CreditCards to update
+     */
+    where?: CreditCardWhereInput
+    /**
+     * Limit how many CreditCards to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CreditCard updateManyAndReturn
+   */
+  export type CreditCardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * The data used to update CreditCards.
+     */
+    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyInput>
+    /**
+     * Filter which CreditCards to update
+     */
+    where?: CreditCardWhereInput
+    /**
+     * Limit how many CreditCards to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CreditCard upsert
+   */
+  export type CreditCardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CreditCard to update in case it exists.
+     */
+    where: CreditCardWhereUniqueInput
+    /**
+     * In case the CreditCard found by the `where` argument doesn't exist, create a new CreditCard with this data.
+     */
+    create: XOR<CreditCardCreateInput, CreditCardUncheckedCreateInput>
+    /**
+     * In case the CreditCard was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CreditCardUpdateInput, CreditCardUncheckedUpdateInput>
+  }
+
+  /**
+   * CreditCard delete
+   */
+  export type CreditCardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+    /**
+     * Filter which CreditCard to delete.
+     */
+    where: CreditCardWhereUniqueInput
+  }
+
+  /**
+   * CreditCard deleteMany
+   */
+  export type CreditCardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CreditCards to delete
+     */
+    where?: CreditCardWhereInput
+    /**
+     * Limit how many CreditCards to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CreditCard without action
+   */
+  export type CreditCardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CreditCard
+     */
+    select?: CreditCardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CreditCard
+     */
+    omit?: CreditCardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CreditCardInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4528,6 +5786,19 @@ export namespace Prisma {
   };
 
   export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+
+
+  export const CreditCardScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    cardName: 'cardName',
+    bankName: 'bankName',
+    balance: 'balance',
+    interestRate: 'interestRate',
+    createdAt: 'createdAt'
+  };
+
+  export type CreditCardScalarFieldEnum = (typeof CreditCardScalarFieldEnum)[keyof typeof CreditCardScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4684,6 +5955,7 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     posts?: PostListRelationFilter
     submissions?: SubmissionListRelationFilter
+    creditcards?: CreditCardListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4698,6 +5970,7 @@ export namespace Prisma {
     verificationTokenExpiry?: SortOrderInput | SortOrder
     posts?: PostOrderByRelationAggregateInput
     submissions?: SubmissionOrderByRelationAggregateInput
+    creditcards?: CreditCardOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4715,6 +5988,7 @@ export namespace Prisma {
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
     posts?: PostListRelationFilter
     submissions?: SubmissionListRelationFilter
+    creditcards?: CreditCardListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4863,6 +6137,73 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
   }
 
+  export type CreditCardWhereInput = {
+    AND?: CreditCardWhereInput | CreditCardWhereInput[]
+    OR?: CreditCardWhereInput[]
+    NOT?: CreditCardWhereInput | CreditCardWhereInput[]
+    id?: IntFilter<"CreditCard"> | number
+    userId?: IntFilter<"CreditCard"> | number
+    cardName?: StringFilter<"CreditCard"> | string
+    bankName?: StringFilter<"CreditCard"> | string
+    balance?: FloatFilter<"CreditCard"> | number
+    interestRate?: FloatFilter<"CreditCard"> | number
+    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CreditCardOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cardName?: SortOrder
+    bankName?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CreditCardWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CreditCardWhereInput | CreditCardWhereInput[]
+    OR?: CreditCardWhereInput[]
+    NOT?: CreditCardWhereInput | CreditCardWhereInput[]
+    userId?: IntFilter<"CreditCard"> | number
+    cardName?: StringFilter<"CreditCard"> | string
+    bankName?: StringFilter<"CreditCard"> | string
+    balance?: FloatFilter<"CreditCard"> | number
+    interestRate?: FloatFilter<"CreditCard"> | number
+    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CreditCardOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cardName?: SortOrder
+    bankName?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+    createdAt?: SortOrder
+    _count?: CreditCardCountOrderByAggregateInput
+    _avg?: CreditCardAvgOrderByAggregateInput
+    _max?: CreditCardMaxOrderByAggregateInput
+    _min?: CreditCardMinOrderByAggregateInput
+    _sum?: CreditCardSumOrderByAggregateInput
+  }
+
+  export type CreditCardScalarWhereWithAggregatesInput = {
+    AND?: CreditCardScalarWhereWithAggregatesInput | CreditCardScalarWhereWithAggregatesInput[]
+    OR?: CreditCardScalarWhereWithAggregatesInput[]
+    NOT?: CreditCardScalarWhereWithAggregatesInput | CreditCardScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CreditCard"> | number
+    userId?: IntWithAggregatesFilter<"CreditCard"> | number
+    cardName?: StringWithAggregatesFilter<"CreditCard"> | string
+    bankName?: StringWithAggregatesFilter<"CreditCard"> | string
+    balance?: FloatWithAggregatesFilter<"CreditCard"> | number
+    interestRate?: FloatWithAggregatesFilter<"CreditCard"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"CreditCard"> | Date | string
+  }
+
   export type UserCreateInput = {
     email: string
     name?: string | null
@@ -4874,6 +6215,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     posts?: PostCreateNestedManyWithoutAuthorInput
     submissions?: SubmissionCreateNestedManyWithoutUserInput
+    creditcards?: CreditCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4888,6 +6230,7 @@ export namespace Prisma {
     verificationTokenExpiry?: Date | string | null
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4901,6 +6244,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUpdateManyWithoutAuthorNestedInput
     submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4915,6 +6259,7 @@ export namespace Prisma {
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5056,6 +6401,72 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CreditCardCreateInput = {
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCreditcardsInput
+  }
+
+  export type CreditCardUncheckedCreateInput = {
+    id?: number
+    userId: number
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt?: Date | string
+  }
+
+  export type CreditCardUpdateInput = {
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCreditcardsNestedInput
+  }
+
+  export type CreditCardUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CreditCardCreateManyInput = {
+    id?: number
+    userId: number
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt?: Date | string
+  }
+
+  export type CreditCardUpdateManyMutationInput = {
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CreditCardUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5127,6 +6538,12 @@ export namespace Prisma {
     none?: SubmissionWhereInput
   }
 
+  export type CreditCardListRelationFilter = {
+    every?: CreditCardWhereInput
+    some?: CreditCardWhereInput
+    none?: CreditCardWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5137,6 +6554,10 @@ export namespace Prisma {
   }
 
   export type SubmissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CreditCardOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5418,6 +6839,77 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type CreditCardCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cardName?: SortOrder
+    bankName?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CreditCardAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+  }
+
+  export type CreditCardMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cardName?: SortOrder
+    bankName?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CreditCardMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cardName?: SortOrder
+    bankName?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CreditCardSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    balance?: SortOrder
+    interestRate?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -5432,6 +6924,13 @@ export namespace Prisma {
     connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
   }
 
+  export type CreditCardCreateNestedManyWithoutUserInput = {
+    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
+    createMany?: CreditCardCreateManyUserInputEnvelope
+    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+  }
+
   export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -5444,6 +6943,13 @@ export namespace Prisma {
     connectOrCreate?: SubmissionCreateOrConnectWithoutUserInput | SubmissionCreateOrConnectWithoutUserInput[]
     createMany?: SubmissionCreateManyUserInputEnvelope
     connect?: SubmissionWhereUniqueInput | SubmissionWhereUniqueInput[]
+  }
+
+  export type CreditCardUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
+    createMany?: CreditCardCreateManyUserInputEnvelope
+    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5490,6 +6996,20 @@ export namespace Prisma {
     deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
   }
 
+  export type CreditCardUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
+    upsert?: CreditCardUpsertWithWhereUniqueWithoutUserInput | CreditCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CreditCardCreateManyUserInputEnvelope
+    set?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    disconnect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    delete?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    update?: CreditCardUpdateWithWhereUniqueWithoutUserInput | CreditCardUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CreditCardUpdateManyWithWhereWithoutUserInput | CreditCardUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -5526,6 +7046,20 @@ export namespace Prisma {
     deleteMany?: SubmissionScalarWhereInput | SubmissionScalarWhereInput[]
   }
 
+  export type CreditCardUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput> | CreditCardCreateWithoutUserInput[] | CreditCardUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CreditCardCreateOrConnectWithoutUserInput | CreditCardCreateOrConnectWithoutUserInput[]
+    upsert?: CreditCardUpsertWithWhereUniqueWithoutUserInput | CreditCardUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CreditCardCreateManyUserInputEnvelope
+    set?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    disconnect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    delete?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    connect?: CreditCardWhereUniqueInput | CreditCardWhereUniqueInput[]
+    update?: CreditCardUpdateWithWhereUniqueWithoutUserInput | CreditCardUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CreditCardUpdateManyWithWhereWithoutUserInput | CreditCardUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -5560,6 +7094,28 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSubmissionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmissionsInput, UserUpdateWithoutSubmissionsInput>, UserUncheckedUpdateWithoutSubmissionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCreditcardsInput = {
+    create?: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreditcardsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutCreditcardsNestedInput = {
+    create?: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreditcardsInput
+    upsert?: UserUpsertWithoutCreditcardsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreditcardsInput, UserUpdateWithoutCreditcardsInput>, UserUncheckedUpdateWithoutCreditcardsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5776,6 +7332,22 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type PostCreateWithoutAuthorInput = {
     title: string
     content?: string | null
@@ -5819,6 +7391,33 @@ export namespace Prisma {
 
   export type SubmissionCreateManyUserInputEnvelope = {
     data: SubmissionCreateManyUserInput | SubmissionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CreditCardCreateWithoutUserInput = {
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt?: Date | string
+  }
+
+  export type CreditCardUncheckedCreateWithoutUserInput = {
+    id?: number
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
+    createdAt?: Date | string
+  }
+
+  export type CreditCardCreateOrConnectWithoutUserInput = {
+    where: CreditCardWhereUniqueInput
+    create: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type CreditCardCreateManyUserInputEnvelope = {
+    data: CreditCardCreateManyUserInput | CreditCardCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -5876,6 +7475,35 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Submission"> | Date | string
   }
 
+  export type CreditCardUpsertWithWhereUniqueWithoutUserInput = {
+    where: CreditCardWhereUniqueInput
+    update: XOR<CreditCardUpdateWithoutUserInput, CreditCardUncheckedUpdateWithoutUserInput>
+    create: XOR<CreditCardCreateWithoutUserInput, CreditCardUncheckedCreateWithoutUserInput>
+  }
+
+  export type CreditCardUpdateWithWhereUniqueWithoutUserInput = {
+    where: CreditCardWhereUniqueInput
+    data: XOR<CreditCardUpdateWithoutUserInput, CreditCardUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CreditCardUpdateManyWithWhereWithoutUserInput = {
+    where: CreditCardScalarWhereInput
+    data: XOR<CreditCardUpdateManyMutationInput, CreditCardUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CreditCardScalarWhereInput = {
+    AND?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
+    OR?: CreditCardScalarWhereInput[]
+    NOT?: CreditCardScalarWhereInput | CreditCardScalarWhereInput[]
+    id?: IntFilter<"CreditCard"> | number
+    userId?: IntFilter<"CreditCard"> | number
+    cardName?: StringFilter<"CreditCard"> | string
+    bankName?: StringFilter<"CreditCard"> | string
+    balance?: FloatFilter<"CreditCard"> | number
+    interestRate?: FloatFilter<"CreditCard"> | number
+    createdAt?: DateTimeFilter<"CreditCard"> | Date | string
+  }
+
   export type UserCreateWithoutPostsInput = {
     email: string
     name?: string | null
@@ -5886,6 +7514,7 @@ export namespace Prisma {
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
     submissions?: SubmissionCreateNestedManyWithoutUserInput
+    creditcards?: CreditCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -5899,6 +7528,7 @@ export namespace Prisma {
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
     submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -5927,6 +7557,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submissions?: SubmissionUpdateManyWithoutUserNestedInput
+    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -5940,6 +7571,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSubmissionsInput = {
@@ -5952,6 +7584,7 @@ export namespace Prisma {
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
     posts?: PostCreateNestedManyWithoutAuthorInput
+    creditcards?: CreditCardCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -5965,6 +7598,7 @@ export namespace Prisma {
     verificationToken?: string | null
     verificationTokenExpiry?: Date | string | null
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    creditcards?: CreditCardUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -5993,6 +7627,7 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUpdateManyWithoutAuthorNestedInput
+    creditcards?: CreditCardUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -6006,6 +7641,77 @@ export namespace Prisma {
     verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
     verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    creditcards?: CreditCardUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCreditcardsInput = {
+    email: string
+    name?: string | null
+    hashedPassword: string
+    type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verifiedAt?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    submissions?: SubmissionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreditcardsInput = {
+    id?: number
+    email: string
+    name?: string | null
+    hashedPassword: string
+    type?: $Enums.UserType
+    emailVerified?: Date | string | null
+    verifiedAt?: Date | string | null
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    submissions?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreditcardsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
+  }
+
+  export type UserUpsertWithoutCreditcardsInput = {
+    update: XOR<UserUpdateWithoutCreditcardsInput, UserUncheckedUpdateWithoutCreditcardsInput>
+    create: XOR<UserCreateWithoutCreditcardsInput, UserUncheckedCreateWithoutCreditcardsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreditcardsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreditcardsInput, UserUncheckedUpdateWithoutCreditcardsInput>
+  }
+
+  export type UserUpdateWithoutCreditcardsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    submissions?: SubmissionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreditcardsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    hashedPassword?: StringFieldUpdateOperationsInput | string
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    submissions?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostCreateManyAuthorInput = {
@@ -6019,6 +7725,15 @@ export namespace Prisma {
     id?: number
     formName: string
     data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CreditCardCreateManyUserInput = {
+    id?: number
+    cardName: string
+    bankName: string
+    balance: number
+    interestRate: number
     createdAt?: Date | string
   }
 
@@ -6059,6 +7774,32 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     formName?: StringFieldUpdateOperationsInput | string
     data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CreditCardUpdateWithoutUserInput = {
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CreditCardUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CreditCardUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    cardName?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
+    interestRate?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

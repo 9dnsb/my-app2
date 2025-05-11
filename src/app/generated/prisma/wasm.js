@@ -148,6 +148,16 @@ exports.Prisma.SubmissionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.CreditCardScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  cardName: 'cardName',
+  bankName: 'bankName',
+  balance: 'balance',
+  interestRate: 'interestRate',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -180,7 +190,8 @@ exports.UserType = exports.$Enums.UserType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
-  Submission: 'Submission'
+  Submission: 'Submission',
+  CreditCard: 'CreditCard'
 };
 
 /**

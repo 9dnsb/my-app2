@@ -23,6 +23,7 @@ model User {
 
   posts       Post[]
   submissions Submission[]
+  creditcards CreditCard[]
 }
 
 enum UserType {
@@ -46,4 +47,15 @@ model Submission {
   data      Json
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model CreditCard {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  cardName     String
+  bankName     String
+  balance      Float
+  interestRate Float
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
 }

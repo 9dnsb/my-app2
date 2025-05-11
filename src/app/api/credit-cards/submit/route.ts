@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth'
 
+type CreditCardInput = {
+  cardName: string
+  bankName: string
+  balance: number
+  interestRate: number
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await auth()
@@ -11,7 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json()
-    const { cards } = body
+    const { cards } = body as { cards: CreditCardInput[] }
 
     if (!Array.isArray(cards) || cards.length === 0) {
       return NextResponse.json(
@@ -29,17 +36,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
-    const submission = await prisma.submission.create({
-      data: {
-        userId: user.id,
-        formName: 'creditCards',
-        data: cards,
-      },
-    })
+    await prisma.$transaction(
+      cards.map((card: CreditCardInput) =>
+        prisma.creditCard.create({
+          data: {
+            userId: user.id,
+            cardName: card.cardName,
+            bankName: card.bankName,
+            balance: card.balance,
+            interestRate: card.interestRate,
+          },
+        })
+      )
+    )
 
     return NextResponse.json({
-      message: 'Submission saved successfully',
-      submissionId: submission.id,
+      message: 'Credit cards saved successfully',
     })
   } catch (error) {
     console.error('Error saving credit card submission:', error)
